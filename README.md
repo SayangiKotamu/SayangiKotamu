@@ -1,0 +1,2 @@
+# SayangiKotamu
+SmartApp is a super-app city platform designed as a one-stop service to help Indonesians solve their daily problems. With the SmartApp, citizens and the government can synergize effectively and efficiently to solve city problems digitally, in order to support industry 4.0 and create human resources who are ready to contribute to the progress of the city from various aspects. #LiveSmart
