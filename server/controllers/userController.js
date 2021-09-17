@@ -1,7 +1,7 @@
 const User = require("../models/user");
 // const {comparePassword} = require('../helpers/bcrypt')
 const { jwtSign } = require("../helpers/jwt");
-const { OAuth2Client } = require("google-auth-library");
+// const { OAuth2Client } = require("google-auth-library");
 
 class UserController {
   static async register(req, res, next) {
