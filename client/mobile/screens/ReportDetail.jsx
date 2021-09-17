@@ -9,8 +9,8 @@ const windowWidth = Dimensions.get('window').width
 export default function ReportDetail() {
     const [region, setRegion] = useState({
         //! Coba coba dulu
-        latitude: 51.5078788,
-        longitude: -0.0877321,
+        latitude: -6.2533424,
+        longitude: 106.9229014,
         latitudeDelta: 0.009,
         longitudeDelta: 0.009,
     })

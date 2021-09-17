@@ -2853,6 +2853,13 @@
   "resolved" "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-0.2.0.tgz"
   "version" "0.2.0"
 
+"expo-permissions@~12.1.1":
+  "integrity" "sha512-fHBB4A/aWMcvdmDY79gpgQt0ufKG8F1gwTgO3+RjjudVe5kovNy5TeXdHrCa0MksFVKjktqLjJrgiBITJXjg+g=="
+  "resolved" "https://registry.npmjs.org/expo-permissions/-/expo-permissions-12.1.1.tgz"
+  "version" "12.1.1"
+  dependencies:
+    "expo-modules-core" "~0.2.0"
+
 "expo-status-bar@~1.0.4":
   "integrity" "sha512-s7nc496D/Zn1NGiMJ5wu6HyIdXxbgGtmZZtbHm7rpbcmLdf28GmMSNHDx7M0t00BMhky7VAurTCUo+BJs8ugsw=="
   "resolved" "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.0.4.tgz"

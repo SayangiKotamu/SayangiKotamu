@@ -12,20 +12,17 @@ export default function Report() {
     const [location, setLocation] = useState(null)
 
     useEffect(() => {
-        (async () => {
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied');
-            return;
-          }
-          try {
-            var location = await Location.getCurrentPositionAsync({});
-          } catch {
-            location = await Location.getCurrentPositionAsync({});
-          }
-          console.log(location);
-        })();
-      }, []);
+        ;(async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync()
+            if (status !== 'granted') {
+                console.log('Permission not granted')
+                return
+            }
+
+            let location = await Location.getLastKnownPositionAsync({}) //! Masih last known position, kalau getCurrentPositionAsync error terus
+            setLocation(location)
+        })()
+    }, [])
 
     function sendReport() {
         console.log('pencet send report')
