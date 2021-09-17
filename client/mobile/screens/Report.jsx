@@ -1,11 +1,33 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Platform, StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import Ionicons from '@expo/vector-icons/Ionicons'
+
+import * as Location from 'expo-location'
 
 export default function Report() {
     const [category, setCategory] = useState('')
     const [selectedOrganization, setSelectedOrganization] = useState('')
+
+    const [location, setLocation] = useState(null)
+
+    useEffect(() => {
+        ;(async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync()
+            if (status !== 'granted') {
+                console.log('Permission not granted')
+                return
+            }
+
+            let location = await Location.getLastKnownPositionAsync({}) //! Masih last known position, kalau getCurrentPositionAsync error terus
+            setLocation(location)
+        })()
+    }, [])
+
+    function sendReport() {
+        console.log('pencet send report')
+        console.log(location)
+    }
 
     return (
         <View style={styles.container}>
@@ -63,7 +85,7 @@ export default function Report() {
                     <Button title="Unggah Bukti Foto" color="#05DAA7" />
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button title="Lapor" color="#1A73E9" />
+                    <Button title="Lapor" color="#1A73E9" onPress={sendReport} />
                 </View>
             </View>
         </View>

@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
+
+import MapView, { Marker } from 'react-native-maps'
 
 const windowWidth = Dimensions.get('window').width
 
 export default function ReportDetail() {
+    const [region, setRegion] = useState({
+        //! Coba coba dulu
+        latitude: -6.2533424,
+        longitude: 106.9229014,
+        latitudeDelta: 0.009,
+        longitudeDelta: 0.009,
+    })
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -91,12 +101,9 @@ export default function ReportDetail() {
                 <View style={styles.contentContainer}>
                     <Text style={styles.header}>Lokasi</Text>
                 </View>
-                <Image
-                    style={styles.reportImage}
-                    source={{
-                        uri: 'https://docs.microsoft.com/id-id/azure/azure-maps/media/migrate-google-maps-web-app/google-maps-marker.png',
-                    }}
-                />
+                <MapView style={styles.map} region={region}>
+                    <Marker coordinate={region} />
+                </MapView>
             </View>
         </ScrollView>
     )
@@ -148,5 +155,9 @@ const styles = StyleSheet.create({
     reportImage: {
         width: windowWidth,
         height: 300,
+    },
+    map: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').width,
     },
 })
