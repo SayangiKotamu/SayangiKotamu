@@ -20,27 +20,36 @@ const dinasSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Password is required"],
+    select: false,
+  },
+  NID: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+  rating: {
+    type: Number,
   },
 });
 
 // ! HOOKS BEFORECREATE
 dinasSchema.pre("save", async function (next) {
-  const user = this;
+  const dinas = this;
 
-  const firstWords = user.name.split(" ").map((el) => {
-    return el[0];
+  const firstWords = dinas.name.split(" ").map((el) => {
+    return el[0].toLowerCase();
   });
 
-  console.log(user);
-
+  const NID = firstWords.join("") + dinas._id;
+  dinas.NID = NID;
   next();
 });
 
+dinasSchema.set("toJSON", {
+  transform: (doc, { __v, password, ...rest }, options) => rest,
+});
+
 const Dinas = mongoose.model("Dinas", dinasSchema);
-// class Dinas {
-//   static create(payload) {
-//     return getDatabase().collection("dinas").insertOne(payload);
-//   }
-// }
 
 module.exports = Dinas;
