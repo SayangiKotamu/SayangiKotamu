@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const { ObjectId } = require("bson");
-const { jwtSign } = require("../helpers/jwt");
+const { hashSync } = require("bcryptjs");
 
 const dinasSchema = new mongoose.Schema({
   name: {
@@ -45,7 +45,7 @@ dinasSchema.pre("save", async function (next) {
   const NID = firstWords.join("") + dinas._id;
   dinas.NID = NID;
 
-  const tokenSigned = jwtSign(dinas.password);
+  const tokenSigned = hashSync(dinas.password);
   console.log(tokenSigned);
   dinas.password = tokenSigned;
 

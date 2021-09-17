@@ -1,5 +1,7 @@
 const Dinas = require("../models/dinas");
 const { ObjectId } = require("bson");
+const { jwtVerify, jwtSign } = require("../helpers/jwt");
+const { comparePassword } = require("../helpers/bcrypt");
 
 class DinasController {
   static async register(req, res, next) {
@@ -10,6 +12,7 @@ class DinasController {
     };
 
     try {
+      // ! LATER: ROLE
       const foundEmail = await Dinas.findOne({ email: payload.email });
       if (foundEmail) {
         throw { name: "EmailInCollection" };
@@ -30,6 +33,41 @@ class DinasController {
         });
         res.status(400).json({ message: errMessage });
       }
+    }
+  }
+
+  static async login(req, res, next) {
+    const payload = {
+      email: req.body.email,
+      password: req.body.password,
+    };
+    try {
+      const foundEmail = await Dinas.findOne({ email: payload.email }).select(
+        "+password"
+      );
+      if (foundEmail) {
+        const verifiedPassword = comparePassword(
+          payload.password,
+          foundEmail.password
+        );
+        if (verifiedPassword) {
+          const accessToken = jwtSign({
+            id: foundEmail._id,
+            email: foundEmail.email,
+          });
+          res.status(200).json({
+            accessToken,
+            email: foundEmail.email,
+            id: foundEmail._id,
+          });
+        } else {
+          throw { name: "WrongEmailPassword" };
+        }
+      } else {
+        throw { name: "WrongEmailPassword" };
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 }
