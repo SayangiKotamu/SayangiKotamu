@@ -19,11 +19,11 @@ class DinasController {
       } else {
         const createDinas = await Dinas.create(payload);
         const foundDinas = await Dinas.findOne({ _id: createDinas._id });
-        res.status(201).send({ dinas: foundDinas });
+        res.status(201).send(foundDinas);
         // console.log(foundDinas);
       }
     } catch (err) {
-      console.log(err);
+      console.log(err), "errrrrrrrr";
       if (!err.errors) {
         next(err);
       } else {
@@ -67,6 +67,9 @@ class DinasController {
         throw { name: "WrongEmailPassword" };
       }
     } catch (err) {
+      if (err.name === "WrongEmailPassword") {
+        next(err);
+      }
       console.log(err);
     }
   }

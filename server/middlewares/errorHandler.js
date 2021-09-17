@@ -3,12 +3,16 @@ function errorHandler(err, req, res, next) {
     case "EmailInCollection":
       res.status(400).json({ message: "Email is already registered" });
       break;
+    case "WrongEmailPassword":
+      res.status(401).json({ message: "Email / Password is wrong" });
+      break;
     case "Invalid Login":
       res.status(401).json({ message: err.message });
       break;
     case "Invalid JWT":
       res.status(401).json({ message: err.message });
       break;
+
     case "Not Login":
       res.status(401).json({ message: err.message });
       break;
