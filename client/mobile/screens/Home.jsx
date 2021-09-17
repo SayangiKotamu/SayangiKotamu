@@ -223,23 +223,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     textId: {
-        fontSize: 7,
+        fontSize: 8,
         marginBottom: 8,
     },
     textTitle: {
-        fontSize: 13,
+        fontSize: 15,
         fontWeight: 'bold',
     },
     textDescription: {
-        fontSize: 10,
+        fontSize: 12,
     },
     textCategory: {
         marginTop: 5,
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: 'bold',
     },
     textDate: {
-        fontSize: 9,
+        fontSize: 10,
         marginTop: 3,
     },
     reportImage: {
@@ -255,11 +255,11 @@ const styles = StyleSheet.create({
     },
     reportCardContainer: {
         backgroundColor: 'white',
-        borderColor: 'black',
+        borderColor: 'grey',
         marginTop: 10,
         borderWidth: 1,
         borderRadius: 5,
-        width: '98%',
+        width: '100%',
         flexDirection: 'row',
     },
     reportCardContent: {

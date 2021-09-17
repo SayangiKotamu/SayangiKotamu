@@ -1,12 +1,16 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native'
 
 export default function Login() {
     return (
         <View style={styles.container}>
             <View style={styles.headingContainer}>
-                <Text style={styles.title}>SayangiKotamu</Text>
-                <Text style={styles.slogan}>Yuk #LiveSmart</Text>
+                <Image
+                    style={styles.logoImage}
+                    source={{
+                        uri: 'https://i.imgur.com/GKQ7zUt.jpeg',
+                    }}
+                />
             </View>
 
             <View style={styles.formContainer}>
@@ -39,7 +43,7 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         width: '80%',
-        marginTop: 150,
+        marginTop: 80,
         padding: 5,
         borderRadius: 10,
     },
@@ -63,5 +67,9 @@ const styles = StyleSheet.create({
         height: 50,
         borderBottomWidth: 2,
         borderBottomColor: 'blue',
+    },
+    logoImage: {
+        width: 250,
+        height: 250,
     },
 })

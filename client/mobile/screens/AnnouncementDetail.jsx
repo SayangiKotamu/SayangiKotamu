@@ -8,7 +8,7 @@ export default function AnnouncementDetail() {
             <View style={styles.container}>
                 <View style={styles.announcementCardContainer}>
                     <View>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
+                        <Ionicons name={'information-circle-sharp'} size={40} color={'#1A73E9'} />
                     </View>
                     <View style={styles.announcementCardContent}>
                         <Text style={styles.textTitle}>Pengalihan Jalan</Text>
@@ -16,6 +16,8 @@ export default function AnnouncementDetail() {
                         <Text style={styles.textDate}>
                             Pengumuman dibuat pada 12 September 2021
                         </Text>
+
+                        <View style={styles.horizontalLine} />
 
                         <Text style={styles.textDescription}>
                             Diumumkan untuk warga yang tinggal di sekitar daerah Lorem Ipsum, bahwa
@@ -47,13 +49,18 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
     },
+    horizontalLine: {
+        marginTop: 10,
+        borderBottomColor: 'grey',
+        borderBottomWidth: 1,
+    },
     announcementCardContainer: {
         backgroundColor: 'white',
-        borderColor: 'black',
+        borderColor: 'grey',
         marginTop: 10,
         borderWidth: 1,
         borderRadius: 5,
-        width: '98%',
+        width: '100%',
         flexDirection: 'row',
     },
     announcementCardContent: {
@@ -64,13 +71,15 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     textTitle: {
+        marginTop: 5,
         fontSize: 19,
         fontWeight: 'bold',
     },
     textOrganization: {
         backgroundColor: '#05DAA7',
         width: '70%',
-        padding: 2,
+        padding: 8,
+        marginTop: 8,
         borderRadius: 10,
         marginLeft: 2,
         color: 'white',
@@ -82,6 +91,8 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     textDate: {
+        marginTop: 10,
         fontSize: 12,
+        color: 'grey',
     },
 })

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 export default function Aspiration() {
     const [aspirationType, setAspirationType] = useState('')
@@ -9,6 +10,7 @@ export default function Aspiration() {
     return (
         <View style={styles.container}>
             <View style={styles.headingContainer}>
+                <Ionicons name={'arrow-down-circle-sharp'} size={30} color={'#1A73E9'} />
                 <Text style={styles.headingText}>Punya aspirasi untuk pemerintah?</Text>
                 <Text style={styles.headingText}>Yuk sampaikan disini!</Text>
             </View>
@@ -57,22 +59,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headingContainer: {
-        backgroundColor: '#fafafa',
+        backgroundColor: '#cce5ff',
         borderWidth: 1,
         borderColor: 'grey',
         width: '96%',
         padding: 3,
+        paddingBottom: 15,
+        paddingTop: 15,
         borderRadius: 5,
-        marginTop: 5,
+        marginTop: 15,
+        alignItems: 'center',
     },
     headingText: {
         textAlign: 'center',
+        color: '#1c5d9b',
+        fontWeight: 'bold',
+        fontSize: 20,
     },
     buttonContainer: {
         marginTop: 50,
     },
     formContainer: {
-        width: '80%',
+        width: '90%',
         marginTop: 20,
     },
     input: {

@@ -190,11 +190,12 @@ const styles = StyleSheet.create({
     },
     announcementCardContainer: {
         backgroundColor: 'white',
-        borderColor: 'black',
-        marginTop: 10,
+        borderColor: 'grey',
+        marginTop: 8,
         borderWidth: 1,
         borderRadius: 5,
-        width: '98%',
+        paddingBottom: 5,
+        width: '100%',
         flexDirection: 'row',
     },
     announcementCardContent: {
@@ -205,19 +206,21 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     textTitle: {
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: 'bold',
     },
     textDescription: {
-        fontSize: 10,
+        fontSize: 12,
         marginTop: 10,
+        color: 'black',
     },
     textDate: {
-        fontSize: 9,
+        fontSize: 11,
         marginTop: 1,
+        color: 'grey',
     },
     textInstances: {
-        fontSize: 11,
+        fontSize: 13,
     },
     heading: {
         fontSize: 18,
