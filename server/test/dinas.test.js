@@ -1,9 +1,9 @@
 const app = require("../app");
-const { User } = require("../models");
+const { Dinas } = require("../models");
 
 const request = require("supertest");
 
-const userRegister1 = {
+const dinasRegister1 = {
   name: "Dinas Kesehatan",
   email: "dinasKesehata@test.com",
   password: "test1234",
@@ -11,7 +11,7 @@ const userRegister1 = {
     "Merupakan sebuah media yang memberikan kemudahan layanan dan informasi terkait Healthy City kepada warga Kota.",
 };
 
-const userRegister2 = {
+const dinasRegister2 = {
   name: "",
   email: "dinasKesehata@test.com",
   password: "test1234",
@@ -19,7 +19,7 @@ const userRegister2 = {
     "Merupakan sebuah media yang memberikan kemudahan layanan dan informasi terkait Healthy City kepada warga Kota.",
 };
 
-const userRegister3 = {
+const dinasRegister3 = {
   name: "Dinas Kesehatan",
   email: "",
   password: "test1234",
@@ -27,7 +27,7 @@ const userRegister3 = {
     "Merupakan sebuah media yang memberikan kemudahan layanan dan informasi terkait Healthy City kepada warga Kota.",
 };
 
-const userRegister4 = {
+const dinasRegister4 = {
   name: "Dinas Kesehatan",
   email: "dinasKesehata@test.com",
   password: "",
@@ -35,23 +35,36 @@ const userRegister4 = {
     "Merupakan sebuah media yang memberikan kemudahan layanan dan informasi terkait Healthy City kepada warga Kota.",
 };
 
-const userLogin1 = {
+const dinasLogin1 = {
   email: "dinasKesehata@test.com",
   password: "test1234",
 };
 
-const userLogin2 = {
+const dinasLogin2 = {
   email: "dinasKesehata@test.com",
   password: "",
 };
 
-const userLogin3 = {
+const dinasLogin3 = {
   email: "",
   password: "test1234",
 };
 
+beforeAll((done) => {
+  const testUserLogin = {
+    email: "dinasKesehata@test.com",
+    password: "test1234",
+  };
+  Dinas.create(testUserLogin)
+    .then(() => {
+      done();
+    })
+    .catch((err) => done(err));
+});
+
+// ! LATER: COBA CARI TAU CASCADE
 afterAll((done) => {
-  User.deleteMany()
+  Dinas.deleteMany()
     .then(() => done())
     .catch((err) => done(err));
 });
@@ -65,7 +78,7 @@ describe("POST /register [CASE SUCCESS]", () => {
       request(app)
         .post("/dinas/register")
         .set("Accept", "application/json")
-        .send(userRegister1)
+        .send(dinasRegister1)
         .then((res) => {
           const firstWords = res.body.name.split(" ").map((el) => {
             return el[0];
@@ -75,7 +88,7 @@ describe("POST /register [CASE SUCCESS]", () => {
             "NID",
             `${firstWords.join("")}${res.body._id}`
           );
-          expect(res.body).toHaveProperty("email", userRegister1.email);
+          expect(res.body).toHaveProperty("email", dinasRegister1.email);
           //   ! LATER: COBA PIKIRKAN INI ID
           //   expect(res.body).toHaveProperty("_id", expect.any(new ObjectId(expect.any)));
           expect(res.body).not.toHaveProperty("password");
@@ -93,7 +106,7 @@ describe("POST /register [CASE FAILED / NO NAME]", () => {
       request(app)
         .post("/dinas/register")
         .set("Accept", "application/json")
-        .send(userRegister2)
+        .send(dinasRegister2)
         .then((res) => {
           expect(res.status).toBe(400);
           expect(res.body).toHaveProperty("message", `Please input dinas name`);
@@ -111,7 +124,7 @@ describe("POST /register [CASE FAILED / NO EMAIL]", () => {
       request(app)
         .post("/dinas/register")
         .set("Accept", "application/json")
-        .send(userRegister3)
+        .send(dinasRegister3)
         .then((res) => {
           expect(res.status).toBe(400);
           expect(res.body).toHaveProperty(
@@ -132,7 +145,7 @@ describe("POST /register [CASE FAILED / NO PASSWORD]", () => {
       request(app)
         .post("/dinas/register")
         .set("Accept", "application/json")
-        .send(userRegister4)
+        .send(dinasRegister4)
         .then((res) => {
           expect(res.status).toBe(400);
           expect(res.body).toHaveProperty(
@@ -153,7 +166,7 @@ describe("POST /register [CASE FAILED / NO PASSWORD]", () => {
       request(app)
         .post("/dinas/register")
         .set("Accept", "application/json")
-        .send(userRegister4)
+        .send(dinasRegister4)
         .then((res) => {
           expect(res.status).toBe(400);
           expect(res.body).toHaveProperty(
@@ -168,14 +181,14 @@ describe("POST /register [CASE FAILED / NO PASSWORD]", () => {
     };
 });
 
-// USER LOGIN
+/* USER LOGIN */
 describe("POST /login [CASE SUCCESS]", () => {
   test("Should return object with access_token and status code(200)"),
     (done) => {
       request(app)
         .post("/dinas/login")
         .set("Accept", "application/json")
-        .send(userLogin1)
+        .send(dinasLogin1)
         .then((res) => {
           expect(res.status).toBe(200);
           expect(res.body).toHaveProperty("accessToken", expect.any(String));
@@ -193,7 +206,7 @@ describe("POST /login [CASE FAILED / NO PASSWORD]", () => {
       request(app)
         .post("/dinas/login")
         .set("Accept", "application/json")
-        .send(userLogin2)
+        .send(dinasLogin2)
         .then((res) => {
           expect(res.status).toBe(401);
           expect(res.body).toHaveProperty(
@@ -214,7 +227,7 @@ describe("POST /login [CASE FAILED / NO EMAIL]", () => {
       request(app)
         .post("/dinas/login")
         .set("Accept", "application/json")
-        .send(userLogin3)
+        .send(dinasLogin3)
         .then((res) => {
           expect(res.status).toBe(401);
           expect(res.body).toHaveProperty(
