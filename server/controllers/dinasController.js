@@ -12,6 +12,7 @@ class DinasController {
       console.log(payload);
       const createDinas = await Dinas.create(payload);
     } catch (err) {
+      res.status(400).json({ message: err });
       console.log(err);
       next(err);
     }
