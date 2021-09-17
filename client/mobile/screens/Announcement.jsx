@@ -1,14 +1,16 @@
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export default function Announcement() {
+export default function Announcement({ navigation }) {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={styles.heading}>Pengumuman dari Pemerintah</Text>
-
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -22,9 +24,12 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -38,9 +43,12 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -54,9 +62,12 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -70,9 +81,12 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -86,9 +100,12 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -102,9 +119,12 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -118,9 +138,12 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -134,9 +157,12 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.announcementCardContainer}>
+                <TouchableOpacity
+                    style={styles.announcementCardContainer}
+                    onPress={() => navigation.navigate('Detail Pengumuman')}
+                >
                     <View style={styles.notificationLogo}>
                         <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
                     </View>
@@ -150,7 +176,7 @@ export default function Announcement() {
                             Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
                         </Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     )

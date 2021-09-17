@@ -1,35 +1,43 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, ScrollView, Button } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function Home({ navigation }) {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={styles.title}>SayangiKotamu</Text>
-                <Text style={styles.paragraph}>Yuk #LiveSmart</Text>
+                <View style={styles.brandingContainer}>
+                    <Image
+                        style={styles.logoImage}
+                        source={{
+                            uri: 'https://i.imgur.com/GKQ7zUt.jpeg',
+                        }}
+                    />
+                </View>
+
                 <View style={styles.menuContainer}>
-                    <View
+                    <TouchableOpacity
                         style={styles.buttonContainer}
-                        onStartShouldSetResponder={() => navigation.navigate('Lapor')}
+                        onPress={() => navigation.navigate('Lapor')}
                     >
                         <Ionicons name={'list-circle'} size={30} color={'#1A73E9'} />
                         <Text>KotaReport</Text>
-                    </View>
-                    <View
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={styles.buttonContainer}
-                        onStartShouldSetResponder={() => navigation.navigate('Pengumuman')}
+                        onPress={() => navigation.navigate('Pengumuman')}
                     >
                         <Ionicons name={'newspaper'} size={30} color={'#1A73E9'} />
                         <Text>KotaNews</Text>
-                    </View>
-                    <View
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={styles.buttonContainer}
-                        onStartShouldSetResponder={() => navigation.navigate('Aspirasi')}
+                        onPress={() => navigation.navigate('Aspirasi')}
                     >
                         <Ionicons name={'book-sharp'} size={30} color={'#1A73E9'} />
                         <Text>KotaAspire</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.newsContainer}>
@@ -37,9 +45,12 @@ export default function Home({ navigation }) {
                         <Button title="Logout" color="#05DAA7" />
                     </View>
 
-                    <Text style={styles.heading}>Apa yang sedang terjadi saat ini?</Text>
+                    <Text style={styles.heading}>Apa kabar kota hari ini?</Text>
 
-                    <View style={styles.reportCardContainer}>
+                    <TouchableOpacity
+                        style={styles.reportCardContainer}
+                        onPress={() => navigation.navigate('Detail Laporan')}
+                    >
                         <View style={styles.reportCardImage}>
                             <Image
                                 style={styles.reportImage}
@@ -59,9 +70,12 @@ export default function Home({ navigation }) {
                                 Laporan dibuat pada 16 September 2021 oleh Joko Widodo
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.reportCardContainer}>
+                    <TouchableOpacity
+                        style={styles.reportCardContainer}
+                        onPress={() => navigation.navigate('Detail Laporan')}
+                    >
                         <View style={styles.reportCardImage}>
                             <Image
                                 style={styles.reportImage}
@@ -81,9 +95,12 @@ export default function Home({ navigation }) {
                                 Laporan dibuat pada 16 September 2021 oleh Joko Widodo
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.reportCardContainer}>
+                    <TouchableOpacity
+                        style={styles.reportCardContainer}
+                        onPress={() => navigation.navigate('Detail Laporan')}
+                    >
                         <View style={styles.reportCardImage}>
                             <Image
                                 style={styles.reportImage}
@@ -103,9 +120,12 @@ export default function Home({ navigation }) {
                                 Laporan dibuat pada 16 September 2021 oleh Joko Widodo
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.reportCardContainer}>
+                    <TouchableOpacity
+                        style={styles.reportCardContainer}
+                        onPress={() => navigation.navigate('Detail Laporan')}
+                    >
                         <View style={styles.reportCardImage}>
                             <Image
                                 style={styles.reportImage}
@@ -125,9 +145,12 @@ export default function Home({ navigation }) {
                                 Laporan dibuat pada 16 September 2021 oleh Joko Widodo
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.reportCardContainer}>
+                    <TouchableOpacity
+                        style={styles.reportCardContainer}
+                        onPress={() => navigation.navigate('Detail Laporan')}
+                    >
                         <View style={styles.reportCardImage}>
                             <Image
                                 style={styles.reportImage}
@@ -147,9 +170,12 @@ export default function Home({ navigation }) {
                                 Laporan dibuat pada 16 September 2021 oleh Joko Widodo
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.reportCardContainer}>
+                    <TouchableOpacity
+                        style={styles.reportCardContainer}
+                        onPress={() => navigation.navigate('Detail Laporan')}
+                    >
                         <View style={styles.reportCardImage}>
                             <Image
                                 style={styles.reportImage}
@@ -169,7 +195,7 @@ export default function Home({ navigation }) {
                                 Laporan dibuat pada 16 September 2021 oleh Joko Widodo
                             </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         </ScrollView>
@@ -217,8 +243,15 @@ const styles = StyleSheet.create({
         marginTop: 3,
     },
     reportImage: {
-        width: 115,
-        height: 115,
+        width: 130,
+        height: 130,
+    },
+    logoImage: {
+        width: 250,
+        height: 250,
+    },
+    brandingContainer: {
+        flexDirection: 'row',
     },
     reportCardContainer: {
         backgroundColor: 'white',
@@ -249,7 +282,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     menuContainer: {
-        marginTop: '10%',
+        marginTop: '5%',
         flexDirection: 'row',
         backgroundColor: 'white',
         borderColor: 'grey',

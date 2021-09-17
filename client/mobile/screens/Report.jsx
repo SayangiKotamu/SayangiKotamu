@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     },
     pickerContainer: {
         borderBottomWidth: 2,
-        borderBottomColor: 'blue',
+        borderBottomColor: '#1A73E9',
         paddingBottom: 10,
     },
     headingText: {
@@ -104,12 +104,12 @@ const styles = StyleSheet.create({
     input: {
         height: 50,
         borderBottomWidth: 2,
-        borderBottomColor: 'blue',
+        borderBottomColor: '#1A73E9',
     },
     inputTextArea: {
         height: 50,
         borderWidth: 2,
-        borderColor: 'blue',
+        borderColor: '#1A73E9',
         padding: 8,
         borderRadius: 5,
     },

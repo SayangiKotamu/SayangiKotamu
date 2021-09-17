@@ -1,13 +1,14 @@
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
+import 'react-native-gesture-handler'
 import { StyleSheet } from 'react-native'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
-import Home from './screens/Home'
-import Announcement from './screens/Announcement'
+import HomeScreen from './screens/HomeScreen'
+import AnnouncementScreen from './screens/AnnouncementScreen'
 import Report from './screens/Report'
 import Aspiration from './screens/Aspiration'
 import Notification from './screens/Notification'
@@ -49,8 +50,16 @@ export default function App() {
                         tabBarInactiveTintColor: 'gray',
                     })}
                 >
-                    <Tab.Screen name="Beranda" component={Home} />
-                    <Tab.Screen name="Pengumuman" component={Announcement} />
+                    <Tab.Screen
+                        name="Beranda"
+                        component={HomeScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Tab.Screen
+                        name="Pengumuman"
+                        component={AnnouncementScreen}
+                        options={{ headerShown: false }}
+                    />
                     <Tab.Screen name="Lapor" component={Report} />
                     <Tab.Screen name="Aspirasi" component={Aspiration} />
                     <Tab.Screen name="Notifikasi" component={Notification} />
