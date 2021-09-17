@@ -20,6 +20,7 @@ class DinasController {
         // console.log(foundDinas);
       }
     } catch (err) {
+      console.log(err);
       if (!err.errors) {
         next(err);
       } else {
