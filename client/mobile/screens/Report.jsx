@@ -1,14 +1,35 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Platform, StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import Ionicons from '@expo/vector-icons/Ionicons'
+
+import * as Location from 'expo-location'
 
 export default function Report() {
     const [category, setCategory] = useState('')
     const [selectedOrganization, setSelectedOrganization] = useState('')
 
+    const [location, setLocation] = useState(null)
+
+    useEffect(() => {
+        (async () => {
+          let { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+            return;
+          }
+          try {
+            var location = await Location.getCurrentPositionAsync({});
+          } catch {
+            location = await Location.getCurrentPositionAsync({});
+          }
+          console.log(location);
+        })();
+      }, []);
+
     function sendReport() {
         console.log('pencet send report')
+        console.log(location)
     }
 
     return (
