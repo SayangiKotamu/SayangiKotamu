@@ -11,8 +11,10 @@ import {
     Button,
     Image,
     Dimensions,
+    // TouchableOpacity,
 } from 'react-native'
 
+// import { Camera } from 'expo-camera'
 import * as Location from 'expo-location'
 import * as ImagePicker from 'expo-image-picker'
 import * as Firebase from 'firebase'
@@ -31,6 +33,10 @@ export default function Report() {
     const [image, setImage] = useState(null)
 
     const [uploadingImage, setUploadingImage] = useState(false)
+
+    // const [type, setType] = useState(Camera.Constants.Type.Back)
+    // const [isCameraOpen, setIsCameraOpen] = useState(false)
+    // const [hasCameraPermission, setHasCameraPermission] = useState(null)
 
     useEffect(() => {
         ;(async () => {
@@ -112,7 +118,36 @@ export default function Report() {
         }
     }
 
-    async function takePhoto() {}
+    // async function openCamera() {
+    //     ;(async () => {
+    //         const { status } = await Camera.requestPermissionsAsync()
+    //         setHasCameraPermission(status === 'granted')
+    //     })()
+    //     setIsCameraOpen(true)
+    // }
+
+    // if (isCameraOpen && hasCameraPermission) {
+    //     return (
+    //         <View style={styles.cameraContainer}>
+    //             <Camera style={styles.camera} type={type}>
+    //                 <View style={styles.cameraButtonContainer}>
+    //                     <TouchableOpacity
+    //                         style={styles.cameraButton}
+    //                         onPress={() => {
+    //                             setType(
+    //                                 type === Camera.Constants.Type.back
+    //                                     ? Camera.Constants.Type.front
+    //                                     : Camera.Constants.Type.back
+    //                             )
+    //                         }}
+    //                     >
+    //                         <Text style={styles.cameraText}> Flip </Text>
+    //                     </TouchableOpacity>
+    //                 </View>
+    //             </Camera>
+    //         </View>
+    //     )
+    // }
 
     return (
         <ScrollView>
@@ -180,10 +215,10 @@ export default function Report() {
                                 color="#05DAA7"
                                 onPress={selectPhoto}
                             />
-                            <View style={styles.textContainer}>
+                            {/* <View style={styles.textContainer}>
                                 <Text style={styles.text}>Atau</Text>
                             </View>
-                            <Button title="Ambil Foto" color="#05DAA7" onPress={takePhoto} />
+                            <Button title="Ambil Foto" color="#05DAA7" onPress={openCamera} /> */}
                         </View>
                     )}
                     <View style={styles.buttonContainer}>
@@ -267,5 +302,26 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
         color: 'grey',
+    },
+    camera: {
+        flex: 1,
+    },
+    cameraButtonContainer: {
+        flex: 1,
+        backgroundColor: 'transparent',
+        flexDirection: 'row',
+        margin: 20,
+    },
+    cameraContainer: {
+        flex: 1,
+    },
+    cameraButton: {
+        flex: 0.1,
+        alignSelf: 'flex-end',
+        alignItems: 'center',
+    },
+    cameraText: {
+        fontSize: 18,
+        color: 'white',
     },
 })
