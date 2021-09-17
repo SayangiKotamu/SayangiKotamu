@@ -7,6 +7,10 @@ export default function Report() {
     const [category, setCategory] = useState('')
     const [selectedOrganization, setSelectedOrganization] = useState('')
 
+    function sendReport() {
+        console.log('pencet send report')
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.headingContainer}>
@@ -63,7 +67,7 @@ export default function Report() {
                     <Button title="Unggah Bukti Foto" color="#05DAA7" />
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button title="Lapor" color="#1A73E9" />
+                    <Button title="Lapor" color="#1A73E9" onPress={sendReport} />
                 </View>
             </View>
         </View>
