@@ -1,4 +1,5 @@
 const Dinas = require("../models/dinas");
+const { ObjectId } = require("bson");
 
 class DinasController {
   static async register(req, res, next) {
@@ -9,12 +10,25 @@ class DinasController {
     };
 
     try {
-      console.log(payload);
-      const createDinas = await Dinas.create(payload);
+      const foundEmail = await Dinas.findOne({ email: payload.email });
+      if (foundEmail) {
+        throw { name: "EmailInCollection" };
+      } else {
+        const createDinas = await Dinas.create(payload);
+        const foundDinas = await Dinas.findOne({ _id: createDinas._id });
+        res.status(201).send({ dinas: foundDinas });
+        // console.log(foundDinas);
+      }
     } catch (err) {
-      res.status(400).json({ message: err });
-      console.log(err);
-      next(err);
+      if (!err.errors) {
+        next(err);
+      } else {
+        const toArray = Object.values(err.errors);
+        const errMessage = toArray.map((el) => {
+          return el.message;
+        });
+        res.status(400).json({ message: errMessage });
+      }
     }
   }
 }
