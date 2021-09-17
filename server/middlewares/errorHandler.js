@@ -1,9 +1,19 @@
 function errorHandler(err, req, res, next) {
+  console.log(err.name);
   switch (err.name) {
     case "EmailInCollection":
       res.status(400).json({ message: "Email is already registered" });
       break;
-    case "Invalid Login":
+    case "NIKInCollection":
+      res.status(400).json({ message: "NIK is already registered" });
+      break;
+    case "EmailCollection":
+      res.status(400).json({ message: err.message });
+      break;
+    case "userRequired":
+      res.status(400).json({ message: err.message });
+      break;
+    case "invalidLogin":
       res.status(401).json({ message: err.message });
       break;
     case "Invalid JWT":
