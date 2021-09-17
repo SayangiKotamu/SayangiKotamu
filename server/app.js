@@ -10,6 +10,4 @@ app.use(cors())
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
 
-app.listen(port, function(){
-    console.log('running '+ port);
-})  
+module.exports=app
