@@ -9,12 +9,24 @@ class DinasController {
     };
 
     try {
-      console.log(payload);
+      //   const foundEmail = await Dinas.findOne({ email: payload.email });
+      //   if (foundEmail) {
+      //     throw { name: "EmailInCollection" };
+      //   } else {
       const createDinas = await Dinas.create(payload);
+      console.log(createDinas);
+      //   }
     } catch (err) {
-      res.status(400).json({ message: err });
-      console.log(err);
-      next(err);
+      //   console.log(errMessage);
+      //   if (!err.errors) {
+      //     next(err);
+      //   } else {
+      const toArray = Object.values(err.errors);
+      const errMessage = toArray.map((el) => {
+        return el.message;
+      });
+      res.status(400).json({ message: errMessage });
+      //   }
     }
   }
 }
