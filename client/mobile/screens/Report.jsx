@@ -42,8 +42,8 @@ export default function Report({ navigation }) {
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [category, setCategory] = useState(categories?.[0]?.name) //! Ganti ID nanti
-    const [selectedDinas, setSelectedDinas] = useState(dinas?.[0]?.name)
+    const [category, setCategory] = useState('')
+    const [selectedDinas, setSelectedDinas] = useState('')
     const [locationDescription, setLocationDescription] = useState('')
     const [location, setLocation] = useState(null)
     const [image, setImage] = useState(null)
@@ -57,8 +57,8 @@ export default function Report({ navigation }) {
     function resetAllForm() {
         setTitle('')
         setDescription('')
-        setCategory(categories[0].name)
-        setSelectedDinas(dinas[0].name)
+        setCategory('')
+        setSelectedDinas('')
         setLocationDescription('')
         setLocation(null)
         setImage(null)
@@ -181,15 +181,12 @@ export default function Report({ navigation }) {
     }
 
     async function selectPhoto() {
-        console.log('mau upload')
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
         })
-
-        console.log(result)
 
         if (!result.cancelled) {
             setImage(result.uri)
@@ -262,6 +259,7 @@ export default function Report({ navigation }) {
                                 selectedValue={category}
                                 onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
                             >
+                                <Picker.Item label={'Pilih kategori permasalahan'} value={''} />
                                 {categories.map((category, idx) => {
                                     return (
                                         <Picker.Item
@@ -286,6 +284,7 @@ export default function Report({ navigation }) {
                                     setSelectedDinas(itemValue)
                                 }
                             >
+                                <Picker.Item label={'Pilih dinas'} value={''} />
                                 {dinas.map((eachDinas, idx) => {
                                     return (
                                         <Picker.Item

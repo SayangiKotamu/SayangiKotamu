@@ -12,9 +12,6 @@ import {
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import Toast from 'react-native-toast-message'
-
-import { setIsLoggedIn, setAccessToken } from '../store/auth/action'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllReports } from '../store/reports/action'
 
@@ -40,19 +37,6 @@ export default function Home({ navigation }) {
     useEffect(() => {
         dispatch(fetchAllReports())
     }, [])
-
-    function onLogoutClick() {
-        dispatch(setIsLoggedIn(false))
-        dispatch(setAccessToken(''))
-
-        Toast.show({
-            type: 'success',
-            position: 'bottom',
-            bottomOffset: 70,
-            text1: 'SayangiKotamu',
-            text2: 'Berhasil logout dari SayangiKotamu',
-        })
-    }
 
     return (
         <ScrollView
@@ -93,11 +77,7 @@ export default function Home({ navigation }) {
                 </View>
 
                 <View style={styles.newsContainer}>
-                    <View style={styles.buttonContainer}>
-                        <Button title="Logout" color="#05DAA7" onPress={onLogoutClick} />
-                    </View>
-
-                    <Text style={styles.heading}>Apa kabar kota hari ini?</Text>
+                    <Text style={styles.heading}>Apa kabar kota mu hari ini?</Text>
 
                     {loadingReports ? (
                         <SkeletonContent
@@ -174,7 +154,6 @@ const styles = StyleSheet.create({
     newsContainer: {
         flex: 1,
         marginTop: '5%',
-        backgroundColor: '#fafafa',
         alignItems: 'center',
         width: '100%',
     },
