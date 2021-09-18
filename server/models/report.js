@@ -24,10 +24,10 @@ const reportSchema = new mongoose.Schema({
   },
   // ! LATER: CARI TAHU LAGI
   long: {
-    type: mongoose.Schema.Types.Decimal128,
+    type: Number,
   },
   lat: {
-    type: mongoose.Schema.Types.Decimal128,
+    type: Number,
   },
   category: {
     type: String,
@@ -41,18 +41,14 @@ const reportSchema = new mongoose.Schema({
   downVote: {
     type: Number,
   },
-  users: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  dinas: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Dinas",
-    },
-  ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  dinas: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Dinas",
+  },
 });
 
 const Report = mongoose.model("Report", reportSchema);
