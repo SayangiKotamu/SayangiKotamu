@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 const { ObjectId } = require("bson");
 const mongoose = require("mongoose");
 const validator = require("validator");
@@ -45,9 +47,41 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", function (next) {
-  var user = this;
+  const user = this;
   if (!user.isModified("password")) return next();
   user.password = hashPassword(user.password);
+
+  // ! EMAIL TOKEN
+  const emailToken = jwt.sign(
+    { NIK: user.NIK, email: user.email, password: user.password },
+    process.env.JWT_EMAIL_ACTIVATE,
+    { expiresIn: "30m" }
+  );
+
+  user.activateEmailToken = emailToken;
+
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_NODEMAILER,
+      pass: process.env.PASSWORD_EMAIL_NODEMAILER,
+    },
+  });
+
+  let mailOptions = {
+    from: "noreply@gmail.com",
+    to: `${user.email}`,
+    subject: "Verification Email",
+    html: `<h1>Verification Email </h1> \n <p>Here is your token <a>${emailToken}</a></p>`,
+  };
+
+  transporter.sendMail(mailOptions, function (err, data) {
+    if (err) {
+      console.log("Error");
+    } else {
+      console.log("email sent");
+    }
+  });
   next();
 });
 
