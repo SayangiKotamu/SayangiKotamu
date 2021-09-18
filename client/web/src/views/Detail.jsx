@@ -1,74 +1,93 @@
+import React, { useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+
 import Navbar from "../components/Navbar";
-import Description from "../components/Description";
-import Tracker from "../components/Tracker";
-import { useHistory } from "react-router";
+import DetailView from "../components/DetailView";
+import { fetchReportById } from "../stores/reports/action";
 
 function Detail() {
   const history = useHistory();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { reportDetail, loading, error } = useSelector((state) => state.report);
+
+  useEffect(() => {
+    dispatch(fetchReportById(id));
+  }, []);
+
+  if (error) {
+    toast.error("Mohon maaf, terjadi kesalahan pada server.", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
 
   const handleToDashboard = () => {
-    history.push("/dashboard");
+    history.push("/beranda");
   };
 
   return (
     <>
+      <ToastContainer />
       <div
-        class="min-h-screen bg-cover"
+        className="min-h-screen bg-cover"
         style={{
           backgroundColor: "#C1FFD7",
         }}
       >
         <Navbar />
-        <div class="container" style={{ marginLeft: "10%", marginTop: "5%" }}>
-          <div class="card">
-            <div class="justify-between grid grid-cols-2">
-              <div>
-                <h2 class="mb-5 text-3xl font-bold">Detail Pengaduan</h2>
-              </div>
-              <div class="text-right">
-                <button
-                  class="btn btn-square btn-ghost mt-2"
-                  onClick={handleToDashboard}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    class="bi bi-x-lg"
-                    viewBox="0 0 16 16"
+        {loading ? (
+          <lottie-player
+            src="https://assets9.lottiefiles.com/packages/lf20_dXaGKl.json"
+            background="transparent"
+            speed="1"
+            style={{
+              width: "700px",
+              height: "700px",
+              marginLeft: "32%",
+            }}
+            loop
+            autoplay
+          ></lottie-player>
+        ) : (
+          <div
+            className="container"
+            style={{ marginLeft: "10%", marginTop: "5%" }}
+          >
+            <div className="card">
+              <div className="justify-between grid grid-cols-2">
+                <div>
+                  <h2 className="mb-5 text-3xl font-bold">Detail Pengaduan</h2>
+                </div>
+                <div className="text-right">
+                  <button
+                    className="btn btn-square btn-ghost mt-2"
+                    onClick={handleToDashboard}
                   >
-                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
-                  </svg>
-                </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      fill="currentColor"
+                      className="bi bi-x-lg"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-            </div>
-            <div
-              class="grid grid-cols-5"
-              style={{ height: "650px", borderWidth: 1, borderRadius: 5 }}
-            >
-              <div
-                class="card-body col-span-2"
-                style={{
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                }}
-              >
-                <h2 class="mb-5 text-2xl font-bold">JKT-70001218471804616</h2>
-                <Tracker />
-              </div>
-              <div
-                class="card-body col-span-3"
-                style={{
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                }}
-              >
-                <Description />
-              </div>
+              <DetailView report={reportDetail} />
             </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

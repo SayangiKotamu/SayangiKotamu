@@ -1,17 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { logining } from "../stores/authentication/action";
 
 function Login() {
   const history = useHistory();
-
-  const handleToRegister = () => {
-    history.push("/register");
-  };
-
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleToRegister = () => {
+    history.push("/daftar");
+  };
 
   const forEmail = (e) => {
     e.preventDefault();
@@ -24,8 +26,14 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
-      toast.error("Tolong isikan email/password!", {
+
+    const payload = {
+      email,
+      password,
+    };
+
+    if (payload.email === "" || payload.password === "") {
+      toast.error("Mohon isikan email dan password!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -35,7 +43,8 @@ function Login() {
         progress: undefined,
       });
     } else {
-      history.push("/dashboard");
+      dispatch(logining(payload));
+      history.push("/beranda");
     }
   };
 
@@ -50,16 +59,16 @@ function Login() {
       />
 
       <div
-        class="hero min-h-screen bg-base-200"
+        className="hero min-h-screen bg-base-200"
         style={{ backgroundColor: "white", marginTop: "-10%" }}
       >
-        <div class="col-6 hero-content lg:flex-row">
+        <div className="col-6 hero-content lg:flex-row">
           <div
-            class="text-center lg:text-left"
+            className="text-center lg:text-left"
             style={{ width: "100%", marginRight: "10%" }}
           >
-            <h1 class="mb-5 text-5xl font-bold">Selamat datang, warga!</h1>
-            <p class="mb-5 text-xl italic">
+            <h1 className="mb-5 text-5xl font-bold">Selamat datang, warga!</h1>
+            <p className="mb-5 text-xl italic">
               "SayangiKotamu merupakan platform super-app city yang didesain
               sebagai one-stop service untuk membantu warga Indonesia mengatasi
               masalah sehari-hari. Dengan SmartApp, warga dan pemerintah dapat
@@ -69,45 +78,45 @@ function Login() {
               berkontribusi dalam kemajuan kota dari berbagai aspek."
             </p>
           </div>
-          <div class="card col-6 w-full max-w shadow-2xl bg-base-500">
-            <div class="card-body" style={{ backgroundColor: "#C8C6C6" }}>
+          <div className="card col-6 w-full max-w shadow-2xl bg-base-500">
+            <div className="card-body" style={{ backgroundColor: "#C8C6C6" }}>
               <form action="" type="submit" onSubmit={handleLogin}>
-                <div class="text-center">
-                  <h1 class="mb-3 text-4xl font-bold">Masuk</h1>
+                <div className="text-center">
+                  <h1 className="mb-3 text-4xl font-bold">Masuk</h1>
                 </div>
-                <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Email</span>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Email</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="email"
-                    class="input input-bordered"
+                    placeholder="E-mail"
+                    className="input input-bordered"
                     onChange={forEmail}
                     value={email}
                   />
                 </div>
-                <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Password</span>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Password</span>
                   </label>
                   <input
                     type="password"
-                    placeholder="password"
-                    class="input input-bordered"
+                    placeholder="Kata Sandi"
+                    className="input input-bordered"
                     onChange={forPaswword}
                     value={password}
                   />
                 </div>
-                <div class="form-control mt-6 mb-3">
+                <div className="form-control mt-6 mb-3">
                   <input
                     type="submit"
                     value="Masuk"
-                    class="btn"
+                    className="btn"
                     style={{ backgroundColor: "#05DAA7" }}
                   />
                 </div>
-                <label class="label-text-alt text-center">
+                <label className="label-text-alt text-center">
                   <p>
                     Belum mempunyai akun?{" "}
                     <a
