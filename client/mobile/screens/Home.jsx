@@ -3,7 +3,17 @@ import { StyleSheet, Text, View, Image, ScrollView, Button } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import { setIsLoggedIn, setAccessToken } from '../store/auth/action'
+import { useDispatch } from 'react-redux'
+
 export default function Home({ navigation }) {
+    const dispatch = useDispatch()
+
+    function onLogoutClick() {
+        dispatch(setIsLoggedIn(false))
+        dispatch(setAccessToken(''))
+    }
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -42,7 +52,7 @@ export default function Home({ navigation }) {
 
                 <View style={styles.newsContainer}>
                     <View style={styles.buttonContainer}>
-                        <Button title="Logout" color="#05DAA7" />
+                        <Button title="Logout" color="#05DAA7" onPress={onLogoutClick} />
                     </View>
 
                     <Text style={styles.heading}>Apa kabar kota hari ini?</Text>
