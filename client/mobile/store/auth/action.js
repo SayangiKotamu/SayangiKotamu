@@ -40,7 +40,7 @@ export function doRegister(payload) {
         try {
             dispatch(setLoadingRegister(true))
 
-            let response = await fetch('https://f573-110-138-92-119.ngrok.io/register', {
+            let response = await fetch('https://d505-110-138-92-119.ngrok.io/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export function doLogin(payload) {
         try {
             dispatch(setLoadingLogin(true))
 
-            let response = await fetch('https://f573-110-138-92-119.ngrok.io/login', {
+            let response = await fetch('https://d505-110-138-92-119.ngrok.io/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

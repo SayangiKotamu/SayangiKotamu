@@ -1,5 +1,14 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, Button, Dimensions } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    ScrollView,
+    Button,
+    Dimensions,
+    RefreshControl,
+} from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
@@ -11,23 +20,26 @@ import { fetchAllReports } from '../store/reports/action'
 
 import ReportCard from '../components/ReportCard'
 
-import { useIsFocused } from '@react-navigation/native'
-
 import SkeletonContent from 'react-native-skeleton-content'
 
 const windowWidth = Dimensions.get('window').width
 
 export default function Home({ navigation }) {
     const dispatch = useDispatch()
-    const isFocused = useIsFocused()
 
     const { reports, loadingReports } = useSelector((state) => state.reports)
 
+    const [isRefreshing, setIsRefreshing] = useState(false)
+
+    function onRefresh() {
+        setIsRefreshing(true)
+        dispatch(fetchAllReports())
+        setIsRefreshing(false)
+    }
+
     useEffect(() => {
-        if (isFocused) {
-            dispatch(fetchAllReports())
-        }
-    }, [isFocused])
+        dispatch(fetchAllReports())
+    }, [])
 
     function onLogoutClick() {
         dispatch(setIsLoggedIn(false))
@@ -43,7 +55,9 @@ export default function Home({ navigation }) {
     }
 
     return (
-        <ScrollView>
+        <ScrollView
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+        >
             <View style={styles.container}>
                 <View style={styles.brandingContainer}>
                     <Image

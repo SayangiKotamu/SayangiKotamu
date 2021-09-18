@@ -11,8 +11,11 @@ import {
     Button,
     Image,
     Dimensions,
+    ActivityIndicator,
     // TouchableOpacity,
 } from 'react-native'
+
+import Toast from 'react-native-toast-message'
 
 // import { Camera } from 'expo-camera'
 import * as Location from 'expo-location'
@@ -21,14 +24,27 @@ import * as Firebase from 'firebase'
 
 import { firebaseConfig } from '../firebase'
 
-export default function Report() {
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllCategory } from '../store/categories/action'
+import { fetchAllDinas } from '../store/dinas/action'
+import { addReport } from '../store/reports/action'
+
+export default function Report({ navigation }) {
     if (!Firebase.apps.length) {
         Firebase.initializeApp(firebaseConfig)
     }
 
-    const [category, setCategory] = useState('')
-    const [selectedOrganization, setSelectedOrganization] = useState('')
+    const dispatch = useDispatch()
 
+    const { categories, loadingCategories } = useSelector((state) => state.categories)
+    const { dinas, loadingDinas } = useSelector((state) => state.dinas)
+    const { loadingSendReport } = useSelector((state) => state.reports)
+
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [category, setCategory] = useState(categories?.[0]?.name) //! Ganti ID nanti
+    const [selectedDinas, setSelectedDinas] = useState(dinas?.[0]?.name)
+    const [locationDescription, setLocationDescription] = useState('')
     const [location, setLocation] = useState(null)
     const [image, setImage] = useState(null)
 
@@ -38,11 +54,27 @@ export default function Report() {
     // const [isCameraOpen, setIsCameraOpen] = useState(false)
     // const [hasCameraPermission, setHasCameraPermission] = useState(null)
 
+    function resetAllForm() {
+        setTitle('')
+        setDescription('')
+        setCategory(categories[0].name)
+        setSelectedDinas(dinas[0].name)
+        setLocationDescription('')
+        setLocation(null)
+        setImage(null)
+    }
+
     useEffect(() => {
         ;(async () => {
             let { status: locationStatus } = await Location.requestForegroundPermissionsAsync()
             if (locationStatus !== 'granted') {
-                console.log('Permission not granted')
+                Toast.show({
+                    type: 'error',
+                    position: 'bottom',
+                    bottomOffset: 70,
+                    text1: 'SayangiKotamu',
+                    text2: 'Mohon maaf, kami membutuhkan akses lokasi',
+                })
                 return
             }
 
@@ -50,56 +82,102 @@ export default function Report() {
             setLocation(location)
 
             if (Platform.OS !== 'web') {
-                console.log('jalan')
                 const { status: galleryStatus } =
                     await ImagePicker.requestMediaLibraryPermissionsAsync()
                 if (galleryStatus !== 'granted') {
-                    alert('Sorry, we need camera roll permissions to make this work!')
+                    Toast.show({
+                        type: 'error',
+                        position: 'bottom',
+                        bottomOffset: 70,
+                        text1: 'SayangiKotamu',
+                        text2: 'Mohon maaf, kami membutuhkan akses kamera',
+                    })
                 }
             }
         })()
+
+        dispatch(fetchAllCategory())
+        dispatch(fetchAllDinas())
     }, [])
 
     async function sendReport() {
-        console.log('pencet send report')
-        console.log(location) //! Dapet location disini
+        if (
+            !title.trim() ||
+            !description.trim() ||
+            !locationDescription.trim() ||
+            !category ||
+            !selectedDinas ||
+            !location ||
+            !image
+        ) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Mohon input form laporan dengan lengkap!',
+            })
+        } else {
+            const blob = await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest()
+                xhr.onload = function () {
+                    resolve(xhr.response)
+                }
+                xhr.onerror = function () {
+                    reject(new TypeError('network request failed'))
+                }
+                xhr.responseType = 'blob'
+                xhr.open('GET', image, true)
+                xhr.send(null)
+            })
 
-        const blob = await new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest()
-            xhr.onload = function () {
-                resolve(xhr.response)
-            }
-            xhr.onerror = function () {
-                reject(new TypeError('network request failed'))
-            }
-            xhr.responseType = 'blob'
-            xhr.open('GET', image, true)
-            xhr.send(null)
-        })
+            const ref = Firebase.storage().ref().child(new Date().toISOString())
+            const snapshot = ref.put(blob)
 
-        const ref = Firebase.storage().ref().child(new Date().toISOString())
-        const snapshot = ref.put(blob)
-
-        snapshot.on(
-            Firebase.storage.TaskEvent.STATE_CHANGED,
-            () => {
-                setUploadingImage(true)
-            },
-            (error) => {
-                setUploadingImage(false)
-                console.log(error)
-                blob.close()
-                return
-            },
-            () => {
-                snapshot.snapshot.ref.getDownloadURL().then((url) => {
+            snapshot.on(
+                Firebase.storage.TaskEvent.STATE_CHANGED,
+                () => {
+                    setUploadingImage(true)
+                },
+                (error) => {
                     setUploadingImage(false)
-                    console.log(url, '<<< image url') //! Dapet url image disini
+                    console.log(error)
                     blob.close()
-                    return url
-                })
-            }
-        )
+                    return
+                },
+                () => {
+                    snapshot.snapshot.ref.getDownloadURL().then((url) => {
+                        setUploadingImage(false)
+
+                        //* Proses dispatch
+                        const payload = {
+                            title,
+                            description,
+                            location: locationDescription,
+                            category,
+                            lat: location.coords.latitude, //! Dapet location disini
+                            long: location.coords.longitude, //! Dapet location disini
+                            picture: url, //! Dapet url image disini
+                        }
+
+                        dispatch(addReport(payload)).then(() => {
+                            resetAllForm()
+                            navigation.navigate('Beranda')
+                            Toast.show({
+                                type: 'success',
+                                position: 'bottom',
+                                bottomOffset: 70,
+                                text1: 'SayangiKotamu',
+                                text2: 'Laporan Anda berhasil kami terima, terimakasih atas laporan Anda! Akan kami segera proses ya!',
+                            })
+                        })
+
+                        blob.close()
+                        return url
+                    })
+                }
+            )
+        }
     }
 
     async function selectPhoto() {
@@ -159,50 +237,74 @@ export default function Report() {
                 </View>
 
                 <View style={styles.formContainer}>
+                    <Text style={styles.label}>Judul laporan:</Text>
+                    <TextInput
+                        style={styles.inputTextArea}
+                        placeholder="judul laporan dengan singkat..."
+                        value={title}
+                        onChangeText={(text) => setTitle(text)}
+                    />
+
                     <Text style={styles.label}>Ceritakan laporan kamu:</Text>
                     <TextInput
                         style={styles.inputTextArea}
                         placeholder="sampaikan laporanmu disini..."
-                        // value={name}
-                        // onChangeText={(text) => setName(text)}
+                        value={description}
+                        onChangeText={(text) => setDescription(text)}
                     />
 
                     <Text style={styles.label}>Kategori Permasalahan:</Text>
-                    <View style={styles.pickerContainer}>
-                        <Picker
-                            selectedValue={category}
-                            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
-                        >
-                            <Picker.Item label="Masalah Lalu Lintas" value="Masalah Lalu Lintas" />
-                            <Picker.Item
-                                label="Masalah Sarana/Fasilitas Umum"
-                                value="Masalah Sarana/Fasilitas Umum"
-                            />
-                            <Picker.Item label="Masalah Kriminal" value="Masalah Kriminal" />
-                            <Picker.Item label="Masalah Kesehatan" value="Masalah Kesehatan" />
-                            <Picker.Item label="Masalah Kebersihan" value="Masalah Kebersihan" />
-                            <Picker.Item label="Masalah Lainnya" value="Masalah Lainnya" />
-                        </Picker>
-                    </View>
+                    {loadingCategories ? (
+                        <ActivityIndicator size="large" color="#1A73E9" />
+                    ) : (
+                        <View style={styles.pickerContainer}>
+                            <Picker
+                                selectedValue={category}
+                                onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+                            >
+                                {categories.map((category, idx) => {
+                                    return (
+                                        <Picker.Item
+                                            label={category.name}
+                                            value={category.id}
+                                            key={'category' + idx}
+                                        />
+                                    )
+                                })}
+                            </Picker>
+                        </View>
+                    )}
                     <Text style={styles.label}>Pilih instansi terkait:</Text>
-                    <View style={styles.pickerContainer}>
-                        <Picker
-                            selectedValue={selectedOrganization}
-                            onValueChange={(itemValue, itemIndex) =>
-                                setSelectedOrganization(itemValue)
-                            }
-                        >
-                            <Picker.Item label="Dinas A" value="Dinas A" />
-                            <Picker.Item label="Dinas B" value="Dinas B" />
-                        </Picker>
-                    </View>
+
+                    {loadingDinas ? (
+                        <ActivityIndicator size="large" color="#1A73E9" />
+                    ) : (
+                        <View style={styles.pickerContainer}>
+                            <Picker
+                                selectedValue={selectedDinas}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setSelectedDinas(itemValue)
+                                }
+                            >
+                                {dinas.map((eachDinas, idx) => {
+                                    return (
+                                        <Picker.Item
+                                            label={eachDinas.name}
+                                            value={eachDinas.id}
+                                            key={'dinas' + idx}
+                                        />
+                                    )
+                                })}
+                            </Picker>
+                        </View>
+                    )}
 
                     <Text style={styles.label}>Deskripsikan lokasi kejadian:</Text>
                     <TextInput
                         style={styles.inputTextArea}
                         placeholder="cantumkan deskripsi dengan detail..."
-                        // value={name}
-                        // onChangeText={(text) => setName(text)}
+                        value={locationDescription}
+                        onChangeText={(text) => setLocationDescription(text)}
                     />
                     {image ? (
                         <View style={styles.imageContainer}>
@@ -222,7 +324,11 @@ export default function Report() {
                         </View>
                     )}
                     <View style={styles.buttonContainer}>
-                        <Button title="Lapor" color="#1A73E9" onPress={sendReport} />
+                        {uploadingImage || loadingSendReport ? (
+                            <ActivityIndicator size="large" color="#1A73E9" />
+                        ) : (
+                            <Button title="Lapor" color="#1A73E9" onPress={sendReport} />
+                        )}
                     </View>
                 </View>
             </View>
@@ -244,6 +350,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 20,
+        marginBottom: 20,
     },
     headingContainer: {
         backgroundColor: '#cce5ff',

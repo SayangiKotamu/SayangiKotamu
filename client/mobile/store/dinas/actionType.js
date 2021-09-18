@@ -1,0 +1,2 @@
+export const SET_DINAS = 'SET_DINAS'
+export const SET_LOADING_DINAS = 'SET_LOADING_DINAS'
