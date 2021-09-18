@@ -1,8 +1,8 @@
-import { SET_ASPIRATION, SET_LOADING, SET_ERROR } from "./actionType";
+import { SET_CATEGORIES, SET_LOADING, SET_ERROR } from "./actionType";
 import axios from "axios";
 
-function setAspiration(payload) {
-  return { type: SET_ASPIRATION, payload };
+function setCategories(payload) {
+  return { type: SET_CATEGORIES, payload };
 }
 
 function setLoading(payload) {
@@ -13,14 +13,14 @@ function setError(payload) {
   return { type: SET_ERROR, payload };
 }
 
-export function fetchAspiration() {
+export function fetchCategories() {
   return function (dispatch) {
     dispatch(setError(null));
     dispatch(setLoading(true));
     axios
-      .get("http://localhost:3001/aspiration")
+      .get("http://localhost:3001/categories")
       .then((response) => {
-        dispatch(setAspiration(response.data));
+        dispatch(setCategories(response.data));
       })
       .catch((err) => {
         dispatch(setError(err));
