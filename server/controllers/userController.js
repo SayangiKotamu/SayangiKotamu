@@ -59,7 +59,7 @@ class UserController {
       } else {
         next({
           name: "invalidLogin",
-          message: `email/password not match`,
+          message: `email or password not match`,
         });
       }
     } else {
