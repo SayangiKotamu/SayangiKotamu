@@ -33,7 +33,7 @@ const dinasSchema = new mongoose.Schema({
     type: Number,
   },
   role: {
-    type: Number,
+    type: String,
   },
 });
 

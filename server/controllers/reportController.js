@@ -1,6 +1,7 @@
-const ReportUser = require("../models/report");
+const Report = require("../models/report");
 
 class ReportController {
+  // ! USER REPORT
   static async showAll(req, res, next) {
     try {
       let data = await ReportUser.findAll();
@@ -28,6 +29,9 @@ class ReportController {
   static async addReport(req, res, next) {}
   static async editReport(req, res, next) {}
   static async deleteReport(req, res, next) {}
+
+  // ! DINAS REPORT
+  static async dinasGetAllReports(req, res, next) {}
 }
 
 module.exports = ReportController;
