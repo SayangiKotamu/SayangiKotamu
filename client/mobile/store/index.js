@@ -7,6 +7,7 @@ import announcementsReducer from './announcements/reducer'
 import categoriesReducer from './categories/reducer'
 import dinasReducer from './dinas/reducer'
 import aspirationReducer from './aspiration/reducer'
+import notificationReducer from './notification/reducer'
 
 const store = createStore(
     combineReducers({
@@ -16,6 +17,7 @@ const store = createStore(
         categories: categoriesReducer,
         dinas: dinasReducer,
         aspiration: aspirationReducer,
+        notification: notificationReducer,
     }),
     applyMiddleware(thunk)
 )
