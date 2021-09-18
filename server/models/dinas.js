@@ -35,6 +35,12 @@ const dinasSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  reports: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Report",
+    },
+  ],
 });
 
 // ! HOOKS BEFORECREATE

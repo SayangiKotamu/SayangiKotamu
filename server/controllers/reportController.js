@@ -31,7 +31,10 @@ class ReportController {
   static async deleteReport(req, res, next) {}
 
   // ! DINAS REPORT
-  static async dinasGetAllReports(req, res, next) {}
+  static async dinasGetAllReports(req, res, next) {
+    try {
+    } catch (err) {}
+  }
 }
 
 module.exports = ReportController;
