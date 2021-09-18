@@ -1,443 +1,451 @@
 {
-    "reports": [
-        {
-            "id": "R0001",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diterima",
-            "title": "Terjadi kemacetan di Jl. ABC",
-            "description": "Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet. Sudah sering kali setiap saya pulang kantor macet disini, mohon untuk segera ditangani secepatnya.",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "location": "Samping Supermarket A, JL. XYZ",
-            "long": {
-                "$numberDecimal": "106.89391793304529"
-            },
-            "lat": {
-                "$numberDecimal": "-6.285581390738571"
-            },
-            "category": "Masalah Lalu Lintas",
-            "upVote": 51,
-            "downVote": 5,
-            "picture": "https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650"
-        },
-        {
-            "id": "R0002",
-            "user": {
-                "email": "johndoe@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "John Doe",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Kesehatan"
-            },
-            "status": "Diproses",
-            "title": "Antri vaksin lama",
-            "description": "Mohon agar segera ditangani, vaksinasi sangat lama. Saya sudah nunggu 5 jam.",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "location": "Samping Supermarket A, JL. XYZ",
-            "long": {
-                "$numberDecimal": "106.81447449443793"
-            },
-            "lat": {
-                "$numberDecimal": "-6.219555543570665"
-            },
-            "category": "Masalah Kesehatan",
-            "upVote": 21,
-            "downVote": 1,
-            "picture": "https://cdn-2.tstatic.net/tribunnews/foto/bank/images/ribuan-warga-antri-untuk-suntik-vaksin-covid-19-di-tangerang_20210629_113126.jpg"
-        },
-        {
-            "id": "R0003",
-            "user": {
-                "email": "siapaaja@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Amy May",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diproses",
-            "title": "Lampu jalan mati",
-            "description": "Mohon agar lampu di Jl ABC diperbaiki.",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "location": "Samping Supermarket A, JL. XYZ",
-            "long": {
-                "$numberDecimal": "106.81447449443793"
-            },
-            "lat": {
-                "$numberDecimal": "-6.219555543570665"
-            },
-            "category": "Masalah Sarana/Fasilitas Umum",
-            "upVote": 31,
-            "downVote": 8,
-            "picture": "https://lh3.googleusercontent.com/proxy/FlIpGgPdP5zNIUXKziYxGGEXSfsM6yjPClgh-pmWj5EmykVURHP85KYD4TLI9BNkUm8WQI1IN_n-KJbetX8cU-vuwAkHrAbgB0qgOZn7XiBNWe63rj5WtNGgTATz4VB1I27NCOIw16vHWk45Z8zvLL0zB6QZiCk"
-        },
-        {
-            "title": "Judul",
-            "description": "Cerita",
-            "location": "Jl ABC",
-            "category": "Masalah Lalu Lintas",
-            "lat": {
-                "$numberDecimal": -6.2533543
-            },
-            "long": {
-                "$numberDecimal": 106.9229036
-            },
-            "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A06%3A40.326Z?alt=media&token=8676e48c-e9d5-4832-88e4-3619d5978566",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diterima",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "upVote": 0,
-            "downVote": 0,
-            "id": "AQhJJ6m"
-        },
-        {
-            "title": "Banjir",
-            "description": "Banjir setinggi leher",
-            "location": "Di jalan raya",
-            "category": "C0005",
-            "lat": {
-                "$numberDecimal": -6.2533474
-            },
-            "long": {
-                "$numberDecimal": 106.9228906
-            },
-            "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A12%3A39.125Z?alt=media&token=5b19d845-cd59-47f3-b1ea-4f006ff4193c",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diterima",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "upVote": 0,
-            "downVote": 0,
-            "id": "2Cl8lC-"
-        },
-        {
-            "title": "Banjir lagi",
-            "description": "Banjir sampai mata kaki lantai dua",
-            "location": "Di rumah aku",
-            "category": "C0005",
-            "lat": {
-                "$numberDecimal": -6.2533432
-            },
-            "long": {
-                "$numberDecimal": 106.9228836
-            },
-            "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A18%3A04.418Z?alt=media&token=841ea66a-5506-4529-9a2d-4003296d2eeb",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diterima",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "upVote": 0,
-            "downVote": 0,
-            "id": "LhknqAR"
-        },
-        {
-            "title": "Banjir banjir",
-            "description": "Banjerrrrrr",
-            "location": "Banjer",
-            "category": "C0004",
-            "lat": {
-                "$numberDecimal": -6.2533432
-            },
-            "long": {
-                "$numberDecimal": 106.9228836
-            },
-            "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A19%3A38.105Z?alt=media&token=32afb82a-6d2a-43d9-9a18-3e4c680afa7a",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diterima",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "upVote": 0,
-            "downVote": 0,
-            "id": "IvIkRak"
-        },
-        {
-            "title": "Masalah kesehatan",
-            "description": "Untuk dinas kebersihan",
-            "location": "Lokasi",
-            "category": "C0004",
-            "lat": {
-                "$numberDecimal": -6.253376
-            },
-            "long": {
-                "$numberDecimal": 106.9228918
-            },
-            "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T17%3A01%3A53.446Z?alt=media&token=bde1e3e5-e3b1-4460-8f29-57d9e1b75ba6",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diterima",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "upVote": 0,
-            "downVote": 0,
-            "id": "Twxw9eG"
-        },
-        {
-            "title": "Test lagi",
-            "description": "Laporan",
-            "location": "Sarana kebersihan",
-            "category": "C0002",
-            "lat": {
-                "$numberDecimal": -6.253376
-            },
-            "long": {
-                "$numberDecimal": 106.9228918
-            },
-            "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T17%3A05%3A10.777Z?alt=media&token=365a6a59-3cca-454b-831c-a2e94854d6a3",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diterima",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "upVote": 0,
-            "downVote": 0,
-            "id": "a3KjERk"
-        }
-    ],
-    "announcements": [
-        {
-            "id": "AN0001",
-            "title": "Pengalihan jalan",
-            "announcement": "Diumumkan untuk warga yang tinggal di sekitar daerah Lorem Ipsum, bahwapada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selainitu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteursint occaecat cupidatat non proident, sunt in culpa qui officia deseruntmollit anim id est laborum. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt ut labore et doloremagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolorin reprehenderit in voluptate velit esse cillum dolore eu fugiat null pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
-            "date": "2021-09-18T04:45:22.074Z",
-            "dinas": {
-                "id": "D0002",
-                "name": "Dinas Perhubungan"
-            }
-        },
-        {
-            "id": "AN0002",
-            "title": "Data kasus tes covid hari ini",
-            "announcement": "Berikut adalah hasil tes covid di sekitar daerah Lorem Ipsum, bahwapada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selainitu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteursint occaecat cupidatat non proident, sunt in culpa qui officia deseruntmollit anim id est laborum. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt ut labore et doloremagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolorin reprehenderit in voluptate velit esse cillum dolore eu fugiat null pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
-            "date": "2021-09-18T04:45:22.074Z",
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Kesehatan"
-            }
-        }
-    ],
-    "notifications": [
-        {
-            "id": "N0001",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "date": "2021-09-18T04:45:22.074Z",
-            "notification": "Laporan kamu dengan nama Terjadi kemacetan di Jl. ABC sudah selesai ditangani oleh Dinas Perhubungan."
-        },
-        {
-            "id": "N0001",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "date": "2021-09-18T04:45:22.074Z",
-            "notification": "Laporan kamu dengan nama Terjadi kemacetan di Jl. ABC sedang ditangani oleh Dinas Perhubungan."
-        }
-    ],
-    "aspiration": [
-        {
-            "id": "AS0001",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "type": "Kritik",
-            "description": "Mohon agar Dinas Perhubungan lebih cepat tanggap dalam merespon kemacetan di Ibukota"
-        },
-        {
-            "type": "Kritik",
-            "description": "Kritik dinas perhubungan",
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "id": "GrzkXLd"
-        }
-    ],
-    "dinas": [
-        {
-            "id": "D0001",
-            "name": "Dinas Kesehatan"
-        },
-        {
-            "id": "D0002",
-            "name": "Dinas Perhubungan"
-        },
-        {
-            "id": "D0003",
-            "name": "Dinas Kebersihan"
-        }
-    ],
-    "users": [
-        {
-            "email": "jokowi@mail.com",
-            "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-            "NIK": "314012401204901",
-            "full_name": "Joko Widodo",
-            "kota": "Jakarta",
-            "id": 1
-        },
-        {
-            "email": "ridwankamil@mail.com",
-            "password": "$2a$10$uplciVRs9N5MgBW9.3fqEO9hnPoertC0cxI1suaFitzxWVv8dtsF.",
-            "NIK": "378012401212901",
-            "full_name": "Ridwan Kamil",
-            "kota": "Bandung",
-            "id": 2
-        },
-        {
-            "email": "dody.virgiawan@email.com",
-            "password": "$2a$10$KOp2/uCfp.Lg3PBwg9UIru9AtJwKmvGmhPFUYUXjNcu95NqXV12bm",
-            "NIK": "320312030121",
-            "kota": "Jakarta",
-            "full_name": "Dody Virgiawan",
-            "id": 3
-        },
-        {
-            "email": "test@email.com",
-            "password": "$2a$10$.6TFbJxiAyQ1CrNvdxcWO.Wy.xsCDtUmzMbtmyc9lOLhPXrfmGxHO",
-            "NIK": "320312030121",
-            "kota": "Jakarta",
-            "full_name": "Test Aja",
-            "id": 4
-        }
-    ],
-    "categories": [
-        {
-            "id": "C0001",
-            "name": "Masalah Lalu Lintas"
-        },
-        {
-            "id": "C0002",
-            "name": "Masalah Sarana/Fasilitas Umum"
-        },
-        {
-            "id": "C0003",
-            "name": "Masalah Kriminal"
-        },
-        {
-            "id": "C0004",
-            "name": "Masalah Kesehatan"
-        },
-        {
-            "id": "C0005",
-            "name": "Masalah Kebersihan"
-        },
-        {
-            "id": "C0006",
-            "name": "Masalah Lainnya"
-        }
-    ]
+  "reports": [
+    {
+      "id": "R0001",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "title": "Terjadi kemacetan di Jl. ABC",
+      "description": "Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet. Sudah sering kali setiap saya pulang kantor macet disini, mohon untuk segera ditangani secepatnya.",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "location": "Samping Supermarket A, JL. XYZ",
+      "long": {
+        "$numberDecimal": "106.89391793304529"
+      },
+      "lat": {
+        "$numberDecimal": "-6.285581390738571"
+      },
+      "category": "Masalah Lalu Lintas",
+      "upVote": 51,
+      "downVote": 5,
+      "picture": "https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650"
+    },
+    {
+      "id": "R0002",
+      "user": {
+        "email": "johndoe@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "John Doe",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Kesehatan"
+      },
+      "status": "Diproses",
+      "title": "Antri vaksin lama",
+      "description": "Mohon agar segera ditangani, vaksinasi sangat lama. Saya sudah nunggu 5 jam.",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "location": "Samping Supermarket A, JL. XYZ",
+      "long": {
+        "$numberDecimal": "106.81447449443793"
+      },
+      "lat": {
+        "$numberDecimal": "-6.219555543570665"
+      },
+      "category": "Masalah Kesehatan",
+      "upVote": 21,
+      "downVote": 1,
+      "picture": "https://cdn-2.tstatic.net/tribunnews/foto/bank/images/ribuan-warga-antri-untuk-suntik-vaksin-covid-19-di-tangerang_20210629_113126.jpg"
+    },
+    {
+      "id": "R0003",
+      "user": {
+        "email": "siapaaja@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Amy May",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diproses",
+      "title": "Lampu jalan mati",
+      "description": "Mohon agar lampu di Jl ABC diperbaiki.",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "location": "Samping Supermarket A, JL. XYZ",
+      "long": {
+        "$numberDecimal": "106.81447449443793"
+      },
+      "lat": {
+        "$numberDecimal": "-6.219555543570665"
+      },
+      "category": "Masalah Sarana/Fasilitas Umum",
+      "upVote": 31,
+      "downVote": 8,
+      "picture": "https://lh3.googleusercontent.com/proxy/FlIpGgPdP5zNIUXKziYxGGEXSfsM6yjPClgh-pmWj5EmykVURHP85KYD4TLI9BNkUm8WQI1IN_n-KJbetX8cU-vuwAkHrAbgB0qgOZn7XiBNWe63rj5WtNGgTATz4VB1I27NCOIw16vHWk45Z8zvLL0zB6QZiCk"
+    },
+    {
+      "title": "Judul",
+      "description": "Cerita",
+      "location": "Jl ABC",
+      "category": "Masalah Lalu Lintas",
+      "lat": {
+        "$numberDecimal": -6.2533543
+      },
+      "long": {
+        "$numberDecimal": 106.9229036
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A06%3A40.326Z?alt=media&token=8676e48c-e9d5-4832-88e4-3619d5978566",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "AQhJJ6m"
+    },
+    {
+      "title": "Banjir",
+      "description": "Banjir setinggi leher",
+      "location": "Di jalan raya",
+      "category": "C0005",
+      "lat": {
+        "$numberDecimal": -6.2533474
+      },
+      "long": {
+        "$numberDecimal": 106.9228906
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A12%3A39.125Z?alt=media&token=5b19d845-cd59-47f3-b1ea-4f006ff4193c",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "2Cl8lC-"
+    },
+    {
+      "title": "Banjir lagi",
+      "description": "Banjir sampai mata kaki lantai dua",
+      "location": "Di rumah aku",
+      "category": "C0005",
+      "lat": {
+        "$numberDecimal": -6.2533432
+      },
+      "long": {
+        "$numberDecimal": 106.9228836
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A18%3A04.418Z?alt=media&token=841ea66a-5506-4529-9a2d-4003296d2eeb",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "LhknqAR"
+    },
+    {
+      "title": "Banjir banjir",
+      "description": "Banjerrrrrr",
+      "location": "Banjer",
+      "category": "C0004",
+      "lat": {
+        "$numberDecimal": -6.2533432
+      },
+      "long": {
+        "$numberDecimal": 106.9228836
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A19%3A38.105Z?alt=media&token=32afb82a-6d2a-43d9-9a18-3e4c680afa7a",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "IvIkRak"
+    },
+    {
+      "title": "Masalah kesehatan",
+      "description": "Untuk dinas kebersihan",
+      "location": "Lokasi",
+      "category": "C0004",
+      "lat": {
+        "$numberDecimal": -6.253376
+      },
+      "long": {
+        "$numberDecimal": 106.9228918
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T17%3A01%3A53.446Z?alt=media&token=bde1e3e5-e3b1-4460-8f29-57d9e1b75ba6",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "Twxw9eG"
+    },
+    {
+      "title": "Test lagi",
+      "description": "Laporan",
+      "location": "Sarana kebersihan",
+      "category": "C0002",
+      "lat": {
+        "$numberDecimal": -6.253376
+      },
+      "long": {
+        "$numberDecimal": 106.9228918
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T17%3A05%3A10.777Z?alt=media&token=365a6a59-3cca-454b-831c-a2e94854d6a3",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "a3KjERk"
+    }
+  ],
+  "announcements": [
+    {
+      "id": "AN0001",
+      "title": "Pengalihan jalan",
+      "announcement": "Diumumkan untuk warga yang tinggal di sekitar daerah Lorem Ipsum, bahwapada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selainitu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteursint occaecat cupidatat non proident, sunt in culpa qui officia deseruntmollit anim id est laborum. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt ut labore et doloremagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolorin reprehenderit in voluptate velit esse cillum dolore eu fugiat null pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
+      "date": "2021-09-18T04:45:22.074Z",
+      "dinas": {
+        "id": "D0002",
+        "name": "Dinas Perhubungan"
+      }
+    },
+    {
+      "id": "AN0002",
+      "title": "Data kasus tes covid hari ini",
+      "announcement": "Berikut adalah hasil tes covid di sekitar daerah Lorem Ipsum, bahwapada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selainitu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteursint occaecat cupidatat non proident, sunt in culpa qui officia deseruntmollit anim id est laborum. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt ut labore et doloremagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolorin reprehenderit in voluptate velit esse cillum dolore eu fugiat null pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
+      "date": "2021-09-18T04:45:22.074Z",
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Kesehatan"
+      }
+    }
+  ],
+  "notifications": [
+    {
+      "id": "N0001",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "date": "2021-09-18T04:45:22.074Z",
+      "notification": "Laporan kamu dengan nama Terjadi kemacetan di Jl. ABC sudah selesai ditangani oleh Dinas Perhubungan."
+    },
+    {
+      "id": "N0001",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "date": "2021-09-18T04:45:22.074Z",
+      "notification": "Laporan kamu dengan nama Terjadi kemacetan di Jl. ABC sedang ditangani oleh Dinas Perhubungan."
+    }
+  ],
+  "aspiration": [
+    {
+      "id": "AS0001",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "type": "Kritik",
+      "description": "Mohon agar Dinas Perhubungan lebih cepat tanggap dalam merespon kemacetan di Ibukota"
+    },
+    {
+      "type": "Kritik",
+      "description": "Kritik dinas perhubungan",
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "id": "GrzkXLd"
+    }
+  ],
+  "dinas": [
+    {
+      "id": "D0001",
+      "name": "Dinas Kesehatan"
+    },
+    {
+      "id": "D0002",
+      "name": "Dinas Perhubungan"
+    },
+    {
+      "id": "D0003",
+      "name": "Dinas Kebersihan"
+    }
+  ],
+  "users": [
+    {
+      "email": "jokowi@mail.com",
+      "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+      "NIK": "314012401204901",
+      "full_name": "Joko Widodo",
+      "kota": "Jakarta",
+      "id": 1
+    },
+    {
+      "email": "ridwankamil@mail.com",
+      "password": "$2a$10$uplciVRs9N5MgBW9.3fqEO9hnPoertC0cxI1suaFitzxWVv8dtsF.",
+      "NIK": "378012401212901",
+      "full_name": "Ridwan Kamil",
+      "kota": "Bandung",
+      "id": 2
+    },
+    {
+      "email": "dody.virgiawan@email.com",
+      "password": "$2a$10$KOp2/uCfp.Lg3PBwg9UIru9AtJwKmvGmhPFUYUXjNcu95NqXV12bm",
+      "NIK": "320312030121",
+      "kota": "Jakarta",
+      "full_name": "Dody Virgiawan",
+      "id": 3
+    },
+    {
+      "email": "test@email.com",
+      "password": "$2a$10$.6TFbJxiAyQ1CrNvdxcWO.Wy.xsCDtUmzMbtmyc9lOLhPXrfmGxHO",
+      "NIK": "320312030121",
+      "kota": "Jakarta",
+      "full_name": "Test Aja",
+      "id": 4
+    },
+    {
+      "email": "testing@email.com",
+      "password": "$2a$10$ukKZSm630ddlCaqCNRcUiuVhCR.D54zc3VJ2KZrSNBxiG2erIEju.",
+      "NIK": "320312030121",
+      "kota": "Jakarta",
+      "full_name": "Testing Aja",
+      "id": 5
+    }
+  ],
+  "categories": [
+    {
+      "id": "C0001",
+      "name": "Masalah Lalu Lintas"
+    },
+    {
+      "id": "C0002",
+      "name": "Masalah Sarana/Fasilitas Umum"
+    },
+    {
+      "id": "C0003",
+      "name": "Masalah Kriminal"
+    },
+    {
+      "id": "C0004",
+      "name": "Masalah Kesehatan"
+    },
+    {
+      "id": "C0005",
+      "name": "Masalah Kebersihan"
+    },
+    {
+      "id": "C0006",
+      "name": "Masalah Lainnya"
+    }
+  ]
 }
