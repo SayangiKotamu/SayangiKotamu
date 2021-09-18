@@ -124,23 +124,6 @@ class ReportController {
       console.log(err);
     }
   }
-
-  static async dinasGetByCategoryReport(req, res, next) {
-    // const {category} = req.params
-    // try {
-    //   const foundReports = await Report.find({category: })
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  }
-
-  static async dinasGetByStatusReport(req, res, next) {
-    const { status } = req.params;
-    try {
-      const foundReports = await Report.find({ status });
-      console.log(foundReports);
-    } catch (err) {}
-  }
 }
 
 module.exports = ReportController;
