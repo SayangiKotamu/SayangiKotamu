@@ -1,10 +1,10 @@
-const routers = require('express').Router();
-const ReportUserController = require('../controllers/reportUserController');
+const routers = require("express").Router();
+const ReportController = require("../controllers/reportController");
 
-routers.get('/', ReportUserController.showAll)
-routers.get('/:category', ReportUserController.showByCategory)
-routers.post('/', ReportUserController.addReport)
-routers.put('/', ReportUserController.editReport)
-routers.delete('/:id', ReportUserController.deleteReport)
+routers.get("/", ReportController.showAll);
+routers.get("/:category", ReportController.showByCategory);
+routers.post("/", ReportController.addReport);
+routers.put("/", ReportController.editReport);
+routers.delete("/:id", ReportController.deleteReport);
 
-module.exports= routers
+module.exports = routers;

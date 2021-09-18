@@ -32,6 +32,9 @@ const dinasSchema = new mongoose.Schema({
   rating: {
     type: Number,
   },
+  role: {
+    type: Number,
+  },
 });
 
 // ! HOOKS BEFORECREATE
