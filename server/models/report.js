@@ -1,51 +1,91 @@
-const { getDatabase } = require("../config/mongoose");
-const { ObjectId } = require("bson");
+const mongoose = require("mongoose");
+const validator = require("validator");
 
-class ReportUser {
-  static findAll() {
-    return getDatabase().collection("ReportUser").find().toArray();
-  }
+const reportSchema = new mongoose.Schema({
+  status: {
+    type: String,
+  },
+  description: {
+    type: String,
+    required: [true, "Description is required"],
+  },
+  issuedDate: {
+    type: Date,
+  },
+  finishedDate: {
+    type: Date,
+  },
+  location: {
+    type: String,
+  },
+  // ! LATER: CARI TAHU LAGI
+  long: {
+    type: mongoose.Schema.Types.Decimal128,
+  },
+  lat: {
+    type: mongoose.Schema.Types.Decimal128,
+  },
+  category: {
+    type: String,
+  },
+  picture: {
+    type: String,
+  },
+  upVote: {
+    type: Number,
+  },
+  downVote: {
+    type: Number,
+  },
+});
 
-  static async findByCategory(category) {
-    try {
-      let data = await getDatabase()
-        .collection("ReportUser")
-        .findOne({ category: category });
-      return data;
-    } catch (error) {
-      return {
-        name: "Not Found",
-        message: error,
-      };
-    }
-  }
+const Report = mongoose.model("Report", reportSchema);
 
-  static addReport(payload) {
-    return getDatabase().collection("ReportUser").insertOne(payload);
-  }
+module.exports = Report;
 
-  static editReport(payload, id) {
-    return getDatabase()
-      .collection("ReportUser")
-      .updateOne(
-        {
-          _id: ObjectId(id),
-        },
-        {
-          $set: payload,
-        }
-      );
-  }
+// class ReportUser {
+//   static findAll() {
+//     return getDatabase().collection("ReportUser").find().toArray();
+//   }
 
-  static deleteReport(id) {
-    return getDatabase()
-      .collection("ReportUser")
-      .deleteOne({ _id: ObjectId(id) });
-  }
+//   static async findByCategory(category) {
+//     try {
+//       let data = await getDatabase()
+//         .collection("ReportUser")
+//         .findOne({ category: category });
+//       return data;
+//     } catch (error) {
+//       return {
+//         name: "Not Found",
+//         message: error,
+//       };
+//     }
+//   }
 
-  static deleteDbReport() {
-    return getDatabase().collection("ReportUser").drop();
-  }
-}
+//   static addReport(payload) {
+//     return getDatabase().collection("ReportUser").insertOne(payload);
+//   }
 
-module.exports = ReportUser;
+//   static editReport(payload, id) {
+//     return getDatabase()
+//       .collection("ReportUser")
+//       .updateOne(
+//         {
+//           _id: ObjectId(id),
+//         },
+//         {
+//           $set: payload,
+//         }
+//       );
+//   }
+
+//   static deleteReport(id) {
+//     return getDatabase()
+//       .collection("ReportUser")
+//       .deleteOne({ _id: ObjectId(id) });
+//   }
+
+//   static deleteDbReport() {
+//     return getDatabase().collection("ReportUser").drop();
+//   }
+// }
