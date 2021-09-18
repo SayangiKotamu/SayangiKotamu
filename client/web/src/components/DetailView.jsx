@@ -1,6 +1,10 @@
-import getFormatedDate from "../helpers/formatedDate";
+import React, { useState } from "react";
+import getFormatedDateAndTime from "../helpers/formatedDateAndTime";
 
 function DetailView(props) {
+  const [date, setDate] = useState(new Date());
+  const [status, setStatus] = useState("");
+
   return (
     <div
       class="grid grid-cols-5"
@@ -108,11 +112,24 @@ function DetailView(props) {
           >
             <div
               class="justify-between grid grid-cols-2"
-              style={{ marginTop: "-3%", marginBottom: "-3%" }}
+              style={{ marginTop: "-3%" }}
             >
               <div class="mr-3">
                 <div class="mb-6">
-                  <h1 class="mb-1 text-xl font-bold">{props.report.status}</h1>
+                  <select
+                    class="select select-bordered w-full max-w-xs mb-1"
+                    style={{ marginTop: "-2%" }}
+                  >
+                    <option value={props.report.status} onChange={setStatus}>
+                      {props.report.status}
+                    </option>
+                    <option value="Diproses" onChange={setStatus}>
+                      Diproses
+                    </option>
+                    <option value="Selesai" onChange={setStatus}>
+                      Selesai
+                    </option>
+                  </select>
                 </div>
               </div>
               <div class="ml-3">
@@ -121,26 +138,35 @@ function DetailView(props) {
                 </h1>
               </div>
             </div>
-            <div class="mt-8">
-              <h1 class="mb-1 text-xl font-bold">Deskripsi</h1>
-              <p class="text-xl text-justify" style={{ width: "100%" }}>
-                {props.report.description}
-              </p>
-            </div>
-            <div class="mt-8">
-              <h1 class="mb-1 text-xl font-bold">Tanggal Pemasukan</h1>
-              <p class="text-xl text-justify" style={{ width: "100%" }}>
-                {getFormatedDate(props.report.issued_date)}
-              </p>
-            </div>
-            <div class="mt-8">
-              <h1 class="mb-1 text-xl font-bold">Tanggal Penyelesaian</h1>
-              <p class="text-xl text-justify" style={{ width: "100%" }}>
-                22 Desember 2022
-              </p>
+            <div
+              className="overflow-auto"
+              style={{
+                height: "400px",
+              }}
+            >
+              <div class="mt-8">
+                <h1 class="mb-1 text-xl font-bold">Deskripsi</h1>
+                <p class="text-xl text-justify" style={{ width: "100%" }}>
+                  {props.report.description}
+                </p>
+              </div>
+              <div class="mt-8">
+                <h1 class="mb-3 text-xl font-bold">Tanggal Pemasukan</h1>
+                <p class="text-xl text-justify" style={{ width: "100%" }}>
+                  {getFormatedDateAndTime(props.report.issued_date)}
+                </p>
+              </div>
+              <div class="mt-8">
+                <h1 class="mb-1 text-xl font-bold">Tanggal Penyelesaian</h1>
+                <input
+                  type="date"
+                  placeholder=""
+                  class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none mt-2"
+                />
+              </div>
             </div>
             <button
-              class="btn btn-block mt-10 mb-3"
+              class="btn btn-block mt-10"
               style={{ backgroundColor: "#1A73E9" }}
             >
               Proses

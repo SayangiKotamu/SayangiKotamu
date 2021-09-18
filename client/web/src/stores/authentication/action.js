@@ -22,7 +22,7 @@ export function logining(payload) {
     })
       .then((response) => {
         dispatch(setLogStatus(true));
-        dispatch(setToken(response.data.access_token));
+        dispatch(setToken(response.data.accessToken));
       })
       .catch((err) => {
         console.log(err);
