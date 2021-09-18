@@ -7,7 +7,7 @@ function Detail() {
   const history = useHistory();
 
   const handleToDashboard = () => {
-    history.push("/dashboard");
+    history.push("/beranda");
   };
 
   return (

@@ -14,22 +14,22 @@ function App() {
     <>
       <Router>
         <Switch>
-          <Route path="/aspiration">
+          <Route path="/aspirasi">
             <Aspiration />
           </Route>
-          <Route path="/history">
+          <Route path="/riwayat">
             <History />
           </Route>
-          <Route path="/announcement">
+          <Route path="/pengumuman">
             <Announcement />
           </Route>
           <Route path="/detail">
             <Detail />
           </Route>
-          <Route path="/dashboard">
+          <Route path="/beranda">
             <Dashboard />
           </Route>
-          <Route path="/register">
+          <Route path="/daftar">
             <Register />
           </Route>
           <Route path="/">

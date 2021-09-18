@@ -8,18 +8,6 @@ function Navbar() {
     history.push("/");
   };
 
-  const handleAnnouncement = () => {
-    history.push("/announcement");
-  };
-
-  const handleHistory = () => {
-    history.push("/history");
-  };
-
-  const handleAspiration = () => {
-    history.push("/aspiration");
-  };
-
   return (
     <>
       <div
@@ -28,40 +16,19 @@ function Navbar() {
       >
         <div class="px-2 mx-2 navbar-start">
           <span class="text-lg font-bold">
-            <Link to="/dashboard">SayangiKotamu</Link>
+            <Link to="/beranda">SayangiKotamu</Link>
           </span>
         </div>
         <div class="hidden px-2 mx-2 navbar-center lg:flex">
           <div class="flex items-stretch">
             <a class="btn btn-ghost btn-sm rounded-btn">
-              <Link
-                to="/announcement"
-                onClick={() => {
-                  handleAnnouncement();
-                }}
-              >
-                Pengumuman
-              </Link>
+              <Link to="/pengumuman">Pengumuman</Link>
             </a>
             <a class="btn btn-ghost btn-sm rounded-btn">
-              <Link
-                to="/history"
-                onClick={() => {
-                  handleHistory();
-                }}
-              >
-                Riwayat
-              </Link>
+              <Link to="/riwayat">Riwayat</Link>
             </a>
             <a class="btn btn-ghost btn-sm rounded-btn">
-              <Link
-                to="/aspiration"
-                onClick={() => {
-                  handleAspiration();
-                }}
-              >
-                Aspirasi Warga
-              </Link>
+              <Link to="/aspirasi">Aspirasi Warga</Link>
             </a>
           </div>
         </div>

@@ -7,7 +7,7 @@ function Login() {
   const history = useHistory();
 
   const handleToRegister = () => {
-    history.push("/register");
+    history.push("/daftar");
   };
 
   const [email, setEmail] = useState("");
@@ -35,7 +35,7 @@ function Login() {
         progress: undefined,
       });
     } else {
-      history.push("/dashboard");
+      history.push("/beranda");
     }
   };
 

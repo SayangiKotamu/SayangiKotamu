@@ -8,7 +8,7 @@ function Announcement() {
   const history = useHistory();
 
   const handleToDashboard = () => {
-    history.push("/dashboard");
+    history.push("/beranda");
   };
 
   const handleSubmitAnnouncement = (e) => {
@@ -24,20 +24,20 @@ function Announcement() {
         progress: undefined,
       });
     } else {
-      history.push("/dashboard");
+      history.push("/beranda");
     }
   };
 
   const [message, setMessage] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [title, setTitle] = useState("");
 
   const forMessage = (e) => {
     e.preventDefault();
     setMessage(e.target.value);
   };
-  const forDate = (e) => {
+  const forTitle = (e) => {
     e.preventDefault();
-    setDate(e.target.value);
+    setTitle(e.target.value);
   };
 
   return (
@@ -76,6 +76,18 @@ function Announcement() {
           <div class="card" style={{ backgroundColor: "white" }}>
             <div class="m-8">
               <form action="" type="submit" onSubmit={handleSubmitAnnouncement}>
+                <div class="form-control mt-2">
+                  <label class="label">
+                    <span class="label-text">Judul</span>
+                  </label>
+                  <input
+                    placeholder=""
+                    class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                    onChange={forTitle}
+                    value={title}
+                  />
+                </div>
+
                 <div class="form-control mt-2">
                   <label class="label">
                     <span class="label-text">Isi Pengumuman</span>
