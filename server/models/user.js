@@ -77,6 +77,7 @@ userSchema.pre("save", function (next) {
   };
 
   transporter.sendMail(mailOptions, function (err, data) {
+    // ! LATER: DI ERROR HANDLER
     if (err) {
       console.log("Error");
     } else {
