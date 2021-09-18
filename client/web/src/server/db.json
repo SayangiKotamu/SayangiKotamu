@@ -114,6 +114,12 @@
         "id": "D0001",
         "name": "Dinas Kesehatan"
       }
+    },
+    {
+      "title": "Testing",
+      "announcement": "Testing ini aku coba membuat pengumuman",
+      "date": "2021-09-18T17:31:27.292Z",
+      "id": "yzvfuRW"
     }
   ],
   "notifications": [

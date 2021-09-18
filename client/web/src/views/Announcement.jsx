@@ -3,9 +3,24 @@ import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { postAnnouncement } from "../stores/announcements/action";
 
 function Announcement() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [announcement, setAnnouncement] = useState("");
+  const [title, setTitle] = useState("");
+
+  const forAnnouncement = (e) => {
+    e.preventDefault();
+    setAnnouncement(e.target.value);
+  };
+
+  const forTitle = (e) => {
+    e.preventDefault();
+    setTitle(e.target.value);
+  };
 
   const handleToDashboard = () => {
     history.push("/beranda");
@@ -13,8 +28,15 @@ function Announcement() {
 
   const handleSubmitAnnouncement = (e) => {
     e.preventDefault();
-    if (message === "") {
-      toast.error("Anda belum memberikan pengumuman apapun", {
+
+    const payload = {
+      title,
+      announcement,
+      date: new Date(),
+    };
+
+    if (payload.title === "" || payload.announcement === "") {
+      toast.error("Anda belum mengisi data sesuai kebutuhan pengumuman.", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -24,20 +46,17 @@ function Announcement() {
         progress: undefined,
       });
     } else {
-      history.push("/beranda");
+      dispatch(postAnnouncement(payload));
+      toast.success("Pengumuman yang anda buat telah tersampaikan!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
-  };
-
-  const [message, setMessage] = useState("");
-  const [title, setTitle] = useState("");
-
-  const forMessage = (e) => {
-    e.preventDefault();
-    setMessage(e.target.value);
-  };
-  const forTitle = (e) => {
-    e.preventDefault();
-    setTitle(e.target.value);
   };
 
   return (
@@ -96,8 +115,8 @@ function Announcement() {
                     rows="10"
                     placeholder=""
                     class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                    onChange={forMessage}
-                    value={message}
+                    onChange={forAnnouncement}
+                    value={announcement}
                   />
                 </div>
 

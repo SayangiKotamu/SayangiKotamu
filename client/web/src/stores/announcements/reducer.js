@@ -1,7 +1,7 @@
-import { SET_CATEGORIES, SET_LOADING, SET_ERROR } from "./actionType";
+import { ADD_ANNOUNCEMENT, SET_LOADING, SET_ERROR } from "./actionType";
 
 const initialState = {
-  categories: [],
+  announcements: [],
   loading: true,
   errors: null,
 };
@@ -9,8 +9,8 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case SET_CATEGORIES:
-      return { ...state, categories: payload };
+    case ADD_ANNOUNCEMENT:
+      return { ...state, announcements: [...state, payload] };
     case SET_LOADING:
       return { ...state, loading: payload };
     case SET_ERROR:
