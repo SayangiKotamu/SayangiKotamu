@@ -133,9 +133,76 @@ class ReportController {
 
   // ! DINAS REPORT
   static async dinasGetAllReports(req, res, next) {
+    const { id, email, role } = req.user;
+    const { status, category } = req.query;
     try {
-      res.send("will auth");
-    } catch (err) {}
+      if (status) {
+        const allReports = await Report.find({ dinas: id, status });
+        res.status(200).json(allReports);
+      } else if (category) {
+        const allReports = await Report.find({ dinas: id, category });
+        res.status(200).json(allReports);
+      } else {
+        const allReports = await Report.find({ dinas: id });
+        res.status(200).json(allReports);
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async dinasGetByIdReport(req, res, next) {
+    const { id } = req.params;
+    try {
+      const foundReport = await Report.findOne({ _id: id });
+      if (foundReport) {
+        res.status(200).json(foundReport);
+      } else {
+        throw { name: "ReportNotFound" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async changeStatus(req, res, next) {
+    const { id } = req.params;
+    let finishedDate = null;
+    if (req.body.status === "selesai") {
+      finishedDate = new Date();
+    }
+    const payload = {
+      status: req.body.status,
+      finishedDate,
+    };
+    try {
+      const foundReport = await Report.findOne({ _id: id });
+      if (foundReport) {
+        await Report.updateOne({ _id: id }, payload);
+        const updatedReport = await Report.findOne({ _id: id });
+
+        res.status(200).json(updatedReport);
+      } else {
+        throw { name: "ReportNotFound" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async deleteReport(req, res, next) {
+    const { id } = req.params;
+    try {
+      const foundReport = await Report.findOneAndDelete({ _id: id });
+      if (foundReport) {
+        res.status(200).json(foundReport);
+      } else {
+        throw { name: "ReportNotFound" };
+      }
+    } catch (err) {
+      next(err);
+      console.log(err);
+    }
   }
 }
 

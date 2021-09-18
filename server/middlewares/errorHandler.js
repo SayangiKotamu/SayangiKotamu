@@ -13,6 +13,14 @@ function errorHandler(err, req, res, next) {
     case "NoAccessToken":
       res.status(401).json({ message: "You do not have aceess token" });
       break;
+    case "ReportNotFound":
+      res.status(404).json({ message: "Report not found" });
+      break;
+    case "AnnouncmentNotFound":
+      res.status(404).json({ message: "Announcment not found" });
+      break;
+    // ! HANDI ANGGA COBA INI BUAT APA
+    // case "Invalid Login":
     case "NIKInCollection":
       res.status(400).json({ message: "NIK is already registered" });
       break;

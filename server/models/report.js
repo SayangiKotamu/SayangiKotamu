@@ -52,6 +52,16 @@ const reportSchema = new mongoose.Schema({
   },
 });
 
+// ! LATER: UBAH ADD REPORT
+// reportSchema.pre("updateOne", async function (next) {
+//   const report = this;
+
+//   if (report.status === "selesai") {
+//     report.finishedDate = new Date();
+//   }
+//   next();
+// });
+
 const Report = mongoose.model("Report", reportSchema);
 
 module.exports = Report;
