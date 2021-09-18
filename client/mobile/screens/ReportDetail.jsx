@@ -10,6 +10,8 @@ import {
 } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
+import { TouchableOpacity } from 'react-native-gesture-handler'
+
 import MapView, { Marker } from 'react-native-maps'
 
 import { useIsFocused } from '@react-navigation/native'
@@ -18,6 +20,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchReportById } from '../store/reports/action'
 
 import SkeletonContent from 'react-native-skeleton-content'
+
+import Toast from 'react-native-toast-message'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -28,6 +32,26 @@ export default function ReportDetail({ route }) {
     const dispatch = useDispatch()
 
     const { detailReport, loadingDetailReport } = useSelector((state) => state.reports)
+
+    function upVoteReport() {
+        Toast.show({
+            type: 'success',
+            position: 'bottom',
+            bottomOffset: 70,
+            text1: 'SayangiKotamu',
+            text2: 'Berhasil mendukung laporan ini',
+        })
+    }
+
+    function downVoteReport() {
+        Toast.show({
+            type: 'success',
+            position: 'bottom',
+            bottomOffset: 70,
+            text1: 'SayangiKotamu',
+            text2: 'Berhasil melaporkan laporan ini',
+        })
+    }
 
     useEffect(() => {
         if (isFocused) {
@@ -83,17 +107,21 @@ export default function ReportDetail({ route }) {
                             </Text>
                             <Text style={styles.description}>{detailReport?.description}</Text>
                             <View style={styles.respondContainer}>
-                                <Ionicons
-                                    name={'ios-thumbs-up-outline'}
-                                    size={25}
-                                    color={'#1A73E9'}
-                                />
-                                <Ionicons
-                                    name={'ios-thumbs-down-outline'}
-                                    size={25}
-                                    color={'#1A73E9'}
-                                    style={styles.logo}
-                                />
+                                <TouchableOpacity onPress={upVoteReport}>
+                                    <Ionicons
+                                        name={'ios-thumbs-up-outline'}
+                                        size={25}
+                                        color={'#1A73E9'}
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={downVoteReport}>
+                                    <Ionicons
+                                        name={'ios-thumbs-down-outline'}
+                                        size={25}
+                                        color={'#1A73E9'}
+                                        style={styles.logo}
+                                    />
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
@@ -123,22 +151,22 @@ export default function ReportDetail({ route }) {
                                         <View style={styles.respondContainer}>
                                             <Ionicons
                                                 name={'ios-thumbs-up-outline'}
-                                                size={15}
+                                                size={14}
                                                 color={'#1A73E9'}
                                             />
-                                            <Text style={styles.detailDescContent}>
-                                                {detailReport?.upVote} orang
+                                            <Text style={styles.detailDescContentVote}>
+                                                {detailReport?.upVote}
                                             </Text>
-                                        </View>
-                                        <View style={styles.respondContainer}>
-                                            <Ionicons
-                                                name={'ios-thumbs-down-outline'}
-                                                size={15}
-                                                color={'#1A73E9'}
-                                            />
-                                            <Text style={styles.detailDescContent}>
-                                                {detailReport?.downVote} orang
-                                            </Text>
+                                            <View style={styles.separator}>
+                                                <Ionicons
+                                                    name={'ios-thumbs-down-outline'}
+                                                    size={14}
+                                                    color={'#1A73E9'}
+                                                />
+                                                <Text style={styles.detailDescContentVote}>
+                                                    {detailReport?.downVote}
+                                                </Text>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
@@ -229,6 +257,10 @@ const styles = StyleSheet.create({
     detailDescContent: {
         fontSize: 13,
     },
+    detailDescContentVote: {
+        fontSize: 13,
+        marginLeft: 4,
+    },
     detailDescription: {
         marginTop: 10,
     },
@@ -256,5 +288,9 @@ const styles = StyleSheet.create({
     map: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').width,
+    },
+    separator: {
+        marginLeft: 8,
+        flexDirection: 'row',
     },
 })

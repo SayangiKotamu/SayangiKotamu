@@ -92,17 +92,17 @@ export default function Home({ navigation }) {
                             layout={[
                                 {
                                     width: windowWidth,
-                                    height: 100,
+                                    height: 120,
                                     marginTop: 10,
                                 },
                                 {
                                     width: windowWidth,
-                                    height: 100,
+                                    height: 120,
                                     marginTop: 10,
                                 },
                                 {
                                     width: windowWidth,
-                                    height: 100,
+                                    height: 120,
                                     marginTop: 10,
                                 },
                             ]}
