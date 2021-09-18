@@ -7,7 +7,7 @@ class ReportController {
       let data = await Report.findAll();
       res.status(200).json(data);
     } catch (error) {
-      res.status(400).json(error);
+      next(error)
     }
   }
 
@@ -45,10 +45,11 @@ class ReportController {
       let data = await Report.create(newReport);
       res.status(201).json({ ...newReport, _id: data.insertedId });
     } catch (error) {
-      res.status(400).json(error);
+      next(error)
     }
   }
-  static async editReport(req, res, next) {}
+  static async patchVoteByIdReport(req, res, next) {}
+  static async patchStatusReport(req, res, next) {}
   static async deleteReport(req, res, next) {}
 
   // ! DINAS REPORT
