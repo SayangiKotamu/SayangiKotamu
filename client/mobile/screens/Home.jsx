@@ -1,9 +1,47 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, Button } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, View, Image, ScrollView, Button, Dimensions } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import Toast from 'react-native-toast-message'
+
+import { setIsLoggedIn, setAccessToken } from '../store/auth/action'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllReports } from '../store/reports/action'
+
+import ReportCard from '../components/ReportCard'
+
+import { useIsFocused } from '@react-navigation/native'
+
+import SkeletonContent from 'react-native-skeleton-content'
+
+const windowWidth = Dimensions.get('window').width
+
 export default function Home({ navigation }) {
+    const dispatch = useDispatch()
+    const isFocused = useIsFocused()
+
+    const { reports, loadingReports } = useSelector((state) => state.reports)
+
+    useEffect(() => {
+        if (isFocused) {
+            dispatch(fetchAllReports())
+        }
+    }, [isFocused])
+
+    function onLogoutClick() {
+        dispatch(setIsLoggedIn(false))
+        dispatch(setAccessToken(''))
+
+        Toast.show({
+            type: 'success',
+            position: 'bottom',
+            bottomOffset: 70,
+            text1: 'SayangiKotamu',
+            text2: 'Berhasil logout dari SayangiKotamu',
+        })
+    }
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -42,160 +80,41 @@ export default function Home({ navigation }) {
 
                 <View style={styles.newsContainer}>
                     <View style={styles.buttonContainer}>
-                        <Button title="Logout" color="#05DAA7" />
+                        <Button title="Logout" color="#05DAA7" onPress={onLogoutClick} />
                     </View>
 
                     <Text style={styles.heading}>Apa kabar kota hari ini?</Text>
 
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    {loadingReports ? (
+                        <SkeletonContent
+                            containerStyle={{ flex: 1, width: windowWidth, marginTop: 5 }}
+                            animationDirection="horizontalLeft"
+                            layout={[
+                                {
+                                    width: windowWidth,
+                                    height: 120,
+                                    marginTop: 10,
+                                },
+                                {
+                                    width: windowWidth,
+                                    height: 120,
+                                    marginTop: 10,
+                                },
+                                {
+                                    width: windowWidth,
+                                    height: 120,
+                                    marginTop: 10,
+                                },
+                            ]}
+                            isLoading={loadingReports}
+                        />
+                    ) : (
+                        <>
+                            {reports.map((report, idx) => {
+                                return <ReportCard report={report} key={'report' + idx} />
+                            })}
+                        </>
+                    )}
                 </View>
             </View>
         </ScrollView>
@@ -208,6 +127,10 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         color: '#1A73E9',
         fontWeight: 'bold',
+    },
+    loading: {
+        marginTop: '40%',
+        marginBottom: '40%',
     },
     buttonContainer: {
         marginTop: 50,
@@ -222,52 +145,12 @@ const styles = StyleSheet.create({
         color: '#1A73E9',
         fontWeight: 'bold',
     },
-    textId: {
-        fontSize: 8,
-        marginBottom: 8,
-    },
-    textTitle: {
-        fontSize: 15,
-        fontWeight: 'bold',
-    },
-    textDescription: {
-        fontSize: 12,
-    },
-    textCategory: {
-        marginTop: 5,
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    textDate: {
-        fontSize: 10,
-        marginTop: 3,
-    },
-    reportImage: {
-        width: 130,
-        height: 130,
-    },
     logoImage: {
         width: 250,
         height: 250,
     },
     brandingContainer: {
         flexDirection: 'row',
-    },
-    reportCardContainer: {
-        backgroundColor: 'white',
-        borderColor: 'grey',
-        marginTop: 10,
-        borderWidth: 1,
-        borderRadius: 5,
-        width: '100%',
-        flexDirection: 'row',
-    },
-    reportCardContent: {
-        marginLeft: 10,
-        padding: 3,
-        width: '100%',
-        flexGrow: 1,
-        flex: 1,
     },
     container: {
         flex: 1,
