@@ -21,7 +21,7 @@ export function fetchAllDinas() {
         try {
             dispatch(setLoadingDinas(true))
 
-            let response = await fetch('https://d505-110-138-92-119.ngrok.io/dinas')
+            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/dinas')
 
             if (response.ok) {
                 response = await response.json()

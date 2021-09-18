@@ -48,7 +48,7 @@ export function fetchAllReports(payload) {
         try {
             dispatch(setLoadingReports(true))
 
-            let response = await fetch('https://d505-110-138-92-119.ngrok.io/reports')
+            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/reports')
 
             if (response.ok) {
                 response = await response.json()
@@ -76,7 +76,7 @@ export function fetchReportById(id) {
         try {
             dispatch(setLoadingDetailReport(true))
 
-            let response = await fetch(`https://d505-110-138-92-119.ngrok.io/reports/${id}`)
+            let response = await fetch(`https://e9ce-110-138-83-131.ngrok.io/reports/${id}`)
 
             if (response.ok) {
                 response = await response.json()
@@ -108,7 +108,7 @@ export function addReport(payload) {
         try {
             dispatch(setLoadingSendReport(true))
 
-            let response = await fetch('https://d505-110-138-92-119.ngrok.io/reports', {
+            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/reports', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

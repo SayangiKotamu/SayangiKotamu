@@ -1,11 +1,65 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
-export default function Aspiration() {
-    const [aspirationType, setAspirationType] = useState('')
-    const [selectedOrganization, setSelectedOrganization] = useState('')
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllDinas } from '../store/dinas/action'
+import { sendAspiration } from '../store/aspiration/action'
+
+import Toast from 'react-native-toast-message'
+
+export default function Aspiration({ navigation }) {
+    const dispatch = useDispatch()
+
+    const { dinas, loadingDinas } = useSelector((state) => state.dinas)
+    const { loadingSendAspiration } = useSelector((state) => state.aspiration)
+
+    const [type, setType] = useState('Kritik')
+    const [selectedDinas, setSelectedDinas] = useState('')
+    const [description, setDescription] = useState('')
+
+    useEffect(() => {
+        dispatch(fetchAllDinas())
+    }, [])
+
+    function resetAllForm() {
+        setType('Kritik')
+        setSelectedDinas('')
+        setDescription('')
+    }
+
+    function onSubmitClick() {
+        if (!type || !selectedDinas || !description.trim()) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Mohon input form aspirasi dengan lengkap!',
+            })
+        } else {
+            //! Sementara payload ini dulu, beberapa di hardcode di action. Nanti nyesuaiin kalo server udah jadi.
+            const payload = {
+                type,
+                description,
+            }
+
+            dispatch(sendAspiration(payload)).then(() => {
+                resetAllForm()
+
+                navigation.navigate('Beranda')
+
+                Toast.show({
+                    type: 'success',
+                    position: 'bottom',
+                    bottomOffset: 70,
+                    text1: 'SayangiKotamu',
+                    text2: 'Aspirasi Anda berhasil kami terima, terimakasih atas aspirasinya!',
+                })
+            })
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -19,33 +73,49 @@ export default function Aspiration() {
                 <Text style={styles.label}>Jenis Aspirasi:</Text>
                 <View style={styles.pickerContainer}>
                     <Picker
-                        selectedValue={aspirationType}
-                        onValueChange={(itemValue, itemIndex) => setAspirationType(itemValue)}
+                        selectedValue={type}
+                        onValueChange={(itemValue, itemIndex) => setType(itemValue)}
                         style={styles.picker}
                     >
-                        <Picker.Item label="Kritik" value="kritik" />
-                        <Picker.Item label="Saran" value="saran" />
+                        <Picker.Item label="Kritik" value="Kritik" />
+                        <Picker.Item label="Saran" value="Saran" />
                     </Picker>
                 </View>
                 <Text style={styles.label}>Pilih instansi terkait:</Text>
-                <View style={styles.pickerContainer}>
-                    <Picker
-                        selectedValue={selectedOrganization}
-                        onValueChange={(itemValue, itemIndex) => setSelectedOrganization(itemValue)}
-                    >
-                        <Picker.Item label="Dinas A" value="Dinas A" />
-                        <Picker.Item label="Dinas B" value="Dinas B" />
-                    </Picker>
-                </View>
+                {loadingDinas ? (
+                    <ActivityIndicator size="large" color="#1A73E9" />
+                ) : (
+                    <View style={styles.pickerContainer}>
+                        <Picker
+                            selectedValue={selectedDinas}
+                            onValueChange={(itemValue, itemIndex) => setSelectedDinas(itemValue)}
+                        >
+                            <Picker.Item label={'Pilih dinas'} value={''} />
+                            {dinas.map((eachDinas, idx) => {
+                                return (
+                                    <Picker.Item
+                                        label={eachDinas.name}
+                                        value={eachDinas.id}
+                                        key={'dinas' + idx}
+                                    />
+                                )
+                            })}
+                        </Picker>
+                    </View>
+                )}
                 <Text style={styles.label}>Ceritakan aspirasi mu disini:</Text>
                 <TextInput
                     style={styles.inputTextArea}
                     placeholder="sampaikan aspirasimu disini..."
-                    // value={name}
-                    // onChangeText={(text) => setName(text)}
+                    value={description}
+                    onChangeText={(text) => setDescription(text)}
                 />
                 <View style={styles.buttonContainer}>
-                    <Button title="Kirim" color="#1A73E9" />
+                    {loadingSendAspiration ? (
+                        <ActivityIndicator size="large" color="#1A73E9" />
+                    ) : (
+                        <Button title="Kirim" color="#1A73E9" onPress={onSubmitClick} />
+                    )}
                 </View>
             </View>
         </View>

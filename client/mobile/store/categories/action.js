@@ -21,7 +21,7 @@ export function fetchAllCategory() {
         try {
             dispatch(setLoadingCategories(true))
 
-            let response = await fetch('https://d505-110-138-92-119.ngrok.io/categories')
+            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/categories')
 
             if (response.ok) {
                 response = await response.json()
