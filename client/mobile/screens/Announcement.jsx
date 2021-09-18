@@ -1,182 +1,72 @@
-import React from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, ScrollView, Dimensions, RefreshControl } from 'react-native'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllAnnouncement } from '../store/announcements/action'
+
+import SkeletonContent from 'react-native-skeleton-content'
+
+import AnnouncementCard from '../components/AnnouncementCard'
+
+const windowWidth = Dimensions.get('window').width
 
 export default function Announcement({ navigation }) {
+    const dispatch = useDispatch()
+
+    const { announcements, loadingAnnouncements } = useSelector((state) => state.announcements)
+
+    const [isRefreshing, setIsRefreshing] = useState(false)
+
+    function onRefresh() {
+        setIsRefreshing(true)
+        dispatch(fetchAllAnnouncement())
+        setIsRefreshing(false)
+    }
+
+    useEffect(() => {
+        dispatch(fetchAllAnnouncement())
+    }, [])
+
     return (
-        <ScrollView>
+        <ScrollView
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+        >
             <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.announcementCardContainer}
-                    onPress={() => navigation.navigate('Detail Pengumuman')}
-                >
-                    <View style={styles.notificationLogo}>
-                        <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textInstances}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 16 September 2021
-                        </Text>
-                        <Text style={styles.textDescription}>
-                            Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+                {loadingAnnouncements ? (
+                    <SkeletonContent
+                        containerStyle={{ flex: 1, width: windowWidth, marginTop: 5 }}
+                        animationDirection="horizontalLeft"
+                        layout={[
+                            {
+                                width: windowWidth,
+                                height: 100,
+                                marginTop: 10,
+                            },
+                            {
+                                width: windowWidth,
+                                height: 100,
+                                marginTop: 10,
+                            },
+                            {
+                                width: windowWidth,
+                                height: 100,
+                                marginTop: 10,
+                            },
+                        ]}
+                        isLoading={loadingAnnouncements}
+                    />
+                ) : (
+                    <>
+                        {announcements.map((announcement, idx) => {
+                            return (
+                                <AnnouncementCard
+                                    announcement={announcement}
+                                    key={'announcement' + idx}
+                                />
+                            )
+                        })}
+                    </>
+                )}
             </View>
         </ScrollView>
     )
@@ -187,45 +77,5 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
-    },
-    announcementCardContainer: {
-        backgroundColor: 'white',
-        borderColor: 'grey',
-        marginTop: 8,
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingBottom: 5,
-        width: '100%',
-        flexDirection: 'row',
-    },
-    announcementCardContent: {
-        marginLeft: 10,
-        padding: 3,
-        width: '100%',
-        flexGrow: 1,
-        flex: 1,
-    },
-    textTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    textDescription: {
-        fontSize: 12,
-        marginTop: 10,
-        color: 'black',
-    },
-    textDate: {
-        fontSize: 11,
-        marginTop: 1,
-        color: 'grey',
-    },
-    textInstances: {
-        fontSize: 13,
-    },
-    heading: {
-        fontSize: 18,
-        marginTop: '1%',
-        color: '#1A73E9',
-        fontWeight: 'bold',
     },
 })

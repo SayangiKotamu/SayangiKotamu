@@ -97,15 +97,22 @@
     "announcements": [
         {
             "id": "AN0001",
+            "title": "Pengalihan jalan",
             "announcement": "Diumumkan untuk warga yang tinggal di sekitar daerah Lorem Ipsum, bahwapada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selainitu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteursint occaecat cupidatat non proident, sunt in culpa qui officia deseruntmollit anim id est laborum. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt ut labore et doloremagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolorin reprehenderit in voluptate velit esse cillum dolore eu fugiat null pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
             "date": "2021-09-18T04:45:22.074Z",
             "dinas": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
+                "id": "D0002",
+                "name": "Dinas Perhubungan"
+            }
+        },
+        {
+            "id": "AN0002",
+            "title": "Data kasus tes covid hari ini",
+            "announcement": "Berikut adalah hasil tes covid di sekitar daerah Lorem Ipsum, bahwapada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selainitu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteursint occaecat cupidatat non proident, sunt in culpa qui officia deseruntmollit anim id est laborum. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt ut labore et doloremagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolorin reprehenderit in voluptate velit esse cillum dolore eu fugiat null pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
+            "date": "2021-09-18T04:45:22.074Z",
+            "dinas": {
+                "id": "D0001",
+                "name": "Dinas Kesehatan"
             }
         }
     ],

@@ -40,7 +40,7 @@ export function fetchAllReports(payload) {
         try {
             dispatch(setLoadingReports(true))
 
-            let response = await fetch('https://f573-110-138-92-119.ngrok.io/reports')
+            let response = await fetch('https://80f1-110-138-92-119.ngrok.io/reports')
 
             if (response.ok) {
                 response = await response.json()
@@ -68,7 +68,7 @@ export function fetchReportById(id) {
         try {
             dispatch(setLoadingDetailReport(true))
 
-            let response = await fetch(`https://f573-110-138-92-119.ngrok.io/reports/${id}`)
+            let response = await fetch(`https://80f1-110-138-92-119.ngrok.io/reports/${id}`)
 
             if (response.ok) {
                 response = await response.json()

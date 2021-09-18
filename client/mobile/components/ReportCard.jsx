@@ -4,19 +4,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { useNavigation } from '@react-navigation/native'
 
+import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
+
 export default function ReportCard(props) {
     const navigation = useNavigation()
-
-    function formatDescription(description) {
-        const charLimit = 130
-
-        if (description.length > charLimit) {
-            return `${description.split('').splice(0, charLimit).join('')}...`
-        } else {
-            return description
-        }
-    }
-
     return (
         <TouchableOpacity
             style={styles.reportCardContainer}
@@ -34,7 +25,7 @@ export default function ReportCard(props) {
                 <Text style={styles.textId}>{props.report.id}</Text>
                 <Text style={styles.textTitle}>{props.report.title}</Text>
                 <Text style={styles.textDescription}>
-                    {formatDescription(props.report.description)}
+                    {formatCharactersByLimit(props.report.description)}
                 </Text>
                 <Text style={styles.textCategory}>{props.report.category}</Text>
                 <Text style={styles.textDate}>
