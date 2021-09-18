@@ -45,7 +45,6 @@ export function fetchReportById(id) {
     axios
       .get(`http://localhost:3001/reports/${id}`)
       .then((response) => {
-        console.log(response);
         dispatch(setDetailReport(response.data));
       })
       .catch((err) => {
