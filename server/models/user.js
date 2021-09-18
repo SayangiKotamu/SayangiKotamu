@@ -4,6 +4,7 @@ const { ObjectId } = require("bson");
 const mongoose = require("mongoose");
 const validator = require("validator");
 const { hashPassword } = require("../helpers/bcrypt");
+const { jwtSignEmailActivate } = require("../helpers/jwt");
 
 const userSchema = new mongoose.Schema({
   fullname: {
@@ -52,11 +53,11 @@ userSchema.pre("save", function (next) {
   user.password = hashPassword(user.password);
 
   // ! EMAIL TOKEN
-  const emailToken = jwt.sign(
-    { NIK: user.NIK, email: user.email, password: user.password },
-    process.env.JWT_EMAIL_ACTIVATE,
-    { expiresIn: "30m" }
-  );
+  const emailToken = jwtSignEmailActivate({
+    NIK: user.NIK,
+    email: user.email,
+    password: user.password,
+  });
 
   user.activateEmailToken = emailToken;
 
@@ -72,7 +73,7 @@ userSchema.pre("save", function (next) {
     from: "noreply@gmail.com",
     to: `${user.email}`,
     subject: "Verification Email",
-    html: `<h1>Verification Email </h1> \n <p>Here is your token <a>${emailToken}</a></p>`,
+    html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}${emailToken}'>click here</a> to activate your email</p>`,
   };
 
   transporter.sendMail(mailOptions, function (err, data) {
