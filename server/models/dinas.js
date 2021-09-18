@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const { ObjectId } = require("bson");
 const { hashSync } = require("bcryptjs");
 
 const dinasSchema = new mongoose.Schema({
@@ -39,6 +38,18 @@ const dinasSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Report",
+    },
+  ],
+  aspirations: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Aspiration",
+    },
+  ],
+  announcments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Announcment",
     },
   ],
 });

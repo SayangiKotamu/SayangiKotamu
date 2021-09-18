@@ -45,6 +45,12 @@ const userSchema = new mongoose.Schema({
       ref: "Report",
     },
   ],
+  aspirations: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Aspiration",
+    },
+  ],
 });
 
 userSchema.pre("save", function (next) {
