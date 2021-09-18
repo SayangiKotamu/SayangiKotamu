@@ -1,6 +1,6 @@
 const User = require("../models/user");
 // const {comparePassword} = require('../helpers/bcrypt')
-const { jwtSign } = require("../helpers/jwt");
+const { jwtSign, jwtVerifyEmailActivate } = require("../helpers/jwt");
 const { comparePassword } = require("../helpers/bcrypt");
 const { OAuth2Client } = require("google-auth-library");
 
@@ -110,6 +110,37 @@ class UserController {
       .catch((err) => {
         next(err);
       });
+  }
+
+  static async activateEmail(req, res, next) {
+    const { token } = req.params;
+    try {
+      const verifiedToken = await jwtVerifyEmailActivate(token);
+      if (verifiedToken) {
+        const verifiedEmail = await User.findOne({
+          email: verifiedToken.email,
+        });
+        if (verifiedEmail) {
+          if (!verifiedEmail.isActive) {
+            const updateActive = await User.updateOne(
+              { email: verifiedEmail.email },
+              { isActive: true }
+            );
+            res.status(200).json({ message: "Your email has been activated" });
+            console.log(updateActive);
+          } else {
+            throw { name: "IsActiveTrue" };
+          }
+        } else {
+          throw { name: "EmailTokenInvalid" };
+        }
+      } else {
+        throw { name: "EmailTokenInvalid" };
+      }
+    } catch (err) {
+      next(err);
+      console.log(err);
+    }
   }
 }
 module.exports = UserController;

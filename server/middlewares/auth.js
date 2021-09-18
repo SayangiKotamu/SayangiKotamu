@@ -1,7 +1,7 @@
 const { jwtVerify } = require("../helpers/jwt");
 const Dinas = require("../models/dinas");
 
-async function auth(req, res, next) {
+async function dinasAuth(req, res, next) {
   const { access_token: accessToken } = req.headers;
 
   try {
@@ -31,4 +31,4 @@ async function auth(req, res, next) {
   }
 }
 
-module.exports = { auth };
+module.exports = { dinasAuth };
