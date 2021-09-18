@@ -1,115 +1,123 @@
 {
-    "reports": [
-        {
-            "id": "R0001",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "status": "Diterima",
-            "description": "Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet. Sudah sering kali setiap saya pulang kantor macet disini, mohon untuk segera ditangani secepatnya.",
-            "issued_date": "2021-09-18T04:45:22.074Z",
-            "finished_date": null,
-            "location": "Samping Supermarket A, JL. XYZ",
-            "long": {
-                "$numberDecimal": "106.81447449443793"
-            },
-            "lat": {
-                "$numberDecimal": "-6.219555543570665"
-            },
-            "category": "Masalah Lalu Lintas",
-            "upVote": 51,
-            "downVote": 5,
-            "picture": "https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650"
-        }
-    ],
-    "announcements": [
-        {
-            "id": "AN0001",
-            "announcement": "Diumumkan untuk warga yang tinggal di sekitar daerah Lorem Ipsum, bahwapada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selainitu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteursint occaecat cupidatat non proident, sunt in culpa qui officia deseruntmollit anim id est laborum. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt ut labore et doloremagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolorin reprehenderit in voluptate velit esse cillum dolore eu fugiat null pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
-            "date": "2021-09-18T04:45:22.074Z",
-            "dinas": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            }
-        }
-    ],
-    "notifications": [
-        {
-            "id": "N0001",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "date": "2021-09-18T04:45:22.074Z",
-            "notification": "Laporan kamu dengan nama Terjadi kemacetan di Jl. ABC sudah selesai ditangani oleh Dinas Perhubungan."
-        }
-    ],
-    "aspiration": [
-        {
-            "id": "AS0001",
-            "user": {
-                "email": "jokowi@mail.com",
-                "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-                "NIK": "314012401204901",
-                "full_name": "Joko Widodo",
-                "kota": "Jakarta",
-                "id": 1
-            },
-            "dinas": {
-                "id": "D0001",
-                "name": "Dinas Perhubungan"
-            },
-            "type": "Kritik",
-            "description": "Mohon agar Dinas Perhubungan lebih cepat tanggap dalam merespon kemacetan di Ibukota"
-        }
-    ],
-    "dinas": [
-        {
-            "id": "D0001",
-            "name": "Dinas Kesehatan"
-        },
-        {
-            "id": "D0002",
-            "name": "Dinas Perhubungan"
-        },
-        {
-            "id": "D0002",
-            "name": "Dinas Kebersihan"
-        }
-    ],
-    "users": [
-        {
-            "email": "jokowi@mail.com",
-            "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
-            "NIK": "314012401204901",
-            "full_name": "Joko Widodo",
-            "kota": "Jakarta",
-            "id": 1
-        },
-        {
-            "email": "ridwankamil@mail.com",
-            "password": "$2a$10$uplciVRs9N5MgBW9.3fqEO9hnPoertC0cxI1suaFitzxWVv8dtsF.",
-            "NIK": "378012401212901",
-            "full_name": "Ridwan Kamil",
-            "kota": "Bandung",
-            "id": 2
-        }
-    ]
+  "reports": [
+    {
+      "id": "R0001",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "description": "Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet. Sudah sering kali setiap saya pulang kantor macet disini, mohon untuk segera ditangani secepatnya.",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "location": "Samping Supermarket A, JL. XYZ",
+      "long": {
+        "$numberDecimal": "106.81447449443793"
+      },
+      "lat": {
+        "$numberDecimal": "-6.219555543570665"
+      },
+      "category": "Masalah Lalu Lintas",
+      "upVote": 51,
+      "downVote": 5,
+      "picture": "https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650"
+    }
+  ],
+  "announcements": [
+    {
+      "id": "AN0001",
+      "announcement": "Diumumkan untuk warga yang tinggal di sekitar daerah Lorem Ipsum, bahwapada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selainitu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit involuptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteursint occaecat cupidatat non proident, sunt in culpa qui officia deseruntmollit anim id est laborum. Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod tempor incididunt ut labore et doloremagna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolorin reprehenderit in voluptate velit esse cillum dolore eu fugiat null pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
+      "date": "2021-09-18T04:45:22.074Z",
+      "dinas": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      }
+    }
+  ],
+  "notifications": [
+    {
+      "id": "N0001",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "date": "2021-09-18T04:45:22.074Z",
+      "notification": "Laporan kamu dengan nama Terjadi kemacetan di Jl. ABC sudah selesai ditangani oleh Dinas Perhubungan."
+    }
+  ],
+  "aspiration": [
+    {
+      "id": "AS0001",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "type": "Kritik",
+      "description": "Mohon agar Dinas Perhubungan lebih cepat tanggap dalam merespon kemacetan di Ibukota"
+    }
+  ],
+  "dinas": [
+    {
+      "id": "D0001",
+      "name": "Dinas Kesehatan"
+    },
+    {
+      "id": "D0002",
+      "name": "Dinas Perhubungan"
+    },
+    {
+      "id": "D0002",
+      "name": "Dinas Kebersihan"
+    }
+  ],
+  "users": [
+    {
+      "email": "jokowi@mail.com",
+      "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+      "NIK": "314012401204901",
+      "full_name": "Joko Widodo",
+      "kota": "Jakarta",
+      "id": 1
+    },
+    {
+      "email": "ridwankamil@mail.com",
+      "password": "$2a$10$uplciVRs9N5MgBW9.3fqEO9hnPoertC0cxI1suaFitzxWVv8dtsF.",
+      "NIK": "378012401212901",
+      "full_name": "Ridwan Kamil",
+      "kota": "Bandung",
+      "id": 2
+    },
+    {
+      "email": "dody.virgiawan@email.com",
+      "password": "$2a$10$KOp2/uCfp.Lg3PBwg9UIru9AtJwKmvGmhPFUYUXjNcu95NqXV12bm",
+      "NIK": "320312030121",
+      "kota": "Jakarta",
+      "full_name": "Dody Virgiawan",
+      "id": 3
+    }
+  ]
 }

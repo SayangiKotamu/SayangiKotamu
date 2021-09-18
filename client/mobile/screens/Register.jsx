@@ -1,7 +1,36 @@
-import React from 'react'
-import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, TextInput, Button, Image, ActivityIndicator } from 'react-native'
 
-export default function Register() {
+import Toast from 'react-native-toast-message'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { doRegister } from '../store/auth/action'
+
+export default function Register({ navigation }) {
+    const dispatch = useDispatch()
+    const { loadingRegister } = useSelector((state) => state.auth)
+
+    const [email, setEmail] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [password, setPassword] = useState('')
+
+    function onRegisterClick() {
+        if (!email.trim() || !firstName.trim() || !lastName.trim() || !password.trim()) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Mohon input e-mail dan password!',
+            })
+        } else {
+            dispatch(doRegister({ email, firstName, lastName, password })).then(() =>
+                navigation.navigate('Masuk')
+            )
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.headingContainer}>
@@ -17,26 +46,27 @@ export default function Register() {
                 <TextInput
                     style={styles.input}
                     placeholder="E-mail"
-                    // value={name}
-                    // onChangeText={(text) => setName(text)}
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
                 />
                 <TextInput
                     style={styles.input}
                     placeholder="Nama depan"
-                    // value={name}
-                    // onChangeText={(text) => setName(text)}
+                    value={firstName}
+                    onChangeText={(text) => setFirstName(text)}
                 />
                 <TextInput
                     style={styles.input}
                     placeholder="Nama belakang"
-                    // value={name}
-                    // onChangeText={(text) => setName(text)}
+                    value={lastName}
+                    onChangeText={(text) => setLastName(text)}
                 />
                 <TextInput
                     style={styles.input}
                     placeholder="Kata sandi"
-                    // value={name}
-                    // onChangeText={(text) => setName(text)}
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={(text) => setPassword(text)}
                 />
             </View>
 
@@ -44,7 +74,11 @@ export default function Register() {
                 <Button title="Unggah KTP" color="#05DAA7" />
             </View>
             <View style={styles.buttonContainer}>
-                <Button title="Daftar" color="#1A73E9" />
+                {loadingRegister ? (
+                    <ActivityIndicator size="large" color="#1A73E9" />
+                ) : (
+                    <Button title="Daftar" color="#1A73E9" onPress={onRegisterClick} />
+                )}
             </View>
         </View>
     )

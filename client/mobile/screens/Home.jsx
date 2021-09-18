@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image, ScrollView, Button } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import Toast from 'react-native-toast-message'
+
 import { setIsLoggedIn, setAccessToken } from '../store/auth/action'
 import { useDispatch } from 'react-redux'
 
@@ -12,6 +14,14 @@ export default function Home({ navigation }) {
     function onLogoutClick() {
         dispatch(setIsLoggedIn(false))
         dispatch(setAccessToken(''))
+
+        Toast.show({
+            type: 'success',
+            position: 'bottom',
+            bottomOffset: 70,
+            text1: 'SayangiKotamu',
+            text2: 'Berhasil logout dari SayangiKotamu',
+        })
     }
 
     return (
