@@ -38,7 +38,7 @@ function Navbar() {
           </div>
         </div>
         <div className="navbar-end">
-          <h1>Keluar</h1>
+          <h1 className="text-lg font-bold">Keluar</h1>
           <button
             className="btn btn-square btn-ghost"
             onClick={() => {

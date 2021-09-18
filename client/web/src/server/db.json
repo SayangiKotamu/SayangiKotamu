@@ -159,21 +159,15 @@
   "dinas": [
     {
       "id": "D0001",
-      "name": "Dinas Kesehatan",
-      "email": "dinaskesehatan@mail.com",
-      "password": "test123"
+      "name": "Dinas Kesehatan"
     },
     {
       "id": "D0002",
-      "name": "Dinas Perhubungan",
-      "email": "dinasperhubungan@mail.com",
-      "password": "test123"
+      "name": "Dinas Perhubungan"
     },
     {
       "id": "D0002",
-      "name": "Dinas Kebersihan",
-      "email": "dinaskebersihan@mail.com",
-      "password": "test123"
+      "name": "Dinas Kebersihan"
     }
   ],
   "users": [
