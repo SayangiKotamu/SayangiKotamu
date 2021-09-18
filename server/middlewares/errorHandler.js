@@ -7,6 +7,12 @@ function errorHandler(err, req, res, next) {
     case "WrongEmailPassword":
       res.status(401).json({ message: "Email / Password is wrong" });
       break;
+    case "IdNotVerified":
+      res.status(401).json({ message: "Id is not in the collection" });
+      break;
+    case "NoAccessToken":
+      res.status(401).json({ message: "You do not have aceess token" });
+      break;
     // ! HANDI ANGGA COBA INI BUAT APA
     // case "Invalid Login":
     case "NIKInCollection":

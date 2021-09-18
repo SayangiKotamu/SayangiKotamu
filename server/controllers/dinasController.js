@@ -1,6 +1,6 @@
 const Dinas = require("../models/dinas");
 const { ObjectId } = require("bson");
-const { jwtVerify, jwtSign } = require("../helpers/jwt");
+const { jwtSign } = require("../helpers/jwt");
 const { comparePassword } = require("../helpers/bcrypt");
 
 class DinasController {
@@ -9,10 +9,10 @@ class DinasController {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
+      role: req.body.role || "dinas",
     };
 
     try {
-      // ! LATER: ROLE
       const foundEmail = await Dinas.findOne({ email: payload.email });
       if (foundEmail) {
         throw { name: "EmailInCollection" };
@@ -20,7 +20,6 @@ class DinasController {
         const createDinas = await Dinas.create(payload);
         const foundDinas = await Dinas.findOne({ _id: createDinas._id });
         res.status(201).send(foundDinas);
-        // console.log(foundDinas);
       }
     } catch (err) {
       if (!err.errors) {

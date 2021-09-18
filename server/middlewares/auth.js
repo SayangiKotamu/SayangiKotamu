@@ -1,32 +1,34 @@
-const {User} = require('../models/user')
-const {jwtVerify} = require('../helpers/jwt')
+const { jwtVerify } = require("../helpers/jwt");
+const Dinas = require("../models/dinas");
 
-function authentication(req,res,next){
-    const {access_token} = req.headers
-    if (access_token) {
-        const payload = jwtVerify(access_token)
-        User.findByPk(payload.id)
-        .then((data)=>{
-            if (data) {
-                req.user = {id:data.id,role:data.role,email:data.email}
-                next()
-            } else{
-                next({
-                    name : "invalid JWT",
-                    message:"invalid JWT" 
-                })
-            }
-        })
-        .catch(err=>{
-            console.log(err);
-            next(err)
-        })
-    } else{
-        next({
-            name : "Not Login",
-            message:"You Must Login First" 
-        })
+async function auth(req, res, next) {
+  const { access_token: accessToken } = req.headers;
+
+  try {
+    if (accessToken) {
+      const verifiedAcessToken = jwtVerify(accessToken);
+      const verifiedId = await Dinas.findOne({
+        _id: verifiedAcessToken.id,
+      });
+
+      if (verifiedId) {
+        req.user = {
+          id: verifiedId._id,
+          email: verifiedId.email,
+          role: verifiedId.role,
+        };
+        // console.log(req.user);
+        next();
+      } else {
+        throw { name: "IdNotVerified" };
+      }
+    } else {
+      throw { name: "NoAccessToken" };
     }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 }
 
-module.exports={authentication}
+module.exports = { auth };

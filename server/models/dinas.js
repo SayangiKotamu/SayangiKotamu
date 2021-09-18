@@ -48,14 +48,13 @@ dinasSchema.pre("save", async function (next) {
   const dinas = this;
 
   const firstWords = dinas.name.split(" ").map((el) => {
-    return el[0].toLowerCase();
+    return el[0].toLowerCase() + el[2].toLowerCase();
   });
 
   const NID = firstWords.join("") + dinas._id;
   dinas.NID = NID;
 
   const tokenSigned = hashSync(dinas.password);
-  console.log(tokenSigned);
   dinas.password = tokenSigned;
 
   next();
