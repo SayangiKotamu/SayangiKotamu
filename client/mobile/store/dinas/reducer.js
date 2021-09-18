@@ -1,21 +1,21 @@
-import { SET_CATEGORIES, SET_LOADING_CATEGORIES } from './actionType'
+import { SET_DINAS, SET_LOADING_DINAS } from './actionType'
 
 const initialState = {
-    categories: [],
-    loadingCategories: false,
+    dinas: [],
+    loadingDinas: false,
 }
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case SET_CATEGORIES:
+        case SET_DINAS:
             return {
                 ...state,
-                categories: action.payload,
+                dinas: action.payload,
             }
-        case SET_LOADING_CATEGORIES:
+        case SET_LOADING_DINAS:
             return {
                 ...state,
-                loadingCategories: action.payload,
+                loadingDinas: action.payload,
             }
         default:
             return state

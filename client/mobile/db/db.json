@@ -92,6 +92,130 @@
       "upVote": 31,
       "downVote": 8,
       "picture": "https://lh3.googleusercontent.com/proxy/FlIpGgPdP5zNIUXKziYxGGEXSfsM6yjPClgh-pmWj5EmykVURHP85KYD4TLI9BNkUm8WQI1IN_n-KJbetX8cU-vuwAkHrAbgB0qgOZn7XiBNWe63rj5WtNGgTATz4VB1I27NCOIw16vHWk45Z8zvLL0zB6QZiCk"
+    },
+    {
+      "title": "Judul",
+      "description": "Cerita",
+      "location": "Jl ABC",
+      "category": "Masalah Lalu Lintas",
+      "lat": {
+        "$numberDecimal": -6.2533543
+      },
+      "long": {
+        "$numberDecimal": 106.9229036
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A06%3A40.326Z?alt=media&token=8676e48c-e9d5-4832-88e4-3619d5978566",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "AQhJJ6m"
+    },
+    {
+      "title": "Banjir",
+      "description": "Banjir setinggi leher",
+      "location": "Di jalan raya",
+      "category": "C0005",
+      "lat": {
+        "$numberDecimal": -6.2533474
+      },
+      "long": {
+        "$numberDecimal": 106.9228906
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A12%3A39.125Z?alt=media&token=5b19d845-cd59-47f3-b1ea-4f006ff4193c",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "2Cl8lC-"
+    },
+    {
+      "title": "Banjir lagi",
+      "description": "Banjir sampai mata kaki lantai dua",
+      "location": "Di rumah aku",
+      "category": "C0005",
+      "lat": {
+        "$numberDecimal": -6.2533432
+      },
+      "long": {
+        "$numberDecimal": 106.9228836
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A18%3A04.418Z?alt=media&token=841ea66a-5506-4529-9a2d-4003296d2eeb",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "LhknqAR"
+    },
+    {
+      "title": "Banjir banjir",
+      "description": "Banjerrrrrr",
+      "location": "Banjer",
+      "category": "C0004",
+      "lat": {
+        "$numberDecimal": -6.2533432
+      },
+      "long": {
+        "$numberDecimal": 106.9228836
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-18T15%3A19%3A38.105Z?alt=media&token=32afb82a-6d2a-43d9-9a18-3e4c680afa7a",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "IvIkRak"
     }
   ],
   "announcements": [
