@@ -54,10 +54,18 @@ class ReportController {
   // ! DINAS REPORT
   static async dinasGetAllReports(req, res, next) {
     const { id, email, role } = req.user;
-    console.log(id);
+    const { status, category } = req.query;
     try {
-      const allReports = await Report.find({ dinas: id });
-      res.status(200).json(allReports);
+      if (status) {
+        const allReports = await Report.find({ dinas: id, status });
+        res.status(200).json(allReports);
+      } else if (category) {
+        const allReports = await Report.find({ dinas: id, category });
+        res.status(200).json(allReports);
+      } else {
+        const allReports = await Report.find({ dinas: id });
+        res.status(200).json(allReports);
+      }
     } catch (err) {
       next(err);
     }
