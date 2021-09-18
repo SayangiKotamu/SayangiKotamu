@@ -11,16 +11,13 @@ function Detail() {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { reportDetail, loading, error } = useSelector(
-    (state) => state.reports
-  );
-  console.log(id);
+  const { reportDetail, loading, error } = useSelector((state) => state.report);
 
   useEffect(() => {
     dispatch(fetchReportById(id));
   }, []);
 
-  if (loading || !reportDetail[0]) {
+  if (loading) {
     return (
       <lottie-player
         src="https://assets9.lottiefiles.com/packages/lf20_dXaGKl.json"
@@ -91,7 +88,7 @@ function Detail() {
                 </button>
               </div>
             </div>
-            <DetailView />
+            <DetailView report={reportDetail} />
           </div>
         </div>
       </div>
