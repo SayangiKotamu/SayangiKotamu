@@ -46,12 +46,7 @@ const dinasSchema = new mongoose.Schema({
       ref: "Aspiration",
     },
   ],
-  announcments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Announcment",
-    },
-  ],
+  announcments: [],
 });
 
 // ! HOOKS BEFORECREATE
