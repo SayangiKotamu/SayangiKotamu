@@ -5,7 +5,9 @@ const {Userauth} = require("../middlewares/auth")
 routers.get("/", ReportController.showAll);
 routers.get("/:category", ReportController.showByCategory);
 routers.post("/", Userauth, ReportController.addReport);
-routers.put("/",Userauth, ReportController.patchVoteByIdReport);
+routers.patch("/up/:id", Userauth, ReportController.upVoteByIdReport);
+routers.patch("/down/:id", Userauth, ReportController.downVoteByIdReport);
+routers.patch("/status/:id", Userauth, ReportController.patchStatusReport);
 routers.delete("/:id",Userauth, ReportController.deleteReport);
 
 module.exports = routers;
