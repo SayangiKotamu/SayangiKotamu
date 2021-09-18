@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const reportSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: [true, "Title is required"],
+  },
   status: {
     type: String,
   },

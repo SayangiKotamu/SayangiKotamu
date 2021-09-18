@@ -53,6 +53,7 @@ class ReportController {
   // ! DINAS REPORT
   static async dinasGetAllReports(req, res, next) {
     try {
+      res.send("will auth");
     } catch (err) {}
   }
 }

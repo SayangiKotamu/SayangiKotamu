@@ -2,7 +2,7 @@ const User = require("../models/user");
 // const {comparePassword} = require('../helpers/bcrypt')
 const { jwtSign } = require("../helpers/jwt");
 const { comparePassword } = require("../helpers/bcrypt");
-// const { OAuth2Client } = require("google-auth-library");
+const { OAuth2Client } = require("google-auth-library");
 
 class UserController {
   static async register(req, res, next) {
@@ -15,13 +15,13 @@ class UserController {
         kota: req.body.kota,
         isActive: false,
       };
-      const foundEmail = await User.findOne({email: newUser.email})
-      const foundNIK = await User.findOne({NIK: newUser.NIK})
+      const foundEmail = await User.findOne({ email: newUser.email });
+      const foundNIK = await User.findOne({ NIK: newUser.NIK });
       if (foundEmail) {
-        throw {name:"EmailCollection"}
+        throw { name: "EmailCollection" };
       } else {
         if (foundNIK) {
-          throw {name:"NIKInCollection"}
+          throw { name: "NIKInCollection" };
         } else {
           let data = await User.create(newUser);
           res.status(201).json({ ...newUser, _id: data.insertedId });
@@ -30,8 +30,8 @@ class UserController {
     } catch (err) {
       if (!err.errors) {
         next({
-          name:err.name,
-          message: "Email is already registered" 
+          name: err.name,
+          message: "Email is already registered",
         });
       } else {
         const toArray = Object.values(err.errors);
@@ -39,16 +39,16 @@ class UserController {
           return el.message;
         });
         next({
-          name:"userRequired",
-          message:errMessage
-        })
+          name: "userRequired",
+          message: errMessage,
+        });
       }
     }
   }
   static async login(req, res, next) {
-    const data = await User.findOne({email: req.body.email})
+    const data = await User.findOne({ email: req.body.email });
     if (data) {
-      if(comparePassword(req.body.password,data.password) ) {
+      if (comparePassword(req.body.password, data.password)) {
         let payload = {
           id: data._id,
           email: data.email,
@@ -94,7 +94,7 @@ class UserController {
           return User.create({
             fullname,
             password,
-            email
+            email,
           });
         }
       })
