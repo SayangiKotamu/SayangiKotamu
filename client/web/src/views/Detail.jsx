@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 
 import Navbar from "../components/Navbar";
-import Description from "../components/Description";
-import Tracker from "../components/Tracker";
+import DetailView from "../components/DetailView";
 import { fetchReportById } from "../stores/reports/action";
 
 function Detail() {
@@ -15,14 +14,13 @@ function Detail() {
   const { reportDetail, loading, error } = useSelector(
     (state) => state.reports
   );
+  console.log(id);
 
   useEffect(() => {
     dispatch(fetchReportById(id));
   }, []);
 
-  console.log(reportDetail);
-
-  if (loading || reportDetail[0]) {
+  if (loading || !reportDetail[0]) {
     return (
       <lottie-player
         src="https://assets9.lottiefiles.com/packages/lf20_dXaGKl.json"
@@ -93,32 +91,7 @@ function Detail() {
                 </button>
               </div>
             </div>
-            <div
-              className="grid grid-cols-5"
-              style={{ height: "650px", borderWidth: 1, borderRadius: 5 }}
-            >
-              <div
-                className="card-body col-span-2"
-                style={{
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                }}
-              >
-                <h2 className="mb-5 text-2xl font-bold">
-                  JKT-70001218471804616
-                </h2>
-                <Tracker />
-              </div>
-              <div
-                className="card-body col-span-3"
-                style={{
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                }}
-              >
-                <Description />
-              </div>
-            </div>
+            <DetailView />
           </div>
         </div>
       </div>

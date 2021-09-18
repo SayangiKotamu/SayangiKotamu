@@ -24,6 +24,7 @@ function setError(payload) {
 
 export function fetchReports() {
   return function (dispatch) {
+    dispatch(setError(null));
     dispatch(setLoading(true));
     axios
       .get("http://localhost:3001/reports")
@@ -41,11 +42,11 @@ export function fetchReports() {
 
 export function fetchReportById(id) {
   return function (dispatch) {
+    dispatch(setError(null));
     dispatch(setLoading(true));
     axios
       .get(`http://localhost:3001/reports/${id}`)
       .then((response) => {
-        console.log(response);
         dispatch(setDetailReport(response.data));
       })
       .catch((err) => {

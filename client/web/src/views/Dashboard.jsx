@@ -6,14 +6,19 @@ import { toast, ToastContainer } from "react-toastify";
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
 import Category from "../components/Category";
+import { fetchCategories } from "../stores/categories/action";
 
 function Dashboard() {
   const dispatch = useDispatch();
   const { reports, loading, error } = useSelector((state) => state.report);
+  const { categories } = useSelector((state) => state.category);
 
-  console.log(reports);
   useEffect(() => {
     dispatch(fetchReports());
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
   }, []);
 
   if (loading) {
@@ -60,47 +65,47 @@ function Dashboard() {
           className="container"
           style={{ marginLeft: "10%", marginTop: "5%" }}
         >
-          <div className="card">
-            <h2 className="mb-5 text-3xl font-bold">Kumpulan Pengaduan</h2>
+          <h2 className="mb-5 text-3xl font-bold">Kumpulan Pengaduan</h2>
+          <div
+            className="grid grid-cols-3"
+            style={{ height: "650px", borderWidth: 1, borderRadius: 5 }}
+          >
             <div
-              className="grid grid-cols-3"
-              style={{ height: "650px", borderWidth: 1, borderRadius: 5 }}
+              className="card-body"
+              style={{
+                backgroundColor: "white",
+                borderWidth: 1,
+              }}
             >
+              <h2 className="text-center mb-5 text-2xl font-bold">
+                Kategori Pengaduan
+              </h2>
+              {categories.map((category) => {
+                return <Category category={category} />;
+              })}
+            </div>
+            <div
+              className="card-body col-span-2"
+              style={{
+                backgroundColor: "white",
+                borderWidth: 1,
+              }}
+            >
+              <h2 className="text-center mb-5 text-2xl font-bold">
+                Masalah Lalu Lintas
+              </h2>
               <div
-                className="card-body"
+                className="card-body overflow-auto"
                 style={{
                   backgroundColor: "white",
                   borderWidth: 1,
+                  borderRadius: 5,
+                  maxHeight: "500px",
                 }}
               >
-                <h2 className="text-center mb-5 text-2xl font-bold">
-                  Pengaduan
-                </h2>
-                <Category />
-              </div>
-              <div
-                className="card-body col-span-2"
-                style={{
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                }}
-              >
-                <h2 className="text-center mb-5 text-2xl font-bold">
-                  Masalah Lalu Lintas
-                </h2>
-                <div
-                  className="card-body overflow-auto"
-                  style={{
-                    backgroundColor: "white",
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    maxHeight: "500px",
-                  }}
-                >
-                  {reports.map((report) => {
-                    return <Content report={report} key={report.id} />;
-                  })}
-                </div>
+                {reports.map((report) => {
+                  return <Content report={report} key={report.id} />;
+                })}
               </div>
             </div>
           </div>
