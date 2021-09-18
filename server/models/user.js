@@ -2,12 +2,12 @@ const { getDatabase } = require("../config/mongoose");
 const { ObjectId } = require("bson");
 const mongoose = require("mongoose");
 const validator = require("validator");
-const {hashPassword} = require("../helpers/bcrypt")
+const { hashPassword } = require("../helpers/bcrypt");
 
 const userSchema = new mongoose.Schema({
-  fullname:{
+  fullname: {
     type: String,
-    required:[true,"name is required"]
+    required: [true, "name is required"],
   },
   email: {
     type: String,
@@ -21,30 +21,36 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Password is required"]
+    required: [true, "Password is required"],
   },
   NIK: {
     type: String,
     required: [true, "NIK is required"],
   },
-  kota:{
-    type:String,
-    required:[true,"kota is required"]
+  kota: {
+    type: String,
+    required: [true, "kota is required"],
   },
-  isActive:{
-    type:Boolean
+  isActive: {
+    type: Boolean,
   },
-  activateEmailToken:{
-    type:String
-  }
-})
+  activateEmailToken: {
+    type: String,
+  },
+  reports: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Report",
+    },
+  ],
+});
 
-userSchema.pre('save', function(next) {
+userSchema.pre("save", function (next) {
   var user = this;
-  if (!user.isModified('password')) return next();
-  user.password = hashPassword(user.password)
-  next()
+  if (!user.isModified("password")) return next();
+  user.password = hashPassword(user.password);
+  next();
 });
 
 const User = mongoose.model("User", userSchema);
-module.exports = User
+module.exports = User;
