@@ -1,4 +1,6 @@
+const Categories = require("../models/categories");
 const Report = require("../models/report");
+const Dinas = require("../models/dinas")
 
 class ReportController {
   // ! USER REPORT
@@ -30,21 +32,25 @@ class ReportController {
     try {
       let newReport = {
         title: req.body.title,
-        reportIdNumber: req.body.reportIdNumber,
-        user: req.body.user, //req.user.id
-        dinas: req.body.dinas,
+        user: req.user.id,
         status: "diterima",
         description: req.body.description,
         issuedDate: new Date(),
         location: req.body.location,
         lat: +req.body.lat,
         long: +req.body.long,
-        category: req.body.category,
         picture: req.body.picture,
+        upVote:0,
+        downVote:0
       };
+      let categories = await Categories.findOne({_id:req.body.category})
+      newReport.category = categories
+      let dinas = await Dinas.findOne({_id:req.body.dinas})
+      newReport.dinas = dinas
       let data = await Report.create(newReport);
       res.status(201).json({ ...newReport, _id: data.insertedId });
     } catch (error) {
+      console.log(error);
       next(error)
     }
   }

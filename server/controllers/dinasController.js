@@ -71,6 +71,15 @@ class DinasController {
       console.log(err);
     }
   }
+
+  static async showListDinas(req, res, next) {
+    try {
+      let data = await Dinas.find();
+      res.status(200).json(data);
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = DinasController;
