@@ -1,17 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { logining } from "../stores/authentication/action";
 
 function Login() {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleToRegister = () => {
     history.push("/daftar");
   };
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const forEmail = (e) => {
     e.preventDefault();
@@ -24,8 +26,14 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
-      toast.error("Tolong isikan email/password!", {
+
+    const payload = {
+      email,
+      password,
+    };
+
+    if (payload.email === "" || payload.password === "") {
+      toast.error("Mohon isikan email dan password!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -35,6 +43,7 @@ function Login() {
         progress: undefined,
       });
     } else {
+      dispatch(logining(payload));
       history.push("/beranda");
     }
   };
@@ -81,7 +90,7 @@ function Login() {
                   </label>
                   <input
                     type="text"
-                    placeholder="email"
+                    placeholder="E-mail"
                     class="input input-bordered"
                     onChange={forEmail}
                     value={email}
@@ -93,7 +102,7 @@ function Login() {
                   </label>
                   <input
                     type="password"
-                    placeholder="password"
+                    placeholder="Kata Sandi"
                     class="input input-bordered"
                     onChange={forPaswword}
                     value={password}

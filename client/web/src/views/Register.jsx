@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import { registering } from "../stores/authentication/action";
 
 function Register() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleToLogin = () => {
     history.push("/");
@@ -12,7 +15,7 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [instance, setInstance] = useState("");
-  const [city, setCity] = useState("");
+  // const [city, setCity] = useState("");
 
   const forEmail = (e) => {
     e.preventDefault();
@@ -29,15 +32,22 @@ function Register() {
     setInstance(e.target.value);
   };
 
-  const forCity = (e) => {
-    e.preventDefault();
-    setCity(e.target.value);
-  };
+  // const forCity = (e) => {
+  //   e.preventDefault();
+  //   setCity(e.target.value);
+  // };
 
   const handleRegister = (e) => {
     e.preventDefault();
-    if (email === "" || password === "" || instance === "" || city === "") {
-      toast.error("Tolong diisi sesuai dengan isian di bawah!", {
+
+    const payload = {
+      email,
+      password,
+      instance,
+    };
+
+    if (email === "" || password === "" || instance === "") {
+      toast.error("Mohon diisi sesuai dengan kebutuhan di bawah!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -47,6 +57,7 @@ function Register() {
         progress: undefined,
       });
     } else {
+      dispatch(registering(payload));
       history.push("/");
     }
   };
@@ -93,7 +104,7 @@ function Register() {
                   </label>
                   <input
                     type="text"
-                    placeholder="email"
+                    placeholder="E-mail"
                     class="input input-bordered"
                     onChange={forEmail}
                     value={email}
@@ -105,7 +116,7 @@ function Register() {
                   </label>
                   <input
                     type="password"
-                    placeholder="password"
+                    placeholder="Kata Sandi"
                     class="input input-bordered"
                     onChange={forPaswword}
                     value={password}
@@ -117,24 +128,24 @@ function Register() {
                   </label>
                   <input
                     type="text"
-                    placeholder="nama instansi"
+                    placeholder="Nama Instansi"
                     class="input input-bordered"
                     onChange={forInstance}
                     value={instance}
                   />
                 </div>
-                <div class="form-control">
+                {/* <div class="form-control">
                   <label class="label">
                     <span class="label-text">Kota</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="kota"
+                    placeholder="Kota"
                     class="input input-bordered"
                     onChange={forCity}
                     value={city}
                   />
-                </div>
+                </div> */}
                 <div class="form-control mt-6 mb-3">
                   <input
                     type="submit"

@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 
+import store from "./stores";
 import Login from "./views/Login";
 import Detail from "./views/Detail";
 import Register from "./views/Register";
@@ -12,31 +14,33 @@ import Announcement from "./views/Announcement";
 function App() {
   return (
     <>
-      <Router>
-        <Switch>
-          <Route path="/aspirasi">
-            <Aspiration />
-          </Route>
-          <Route path="/riwayat">
-            <History />
-          </Route>
-          <Route path="/pengumuman">
-            <Announcement />
-          </Route>
-          <Route path="/detail">
-            <Detail />
-          </Route>
-          <Route path="/beranda">
-            <Dashboard />
-          </Route>
-          <Route path="/daftar">
-            <Register />
-          </Route>
-          <Route path="/">
-            <Login />
-          </Route>
-        </Switch>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route path="/aspirasi">
+              <Aspiration />
+            </Route>
+            <Route path="/riwayat">
+              <History />
+            </Route>
+            <Route path="/pengumuman">
+              <Announcement />
+            </Route>
+            <Route path="/detail">
+              <Detail />
+            </Route>
+            <Route path="/beranda">
+              <Dashboard />
+            </Route>
+            <Route path="/daftar">
+              <Register />
+            </Route>
+            <Route path="/">
+              <Login />
+            </Route>
+          </Switch>
+        </Router>
+      </Provider>
     </>
   );
 }
