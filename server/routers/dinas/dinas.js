@@ -3,7 +3,7 @@ const DinasController = require("../../controllers/dinasController");
 const reportDinasRouters = require("./report");
 const { auth } = require("../../middlewares/auth");
 
-router.post("/", DinasController.register);
+router.post("/register", DinasController.register);
 
 router.post("/login", DinasController.login);
 
