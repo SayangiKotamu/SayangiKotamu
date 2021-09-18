@@ -40,7 +40,7 @@ export function fetchAllAnnouncement() {
         try {
             dispatch(setLoadingAnnouncements(true))
 
-            let response = await fetch('https://80f1-110-138-92-119.ngrok.io/announcements')
+            let response = await fetch('https://d505-110-138-92-119.ngrok.io/announcements')
 
             if (response.ok) {
                 response = await response.json()
@@ -68,7 +68,7 @@ export function fetchAnnouncementById(id) {
         try {
             dispatch(setLoadingAnnouncementDetail(true))
 
-            let response = await fetch(`https://80f1-110-138-92-119.ngrok.io/announcements/${id}`)
+            let response = await fetch(`https://d505-110-138-92-119.ngrok.io/announcements/${id}`)
 
             if (response.ok) {
                 response = await response.json()

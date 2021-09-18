@@ -21,10 +21,15 @@ import * as Firebase from 'firebase'
 
 import { firebaseConfig } from '../firebase'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllCategory } from '../store/categories/action'
+
 export default function Report() {
     if (!Firebase.apps.length) {
         Firebase.initializeApp(firebaseConfig)
     }
+
+    const dispatch = useDispatch()
 
     const [category, setCategory] = useState('')
     const [selectedOrganization, setSelectedOrganization] = useState('')
@@ -33,6 +38,8 @@ export default function Report() {
     const [image, setImage] = useState(null)
 
     const [uploadingImage, setUploadingImage] = useState(false)
+
+    const { categories, loadingCategories } = useSelector((state) => state.categories)
 
     // const [type, setType] = useState(Camera.Constants.Type.Back)
     // const [isCameraOpen, setIsCameraOpen] = useState(false)
@@ -58,6 +65,8 @@ export default function Report() {
                 }
             }
         })()
+
+        dispatch(fetchAllCategory())
     }, [])
 
     async function sendReport() {
@@ -159,6 +168,14 @@ export default function Report() {
                 </View>
 
                 <View style={styles.formContainer}>
+                    <Text style={styles.label}>Judul laporan:</Text>
+                    <TextInput
+                        style={styles.inputTextArea}
+                        placeholder="judul laporan dengan singkat..."
+                        // value={name}
+                        // onChangeText={(text) => setName(text)}
+                    />
+
                     <Text style={styles.label}>Ceritakan laporan kamu:</Text>
                     <TextInput
                         style={styles.inputTextArea}
@@ -173,15 +190,15 @@ export default function Report() {
                             selectedValue={category}
                             onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
                         >
-                            <Picker.Item label="Masalah Lalu Lintas" value="Masalah Lalu Lintas" />
-                            <Picker.Item
-                                label="Masalah Sarana/Fasilitas Umum"
-                                value="Masalah Sarana/Fasilitas Umum"
-                            />
-                            <Picker.Item label="Masalah Kriminal" value="Masalah Kriminal" />
-                            <Picker.Item label="Masalah Kesehatan" value="Masalah Kesehatan" />
-                            <Picker.Item label="Masalah Kebersihan" value="Masalah Kebersihan" />
-                            <Picker.Item label="Masalah Lainnya" value="Masalah Lainnya" />
+                            {categories.map((category, idx) => {
+                                return (
+                                    <Picker.Item
+                                        label={category.id}
+                                        value={category.name}
+                                        key={'category' + idx}
+                                    />
+                                )
+                            })}
                         </Picker>
                     </View>
                     <Text style={styles.label}>Pilih instansi terkait:</Text>

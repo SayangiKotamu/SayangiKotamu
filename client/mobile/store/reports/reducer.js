@@ -3,6 +3,7 @@ import {
     SET_LOADING_REPORTS,
     SET_DETAIL_REPORT,
     SET_LOADING_DETAIL,
+    SET_LOADING_SEND_REPORT,
 } from './actionType'
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
     loadingReports: false,
     detailReport: [], // Fetch By ID
     loadingDetailReport: false,
+    loadingSendReport: false,
 }
 
 export default function reducer(state = initialState, action) {
@@ -33,6 +35,11 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 loadingDetailReport: action.payload,
+            }
+        case SET_LOADING_SEND_REPORT:
+            return {
+                ...state,
+                loadingSendReport: action.payload,
             }
         default:
             return state

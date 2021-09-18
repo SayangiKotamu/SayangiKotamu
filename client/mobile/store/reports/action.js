@@ -3,6 +3,7 @@ import {
     SET_LOADING_REPORTS,
     SET_DETAIL_REPORT,
     SET_LOADING_DETAIL,
+    SET_LOADING_SEND_REPORT,
 } from './actionType'
 
 import Toast from 'react-native-toast-message'
@@ -35,12 +36,19 @@ function setLoadingDetailReport(payload) {
     }
 }
 
+function setLoadingSendReport(payload) {
+    return {
+        type: SET_LOADING_SEND_REPORT,
+        payload,
+    }
+}
+
 export function fetchAllReports(payload) {
     return async function (dispatch) {
         try {
             dispatch(setLoadingReports(true))
 
-            let response = await fetch('https://80f1-110-138-92-119.ngrok.io/reports')
+            let response = await fetch('https://d505-110-138-92-119.ngrok.io/reports')
 
             if (response.ok) {
                 response = await response.json()
@@ -68,7 +76,7 @@ export function fetchReportById(id) {
         try {
             dispatch(setLoadingDetailReport(true))
 
-            let response = await fetch(`https://80f1-110-138-92-119.ngrok.io/reports/${id}`)
+            let response = await fetch(`https://d505-110-138-92-119.ngrok.io/reports/${id}`)
 
             if (response.ok) {
                 response = await response.json()
@@ -87,6 +95,15 @@ export function fetchReportById(id) {
             })
         } finally {
             dispatch(setLoadingDetailReport(false))
+        }
+    }
+}
+
+export function addReport(payload) {
+    return async function (dispatch) {
+        try {
+        } catch (err) {
+        } finally {
         }
     }
 }
