@@ -17,7 +17,15 @@ class AspirationController {
         res.status(200).json(getAspirations);
       }
     } catch (err) {
-      next(err);
+      if (!err.errors) {
+        next(err);
+      } else {
+        const toArray = Object.values(err.errors);
+        const errMessage = toArray.map((el) => {
+          return el.message;
+        });
+        res.status(400).json({ message: errMessage });
+      }
     }
   }
 
@@ -28,7 +36,15 @@ class AspirationController {
       const getAspiration = await Aspiration.findOne({ _id: id });
       res.status(200).json(getAspiration);
     } catch (err) {
-      next(err);
+      if (!err.errors) {
+        next(err);
+      } else {
+        const toArray = Object.values(err.errors);
+        const errMessage = toArray.map((el) => {
+          return el.message;
+        });
+        res.status(400).json({ message: errMessage });
+      }
     }
   }
 
@@ -68,7 +84,15 @@ class AspirationController {
       });
       res.status(201).json(foundAspiration);
     } catch (err) {
-      console.log(err);
+      if (!err.errors) {
+        next(err);
+      } else {
+        const toArray = Object.values(err.errors);
+        const errMessage = toArray.map((el) => {
+          return el.message;
+        });
+        res.status(400).json({ message: errMessage });
+      }
     }
   }
 
