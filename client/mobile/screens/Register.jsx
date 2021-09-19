@@ -20,6 +20,8 @@ import * as Firebase from 'firebase'
 
 import { firebaseConfig } from '../firebase'
 
+import { GOOGLE_CLOUD_VISION_API_KEY } from 'react-native-dotenv'
+
 export default function Register({ navigation }) {
     if (!Firebase.apps.length) {
         Firebase.initializeApp(firebaseConfig)
@@ -29,8 +31,10 @@ export default function Register({ navigation }) {
     const { loadingRegister } = useSelector((state) => state.auth)
 
     const [email, setEmail] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
+    const [fullName, setFullName] = useState('')
+    const [NIK, setNIK] = useState('')
+    const [KTPLink, setKTPLink] = useState('')
+    const [city, setCity] = useState('')
     const [password, setPassword] = useState('')
 
     const [image, setImage] = useState(null)
@@ -54,6 +58,59 @@ export default function Register({ navigation }) {
         })()
     }, [])
 
+    useEffect(() => {
+        if (image) {
+            uploadPhoto()
+        }
+    }, [image])
+
+    useEffect(() => {
+        if (KTPLink) {
+            submitToGoogle()
+        }
+    }, [KTPLink])
+
+    async function submitToGoogle() {
+        try {
+            let body = JSON.stringify({
+                requests: [
+                    {
+                        features: [
+                            { type: 'TEXT_DETECTION', maxResults: 5 },
+                            { type: 'DOCUMENT_TEXT_DETECTION', maxResults: 5 },
+                        ],
+                        image: {
+                            source: {
+                                imageUri: KTPLink,
+                            },
+                        },
+                    },
+                ],
+            })
+            let response = await fetch(
+                `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_CLOUD_VISION_API_KEY}`, 
+                {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'POST',
+                    body,
+                }
+            )
+            let responseJson = await response.json()
+
+            //! Autopopulate (masih NIK aja = number yang lebih dari 12 digit)
+            const result = responseJson.responses[0].fullTextAnnotation.text
+
+            const detectedNIK = result.match(/\b\d{12,}\b/g)[0]
+            setNIK(detectedNIK)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async function selectPhoto() {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -67,6 +124,45 @@ export default function Register({ navigation }) {
         }
     }
 
+    async function uploadPhoto() {
+        const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest()
+            xhr.onload = function () {
+                resolve(xhr.response)
+            }
+            xhr.onerror = function () {
+                reject(new TypeError('network request failed'))
+            }
+            xhr.responseType = 'blob'
+            xhr.open('GET', image, true)
+            xhr.send(null)
+        })
+        const ref = Firebase.storage().ref().child(new Date().toISOString())
+        const snapshot = ref.put(blob)
+        snapshot.on(
+            Firebase.storage.TaskEvent.STATE_CHANGED,
+            () => {
+                setUploadingImage(true)
+            },
+            (error) => {
+                setUploadingImage(false)
+                console.log(error)
+                blob.close()
+                return
+            },
+            () => {
+                snapshot.snapshot.ref.getDownloadURL().then((url) => {
+                    setUploadingImage(false)
+                    setKTPLink(url)
+                    submitToGoogle()
+
+                    blob.close()
+                    return url
+                })
+            }
+        )
+    }
+
     async function onRegisterClick() {
         if (!email.trim() || !firstName.trim() || !lastName.trim() || !password.trim() || !image) {
             Toast.show({
@@ -77,55 +173,9 @@ export default function Register({ navigation }) {
                 text2: 'Mohon input form register dengan lengkap!',
             })
         } else {
-            const blob = await new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest()
-                xhr.onload = function () {
-                    resolve(xhr.response)
-                }
-                xhr.onerror = function () {
-                    reject(new TypeError('network request failed'))
-                }
-                xhr.responseType = 'blob'
-                xhr.open('GET', image, true)
-                xhr.send(null)
+            dispatch(doRegister(payload)).then(() => {
+                navigation.navigate('Masuk')
             })
-
-            const ref = Firebase.storage().ref().child(new Date().toISOString())
-            const snapshot = ref.put(blob)
-
-            snapshot.on(
-                Firebase.storage.TaskEvent.STATE_CHANGED,
-                () => {
-                    setUploadingImage(true)
-                },
-                (error) => {
-                    setUploadingImage(false)
-                    console.log(error)
-                    blob.close()
-                    return
-                },
-                () => {
-                    snapshot.snapshot.ref.getDownloadURL().then((url) => {
-                        setUploadingImage(false)
-
-                        //* Proses dispatch
-                        const payload = {
-                            email,
-                            firstName,
-                            lastName,
-                            password,
-                            ktp: url,
-                        }
-
-                        dispatch(doRegister(payload)).then(() => {
-                            navigation.navigate('Masuk')
-                        })
-
-                        blob.close()
-                        return url
-                    })
-                }
-            )
         }
     }
 
@@ -150,15 +200,21 @@ export default function Register({ navigation }) {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Nama depan"
-                        value={firstName}
-                        onChangeText={(text) => setFirstName(text)}
+                        placeholder="Nama lengkap"
+                        value={fullName}
+                        onChangeText={(text) => setFullName(text)}
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Nama belakang"
-                        value={lastName}
-                        onChangeText={(text) => setLastName(text)}
+                        placeholder="Nomor Induk Kependudukan (NIK)"
+                        value={NIK}
+                        onChangeText={(text) => setNIK(text)}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Kota"
+                        value={city}
+                        onChangeText={(text) => setCity(text)}
                     />
                     <TextInput
                         style={styles.input}
@@ -169,15 +225,22 @@ export default function Register({ navigation }) {
                     />
                 </View>
 
-                {image ? (
-                    <View style={styles.imageContainer}>
-                        <Image source={{ uri: image }} style={styles.ktpImage} />
-                    </View>
+                {uploadingImage ? (
+                    <ActivityIndicator size="large" color="#1A73E9" />
                 ) : (
-                    <View style={styles.buttonContainer}>
-                        <Button title="Unggah KTP" color="#05DAA7" onPress={selectPhoto} />
-                    </View>
+                    <>
+                        {image && (
+                            <View style={styles.imageContainer}>
+                                <Image source={{ uri: image }} style={styles.ktpImage} />
+                            </View>
+                        )}
+                    </>
                 )}
+
+                <View style={styles.buttonContainer}>
+                    <Button title="Unggah KTP" color="#05DAA7" onPress={selectPhoto} />
+                </View>
+
                 <View style={styles.buttonContainer}>
                     {uploadingImage || loadingRegister ? (
                         <ActivityIndicator size="large" color="#1A73E9" />
