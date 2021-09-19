@@ -7,6 +7,8 @@ import {
 
 import Toast from 'react-native-toast-message'
 
+import baseURL from '../../apis/sayangiKotamu'
+
 function setAnnouncements(payload) {
     return {
         type: SET_ANNOUNCEMENTS,
@@ -40,7 +42,7 @@ export function fetchAllAnnouncement() {
         try {
             dispatch(setLoadingAnnouncements(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/announcements')
+            let response = await fetch(`${baseURL}/announcements`)
 
             if (response.ok) {
                 response = await response.json()
@@ -68,7 +70,7 @@ export function fetchAnnouncementById(id) {
         try {
             dispatch(setLoadingAnnouncementDetail(true))
 
-            let response = await fetch(`https://e9ce-110-138-83-131.ngrok.io/announcements/${id}`)
+            let response = await fetch(`${baseURL}/announcements/${id}`)
 
             if (response.ok) {
                 response = await response.json()

@@ -49,7 +49,7 @@ export default function App() {
 
                             return <Ionicons name={iconName} size={size} color={color} />
                         },
-                        tabBarActiveTintColor: '#1A73E9',
+                        tabBarActiveTintColor: 'tomato',
                         tabBarInactiveTintColor: 'gray',
                     })}
                 >
@@ -80,7 +80,7 @@ export default function App() {
                             }
                             return <Ionicons name={iconName} size={size} color={color} />
                         },
-                        tabBarActiveTintColor: '#1A73E9',
+                        tabBarActiveTintColor: 'tomato',
                         tabBarInactiveTintColor: 'gray',
                     })}
                 >

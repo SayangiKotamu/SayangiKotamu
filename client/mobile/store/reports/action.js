@@ -8,6 +8,8 @@ import {
 
 import Toast from 'react-native-toast-message'
 
+import baseURL from '../../apis/sayangiKotamu'
+
 function setReportsList(payload) {
     return {
         type: SET_REPORTS_LIST,
@@ -48,7 +50,7 @@ export function fetchAllReports(payload) {
         try {
             dispatch(setLoadingReports(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/reports')
+            let response = await fetch(`${baseURL}/reports`)
 
             if (response.ok) {
                 response = await response.json()
@@ -76,7 +78,7 @@ export function fetchReportById(id) {
         try {
             dispatch(setLoadingDetailReport(true))
 
-            let response = await fetch(`https://e9ce-110-138-83-131.ngrok.io/reports/${id}`)
+            let response = await fetch(`${baseURL}/reports/${id}`)
 
             if (response.ok) {
                 response = await response.json()
@@ -108,7 +110,7 @@ export function addReport(payload) {
         try {
             dispatch(setLoadingSendReport(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/reports', {
+            let response = await fetch(`${baseURL}/reports`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

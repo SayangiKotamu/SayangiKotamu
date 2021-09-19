@@ -7,6 +7,8 @@ import {
 
 import Toast from 'react-native-toast-message'
 
+import baseURL from '../../apis/sayangiKotamu'
+
 export function setIsLoggedIn(payload) {
     return {
         type: SET_IS_LOGGED_IN,
@@ -40,7 +42,7 @@ export function doRegister(payload) {
         try {
             dispatch(setLoadingRegister(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/register', {
+            let response = await fetch(`${baseURL}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,6 +54,7 @@ export function doRegister(payload) {
                     full_name: `${payload.firstName} ${payload.lastName}`,
                     email: payload.email,
                     password: payload.password,
+                    ktp: payload.ktp, //! Ini link ktp dari firebase
                 }),
             })
 
@@ -87,7 +90,7 @@ export function doLogin(payload) {
         try {
             dispatch(setLoadingLogin(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/login', {
+            let response = await fetch(`${baseURL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -2,6 +2,8 @@ import { SET_DINAS, SET_LOADING_DINAS } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
+import baseURL from '../../apis/sayangiKotamu'
+
 function setDinas(payload) {
     return {
         type: SET_DINAS,
@@ -21,7 +23,7 @@ export function fetchAllDinas() {
         try {
             dispatch(setLoadingDinas(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/dinas')
+            let response = await fetch(`${baseURL}/dinas`)
 
             if (response.ok) {
                 response = await response.json()

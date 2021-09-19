@@ -2,6 +2,8 @@ import { SET_NOTIFICATION, SET_LOADING_NOTIFICATION } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
+import baseURL from '../../apis/sayangiKotamu'
+
 function setNotifications(payload) {
     return {
         type: SET_NOTIFICATION,
@@ -21,7 +23,7 @@ export function fetchNotification(payload) {
         try {
             dispatch(setLoadingNotification(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/notifications')
+            let response = await fetch(`${baseURL}/notifications`)
 
             if (response.ok) {
                 response = await response.json()

@@ -90,7 +90,7 @@ export default function Report({ navigation }) {
                         position: 'bottom',
                         bottomOffset: 70,
                         text1: 'SayangiKotamu',
-                        text2: 'Mohon maaf, kami membutuhkan akses kamera',
+                        text2: 'Mohon maaf, kami membutuhkan akses galeri',
                     })
                 }
             }
@@ -305,6 +305,10 @@ export default function Report({ navigation }) {
                         value={locationDescription}
                         onChangeText={(text) => setLocationDescription(text)}
                     />
+                    <Text style={styles.notes}>
+                        <Text style={styles.notesEmphasize}>Catatan:</Text> SayangiKotamu akan
+                        menyimpan data lokasi mu secara otomatis
+                    </Text>
                     {image ? (
                         <View style={styles.imageContainer}>
                             <Image source={{ uri: image }} style={styles.reportImage} />
@@ -342,6 +346,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 50,
     },
+    notesEmphasize: {
+        fontWeight: 'bold',
+    },
+    notes: {
+        textAlign: 'center',
+        fontSize: 10,
+        marginTop: 5,
+        color: 'grey',
+    },
     imageContainer: {
         marginTop: 20,
         alignItems: 'center',
@@ -354,7 +367,7 @@ const styles = StyleSheet.create({
     headingContainer: {
         backgroundColor: '#cce5ff',
         borderWidth: 1,
-        borderColor: 'grey',
+        borderColor: '#ececec',
         width: '96%',
         padding: 3,
         paddingBottom: 15,
@@ -362,6 +375,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 15,
         alignItems: 'center',
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#ececec',
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 8,
     },
     pickerContainer: {
         borderBottomWidth: 2,
