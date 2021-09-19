@@ -22,7 +22,6 @@ const reportSchema = new mongoose.Schema({
   location: {
     type: String,
   },
-  // ! LATER: CARI TAHU LAGI
   long: {
     type: Number,
   },
@@ -32,6 +31,7 @@ const reportSchema = new mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Categories",
+    required: [true, "Category is required"],
   },
   picture: {
     type: String,
@@ -45,10 +45,12 @@ const reportSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: [true, "User is required"],
   },
   dinas: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Dinas",
+    required: [true, "Dinas is required"],
   },
 });
 

@@ -7,7 +7,7 @@ router.get("/:id", ReportController.dinasGetByIdReport);
 
 router.patch("/:id", ReportController.changeStatus);
 
-router.delete("/:id", ReportController.deleteReport);
+router.delete("/:id", ReportController.dinasDeleteReport);
 
 // router.get("/:category", ReportController.dinasGetByCategoryReport);
 
