@@ -469,6 +469,15 @@
       "full_name": "Testingggg Ajaaaa",
       "ktp": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-19T12%3A57%3A30.337Z?alt=media&token=1cc249f8-1e06-49c8-ba3d-f2720da18c0a",
       "id": 7
+    },
+    {
+      "email": "Testdemo@email.com",
+      "password": "$2a$10$OsE4jmssYAj8N.4S6y9I4OKVNkoLJGnGNiU14dJxmmzenOSlC/SIK",
+      "full_name": "Testing",
+      "NIK": "275080809970007",
+      "ktp": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-19T15%3A02%3A04.449Z?alt=media&token=93fad023-fdbd-496d-a3b3-0e31fd514965",
+      "kota": "Jakarta",
+      "id": 8
     }
   ],
   "categories": [

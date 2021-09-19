@@ -88,7 +88,7 @@ export default function Register({ navigation }) {
                 ],
             })
             let response = await fetch(
-                `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_CLOUD_VISION_API_KEY}`, 
+                `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_CLOUD_VISION_API_KEY}`,
                 {
                     headers: {
                         Accept: 'application/json',
@@ -106,6 +106,13 @@ export default function Register({ navigation }) {
             const detectedNIK = result.match(/\b\d{12,}\b/g)[0]
             setNIK(detectedNIK)
 
+            Toast.show({
+                type: 'info',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Beberapa form sudah terisi dengan otomatis, mohon dicek kembali ya!',
+            })
         } catch (error) {
             console.log(error)
         }
@@ -164,7 +171,14 @@ export default function Register({ navigation }) {
     }
 
     async function onRegisterClick() {
-        if (!email.trim() || !firstName.trim() || !lastName.trim() || !password.trim() || !image) {
+        if (
+            !fullName.trim() ||
+            !email.trim() ||
+            !password.trim() ||
+            !NIK.trim() ||
+            !KTPLink ||
+            !city.trim()
+        ) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
@@ -173,6 +187,15 @@ export default function Register({ navigation }) {
                 text2: 'Mohon input form register dengan lengkap!',
             })
         } else {
+            const payload = {
+                fullName,
+                email,
+                password,
+                NIK,
+                ktp: KTPLink,
+                kota: city,
+            }
+
             dispatch(doRegister(payload)).then(() => {
                 navigation.navigate('Masuk')
             })
@@ -226,7 +249,9 @@ export default function Register({ navigation }) {
                 </View>
 
                 {uploadingImage ? (
-                    <ActivityIndicator size="large" color="#1A73E9" />
+                    <View stlye={styles.imageContainer}>
+                        <ActivityIndicator size="large" color="#1A73E9" />
+                    </View>
                 ) : (
                     <>
                         {image && (
@@ -242,7 +267,7 @@ export default function Register({ navigation }) {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    {uploadingImage || loadingRegister ? (
+                    {loadingRegister ? (
                         <ActivityIndicator size="large" color="#1A73E9" />
                     ) : (
                         <Button title="Daftar" color="#1A73E9" onPress={onRegisterClick} />
