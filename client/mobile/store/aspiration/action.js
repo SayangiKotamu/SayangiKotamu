@@ -2,6 +2,8 @@ import { SET_LOADING_SEND_ASPIRATION } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
+import baseURL from '../../apis/sayangiKotamu'
+
 function setLoadingSendAspiration(payload) {
     return {
         type: SET_LOADING_SEND_ASPIRATION,
@@ -18,7 +20,7 @@ export function sendAspiration(payload) {
         try {
             dispatch(setLoadingSendAspiration(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/aspiration', {
+            let response = await fetch(`${baseURL}/aspiration`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

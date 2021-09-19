@@ -2,6 +2,8 @@ import { SET_CATEGORIES, SET_LOADING_CATEGORIES } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
+import baseURL from '../../apis/sayangiKotamu'
+
 function setCategories(payload) {
     return {
         type: SET_CATEGORIES,
@@ -21,7 +23,7 @@ export function fetchAllCategory() {
         try {
             dispatch(setLoadingCategories(true))
 
-            let response = await fetch('https://e9ce-110-138-83-131.ngrok.io/categories')
+            let response = await fetch(`${baseURL}/categories`)
 
             if (response.ok) {
                 response = await response.json()
