@@ -88,12 +88,17 @@ const styles = StyleSheet.create({
     },
     announcementCardContainer: {
         backgroundColor: 'white',
-        borderColor: 'grey',
+        borderColor: '#ececec',
         marginTop: 10,
         borderWidth: 1,
         borderRadius: 5,
         width: '100%',
         flexDirection: 'row',
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#ececec',
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 2,
     },
     announcementCardContent: {
         marginLeft: 10,

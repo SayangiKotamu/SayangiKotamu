@@ -1,10 +1,12 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { Button, View, StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import Home from './Home'
 import ReportDetail from './ReportDetail'
+
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 import { setIsLoggedIn, setAccessToken } from '../store/auth/action'
 
@@ -37,9 +39,9 @@ export default function HomeScreen() {
                 component={Home}
                 options={{
                     headerRight: () => (
-                        <View style={styles.buttonContainer}>
-                            <Button color="#1A73E9" onPress={onLogoutClick} title="Logout" />
-                        </View>
+                        <TouchableOpacity style={styles.buttonContainer} onPress={onLogoutClick}>
+                            <Ionicons name={'exit-outline'} size={30} color={'red'} />
+                        </TouchableOpacity>
                     ),
                 }}
             />

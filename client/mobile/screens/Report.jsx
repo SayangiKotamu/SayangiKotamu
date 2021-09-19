@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     headingContainer: {
         backgroundColor: '#cce5ff',
         borderWidth: 1,
-        borderColor: 'grey',
+        borderColor: '#ececec',
         width: '96%',
         padding: 3,
         paddingBottom: 15,
@@ -362,6 +362,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 15,
         alignItems: 'center',
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#ececec',
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 8,
     },
     pickerContainer: {
         borderBottomWidth: 2,

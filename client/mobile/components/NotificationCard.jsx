@@ -19,7 +19,7 @@ export default function NotificationCard(props) {
 const styles = StyleSheet.create({
     notificationCardContainer: {
         backgroundColor: 'white',
-        borderColor: 'black',
+        borderColor: '#ececec',
         marginTop: 10,
         borderBottomWidth: 1,
         width: '100%',
