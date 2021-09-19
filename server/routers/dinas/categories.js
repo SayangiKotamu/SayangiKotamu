@@ -1,5 +1,5 @@
 const routers = require("express").Router();
-const categoriesController = require("../controllers/categoriesController");
+const categoriesController = require("../../controllers/categoriesController");
 
 routers.get("/", categoriesController.showAll);
 routers.post("/", categoriesController.addCategories);

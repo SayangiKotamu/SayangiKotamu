@@ -34,18 +34,8 @@ const dinasSchema = new mongoose.Schema({
   role: {
     type: String,
   },
-  reports: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Report",
-    },
-  ],
-  aspirations: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Aspiration",
-    },
-  ],
+  reports: [],
+  aspirations: [],
   announcments: [],
 });
 

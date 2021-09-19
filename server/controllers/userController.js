@@ -128,7 +128,6 @@ class UserController {
               { isActive: true }
             );
             res.status(200).json({ message: "Your email has been activated" });
-            console.log(updateActive);
           } else {
             throw { name: "IsActiveTrue" };
           }
