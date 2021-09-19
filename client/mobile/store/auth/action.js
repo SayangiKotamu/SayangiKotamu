@@ -49,12 +49,12 @@ export function doRegister(payload) {
                     Accept: 'application/json',
                 },
                 body: JSON.stringify({
-                    NIK: '320312030121', //! Hardcode dulu => nanti jadiin MVP (dapet dari scan gambar)
-                    kota: 'Jakarta', //! Hardcode dulu => nanti jadiin MVP (dapet dari scan gambar)
-                    full_name: `${payload.firstName} ${payload.lastName}`,
+                    full_name: payload.fullName,
                     email: payload.email,
                     password: payload.password,
+                    NIK: payload.NIK,
                     ktp: payload.ktp, //! Ini link ktp dari firebase
+                    kota: payload.kota,
                 }),
             })
 
