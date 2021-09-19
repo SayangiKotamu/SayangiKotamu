@@ -54,6 +54,7 @@ export function doRegister(payload) {
                     full_name: `${payload.firstName} ${payload.lastName}`,
                     email: payload.email,
                     password: payload.password,
+                    ktp: payload.ktp, //! Ini link ktp dari firebase
                 }),
             })
 

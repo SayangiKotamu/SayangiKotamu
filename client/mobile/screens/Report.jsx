@@ -90,7 +90,7 @@ export default function Report({ navigation }) {
                         position: 'bottom',
                         bottomOffset: 70,
                         text1: 'SayangiKotamu',
-                        text2: 'Mohon maaf, kami membutuhkan akses kamera',
+                        text2: 'Mohon maaf, kami membutuhkan akses galeri',
                     })
                 }
             }

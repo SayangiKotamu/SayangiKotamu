@@ -451,6 +451,15 @@
       "kota": "Jakarta",
       "full_name": "Testing Aja",
       "id": 5
+    },
+    {
+      "email": "testktp@email.com",
+      "password": "$2a$10$E4TkyC5dtNFjExqqzcnMgeA49pDk.hBgJr42KD16SXylvUu8Pr.ei",
+      "NIK": "320312030121",
+      "kota": "Jakarta",
+      "full_name": "Test KTP",
+      "ktp": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-19T09%3A07%3A11.973Z?alt=media&token=9f3f1828-701a-4346-a020-be5e4ae8b600",
+      "id": 6
     }
   ],
   "categories": [
