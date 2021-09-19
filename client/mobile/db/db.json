@@ -278,6 +278,37 @@
       "upVote": 0,
       "downVote": 0,
       "id": "a3KjERk"
+    },
+    {
+      "title": "Tes laporan",
+      "description": "Ini cerita laporan",
+      "location": "Samping abang bakso",
+      "category": "C0003",
+      "lat": {
+        "$numberDecimal": -6.2533412
+      },
+      "long": {
+        "$numberDecimal": 106.9228814
+      },
+      "picture": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-19T07%3A50%3A17.733Z?alt=media&token=d82071d4-330c-4a0e-a8d4-3fcd9d79f1cc",
+      "user": {
+        "email": "jokowi@mail.com",
+        "password": "$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6",
+        "NIK": "314012401204901",
+        "full_name": "Joko Widodo",
+        "kota": "Jakarta",
+        "id": 1
+      },
+      "dinas": {
+        "id": "D0001",
+        "name": "Dinas Perhubungan"
+      },
+      "status": "Diterima",
+      "issued_date": "2021-09-18T04:45:22.074Z",
+      "finished_date": null,
+      "upVote": 0,
+      "downVote": 0,
+      "id": "XECICSg"
     }
   ],
   "announcements": [

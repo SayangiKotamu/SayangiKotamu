@@ -305,6 +305,10 @@ export default function Report({ navigation }) {
                         value={locationDescription}
                         onChangeText={(text) => setLocationDescription(text)}
                     />
+                    <Text style={styles.notes}>
+                        <Text style={styles.notesEmphasize}>Catatan:</Text> SayangiKotamu akan
+                        menyimpan data lokasi mu secara otomatis
+                    </Text>
                     {image ? (
                         <View style={styles.imageContainer}>
                             <Image source={{ uri: image }} style={styles.reportImage} />
@@ -341,6 +345,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
         marginBottom: 50,
+    },
+    notesEmphasize: {
+        fontWeight: 'bold',
+    },
+    notes: {
+        textAlign: 'center',
+        fontSize: 10,
+        marginTop: 5,
+        color: 'grey',
     },
     imageContainer: {
         marginTop: 20,
