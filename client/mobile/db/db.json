@@ -460,6 +460,15 @@
       "full_name": "Test KTP",
       "ktp": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-19T09%3A07%3A11.973Z?alt=media&token=9f3f1828-701a-4346-a020-be5e4ae8b600",
       "id": 6
+    },
+    {
+      "email": "testinggg@email.com",
+      "password": "$2a$10$CqFPsT2ceGneUtNhoBMzo.J07Al15HQJKSzdN.FXQ1h/1cEZoo.A2",
+      "NIK": "320312030121",
+      "kota": "Jakarta",
+      "full_name": "Testingggg Ajaaaa",
+      "ktp": "https://firebasestorage.googleapis.com/v0/b/sayangikotamu.appspot.com/o/2021-09-19T12%3A57%3A30.337Z?alt=media&token=1cc249f8-1e06-49c8-ba3d-f2720da18c0a",
+      "id": 7
     }
   ],
   "categories": [
