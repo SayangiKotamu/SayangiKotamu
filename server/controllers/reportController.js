@@ -18,7 +18,7 @@ class ReportController {
 
   static async showByCategory(req, res, next) {
     try {
-      const data = await Report.findOne({ category: req.params.category });
+      const data = await Report.find({ category: req.params.category });
       if (data) {
         res.status(200).json(data);
       } else {
@@ -203,49 +203,6 @@ class ReportController {
     }
   }
 
-  // ? Bukannya cuma buat Dinas? 2 dibawah?
-  static async patchStatusReport(req, res, next) {
-    try {
-      let data = await Report.findOne({ _id: req.params.id });
-      if (data) {
-        let nowStatus = data.status;
-        if (nowStatus === "diterima") {
-          nowStatus = "diproses";
-        } else if (nowStatus === "diproses") {
-          nowStatus = "selesai";
-        }
-        let status = await Report.updateOne(
-          { _id: req.params.id },
-          { status: nowStatus }
-        );
-        res.status(201).json(status);
-      } else {
-        next({
-          name: "NotFound",
-          message: "report Not Found",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
-  static async deleteReport(req, res, next) {
-    try {
-      let data = await Report.findOneAndDelete({ _id: req.params.id });
-      if (data) {
-        res.status(201).json(data);
-      } else {
-        next({
-          name: "NotFound",
-          message: "Report Not Found",
-        });
-      }
-    } catch (err) {
-      next(err);
-    }
-  }
-
   // ! DINAS REPORT
   static async dinasGetAllReports(req, res, next) {
     const { id, email, role } = req.user;
@@ -296,7 +253,9 @@ class ReportController {
       if (foundReport) {
         payload.user = foundReport.user;
         payload.title = foundReport.title;
-        await Report.updateOne({ _id: id }, payload);
+        await Report.updateOne({ _id: id }, payload, {
+          change: "ChangeStatus",
+        });
         const updatedReport = await Report.findOne({ _id: id });
 
         await Dinas.updateOne(

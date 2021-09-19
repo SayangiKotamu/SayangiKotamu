@@ -58,23 +58,25 @@ const reportSchema = new mongoose.Schema({
 
 // ! LATER: UBAH ADD REPORT
 reportSchema.pre("updateOne", async function (next) {
-  const modifiedField = this.getUpdate();
+  if (this.options.change === "ChangeStatus") {
+    const modifiedField = this.getUpdate();
 
-  const foundDinas = await Dinas.findOne({ _id: modifiedField.dinas })
-    .select("-reports")
-    .select("-aspirations");
+    const foundDinas = await Dinas.findOne({ _id: modifiedField.dinas })
+      .select("-reports")
+      .select("-aspirations");
 
-  let process =
-    modifiedField.status === "diproses"
-      ? "sedang ditangani"
-      : "sudah selesai ditangani";
+    let process =
+      modifiedField.status === "diproses"
+        ? "sedang ditangani"
+        : "sudah selesai ditangani";
 
-  const payload = {
-    description: `Laporan kamu dengan nama ${modifiedField.title} ${process} oleh ${foundDinas.name}`,
-    date: new Date(),
-    user: modifiedField.user,
-  };
-  await Notification.create(payload);
+    const payload = {
+      description: `Laporan kamu dengan nama ${modifiedField.title} ${process} oleh ${foundDinas.name}`,
+      date: new Date(),
+      user: modifiedField.user,
+    };
+    await Notification.create(payload);
+  }
 
   next();
 });

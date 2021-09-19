@@ -33,6 +33,22 @@ class categoriesController {
       }
     }
   }
+  static async getById(req, res, next) {
+    const { id } = req.params;
+    try {
+      const foundCategory = await Categories.findOne({ _id: id });
+      if (foundCategory) {
+        res.status(200).json(foundCategory);
+      } else {
+        next({
+          name: "NotFound",
+          message: "Categories Not Found",
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
   static async editCategories(req, res, next) {
     const { name } = req.body;
 

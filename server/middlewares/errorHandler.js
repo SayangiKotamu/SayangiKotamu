@@ -22,6 +22,12 @@ function errorHandler(err, req, res, next) {
     case "CastError":
       res.status(400).json({ message: "This field should be included" });
       break;
+    case "IsActiveTrue":
+      res.status(400).json({ message: "You have already activate your email" });
+      break;
+    case "JsonWebTokenError":
+      res.status(401).json({ message: "Invalid access token" });
+      break;
     // ! HANDI ANGGA COBA INI BUAT APA
     // case "Invalid Login":
     case "NIKInCollection":

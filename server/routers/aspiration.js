@@ -8,6 +8,6 @@ router.get("/", AspirationController.getAll);
 
 router.get("/:id", AspirationController.getById);
 
-router.post("/", AspirationController.create);
+router.post("/create", AspirationController.create);
 
 module.exports = router;

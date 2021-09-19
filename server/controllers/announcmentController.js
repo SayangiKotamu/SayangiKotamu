@@ -41,11 +41,17 @@ class AnnouncmentController {
   }
 
   static async getAll(req, res, next) {
-    const { id } = req.user;
+    const { id, role } = req.user;
     try {
-      const getAllAnnouncments = await Announcment.find({ dinas: id });
-      //   console.log(getAllAnnouncments);
-      res.status(200).json(getAllAnnouncments);
+      if (!role) {
+        const getAllAnnouncments = await Announcment.find();
+        //   console.log(getAllAnnouncments);
+        res.status(200).json(getAllAnnouncments);
+      } else {
+        const getAllAnnouncments = await Announcment.find({ dinas: id });
+        //   console.log(getAllAnnouncments);
+        res.status(200).json(getAllAnnouncments);
+      }
     } catch (err) {
       next(err);
     }
