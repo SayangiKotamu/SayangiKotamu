@@ -51,7 +51,6 @@ class ReportController {
       let dinas = await Dinas.findOne({ _id: req.body.dinas });
       newReport.dinas = dinas;
       let data = await Report.create(newReport);
-      console.log(data);
       // ! AFTER CREATE SHOULD PUSH AN ARRAY INTO DINAS AND USERS
       await Dinas.findByIdAndUpdate(
         { _id: req.body.dinas },
@@ -289,11 +288,14 @@ class ReportController {
     }
     const payload = {
       status: req.body.status,
+      dinas: req.user.id,
       finishedDate,
     };
     try {
       const foundReport = await Report.findOne({ _id: id });
       if (foundReport) {
+        payload.user = foundReport.user;
+        payload.title = foundReport.title;
         await Report.updateOne({ _id: id }, payload);
         const updatedReport = await Report.findOne({ _id: id });
 

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const Notification = require("../models/notification");
+const Dinas = require("../models/dinas");
 
 const reportSchema = new mongoose.Schema({
   title: {
@@ -55,14 +57,27 @@ const reportSchema = new mongoose.Schema({
 });
 
 // ! LATER: UBAH ADD REPORT
-// reportSchema.pre("updateOne", async function (next) {
-//   const report = this;
+reportSchema.pre("updateOne", async function (next) {
+  const modifiedField = this.getUpdate();
 
-//   if (report.status === "selesai") {
-//     report.finishedDate = new Date();
-//   }
-//   next();
-// });
+  const foundDinas = await Dinas.findOne({ _id: modifiedField.dinas })
+    .select("-reports")
+    .select("-aspirations");
+
+  let process =
+    modifiedField.status === "diproses"
+      ? "sedang ditangani"
+      : "sudah selesai ditangani";
+
+  const payload = {
+    description: `Laporan kamu dengan nama ${modifiedField.title} ${process} oleh ${foundDinas.name}`,
+    date: new Date(),
+    user: modifiedField.user,
+  };
+  await Notification.create(payload);
+
+  next();
+});
 
 const Report = mongoose.model("Report", reportSchema);
 
