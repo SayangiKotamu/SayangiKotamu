@@ -22,13 +22,25 @@ class categoriesController {
       let data = await Categories.create(newCategories);
       res.status(201).json({ ...newCategories, _id: data._id });
     } catch (err) {
-      next(err);
+      if (!err.errors) {
+        next(err);
+      } else {
+        const toArray = Object.values(err.errors);
+        const errMessage = toArray.map((el) => {
+          return el.message;
+        });
+        res.status(400).json({ message: errMessage });
+      }
     }
   }
   static async editCategories(req, res, next) {
+    const { name } = req.body;
+
+    const slug = name.toLowerCase().replace(" ", "_");
     try {
       let updateCategories = {
-        name: req.body.name,
+        name,
+        slug,
       };
       let data = await Categories.findOneAndUpdate(
         { _id: req.params.id },

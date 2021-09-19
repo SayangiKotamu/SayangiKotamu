@@ -8,7 +8,7 @@ function errorHandler(err, req, res, next) {
       res.status(401).json({ message: "Email / Password is wrong" });
       break;
     case "IdNotVerified":
-      res.status(401).json({ message: "Id is not in the collection" });
+      res.status(401).json({ message: "Id is not verified" });
       break;
     case "NoAccessToken":
       res.status(401).json({ message: "You do not have aceess token" });
@@ -18,6 +18,9 @@ function errorHandler(err, req, res, next) {
       break;
     case "AnnouncmentNotFound":
       res.status(404).json({ message: "Announcment not found" });
+      break;
+    case "CastError":
+      res.status(400).json({ message: "This field should be included" });
       break;
     // ! HANDI ANGGA COBA INI BUAT APA
     // case "Invalid Login":
