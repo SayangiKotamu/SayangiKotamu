@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    ScrollView,
-    Button,
-    Dimensions,
-    RefreshControl,
-} from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, RefreshControl } from 'react-native'
+import AntDesign from '@expo/vector-icons/AntDesign'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -58,7 +49,7 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Lapor')}
                         >
-                            <Ionicons name={'list-circle'} size={30} color={'#1A73E9'} />
+                            <AntDesign name={'customerservice'} size={28} color={'#1A73E9'} />
                             <Text style={styles.textColor}>KotaReport</Text>
                         </TouchableOpacity>
                     </View>
@@ -67,7 +58,7 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Pengumuman')}
                         >
-                            <Ionicons name={'newspaper'} size={30} color={'#1A73E9'} />
+                            <AntDesign name={'filetext1'} size={28} color={'#1A73E9'} />
                             <Text style={styles.textColor}>KotaNews</Text>
                         </TouchableOpacity>
                     </View>
@@ -76,7 +67,7 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Aspirasi')}
                         >
-                            <Ionicons name={'book-sharp'} size={30} color={'#1A73E9'} />
+                            <AntDesign name={'carryout'} size={28} color={'#1A73E9'} />
                             <Text style={styles.textColor}>KotaAspire</Text>
                         </TouchableOpacity>
                     </View>
