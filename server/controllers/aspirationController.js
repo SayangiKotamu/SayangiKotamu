@@ -3,12 +3,19 @@ const Dinas = require("../models/dinas");
 const User = require("../models/user");
 
 class AspirationController {
+  // ! USER
   static async getAll(req, res, next) {
-    const { id } = req.user;
+    const { id, role } = req.user;
+    console.log(req.user);
 
     try {
-      const getAspirations = await Aspiration.find({ user: id });
-      res.status(200).json(getAspirations);
+      if (role === "dinas") {
+        const getAspirations = await Aspiration.find({ dinas: id });
+        res.status(200).json(getAspirations);
+      } else {
+        const getAspirations = await Aspiration.find({ user: id });
+        res.status(200).json(getAspirations);
+      }
     } catch (err) {
       next(err);
     }
@@ -64,6 +71,8 @@ class AspirationController {
       console.log(err);
     }
   }
+
+  // ! DINAS
 }
 
 module.exports = AspirationController;
