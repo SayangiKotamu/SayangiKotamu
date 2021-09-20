@@ -9,6 +9,7 @@ import {
     ActivityIndicator,
     Dimensions,
     Text,
+    TouchableOpacity,
 } from 'react-native'
 
 import Toast from 'react-native-toast-message'
@@ -23,7 +24,16 @@ import { firebaseConfig } from '../firebase'
 
 import { GOOGLE_CLOUD_VISION_API_KEY } from 'react-native-dotenv'
 
+import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
+import AppLoading from 'expo-app-loading'
+
+import CustomButton from '../components/CustomButton'
+
 export default function Register({ navigation }) {
+    let [fontsLoaded] = useFonts({
+        Poppins_600SemiBold,
+    })
+
     if (!Firebase.apps.length) {
         Firebase.initializeApp(firebaseConfig)
     }
@@ -204,6 +214,10 @@ export default function Register({ navigation }) {
         }
     }
 
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -231,7 +245,7 @@ export default function Register({ navigation }) {
                     />
                     {analyzingImage ? (
                         <View style={styles.loadingKTP}>
-                            <ActivityIndicator size="small" color="#1A73E9" />
+                            <ActivityIndicator size="small" color="black" />
                             <Text style={styles.loadingKTPText}>Menganalisa KTP</Text>
                         </View>
                     ) : (
@@ -259,7 +273,7 @@ export default function Register({ navigation }) {
 
                 {uploadingImage ? (
                     <View stlye={styles.imageContainer}>
-                        <ActivityIndicator size="large" color="#1A73E9" />
+                        <ActivityIndicator size="large" color="black" />
                     </View>
                 ) : (
                     <>
@@ -272,14 +286,18 @@ export default function Register({ navigation }) {
                 )}
 
                 <View style={styles.buttonContainer}>
-                    <Button title="Unggah KTP" color="#05DAA7" onPress={selectPhoto} />
+                    <TouchableOpacity onPress={selectPhoto}>
+                        <CustomButton buttonName={'Unggah KTP'} buttonColor={'tomato'} />
+                    </TouchableOpacity>
                 </View>
 
-                <View style={styles.buttonContainer}>
+                <View style={styles.buttonContainerBottom}>
                     {loadingRegister ? (
-                        <ActivityIndicator size="large" color="#1A73E9" />
+                        <ActivityIndicator size="large" color="black" />
                     ) : (
-                        <Button title="Daftar" color="#1A73E9" onPress={onRegisterClick} />
+                        <TouchableOpacity onPress={onRegisterClick}>
+                            <CustomButton buttonName={'Daftar'} buttonColor={'black'} />
+                        </TouchableOpacity>
                     )}
                 </View>
             </View>
@@ -292,17 +310,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height: 50,
         borderBottomWidth: 2,
-        borderBottomColor: 'blue',
+        borderBottomColor: 'black',
     },
     loadingKTPText: {
         marginTop: 15,
         marginLeft: 10,
         color: 'grey',
+        fontFamily: 'Poppins_600SemiBold',
     },
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#f5f5f5',
         alignItems: 'center',
+        marginTop: '15%',
+        marginBottom: '15%',
     },
     formContainer: {
         width: '80%',
@@ -312,16 +333,27 @@ const styles = StyleSheet.create({
     },
     headingContainer: {
         marginTop: 30,
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#ececec',
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 2,
+        borderRadius: 250,
     },
     buttonContainer: {
         marginTop: 20,
         marginBottom: 20,
         width: '80%',
     },
+    buttonContainerBottom: {
+        marginTop: 10,
+        width: '80%',
+        marginBottom: '10%',
+    },
     title: {
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#1A73E9',
+        color: 'black',
         textAlign: 'center',
     },
     slogan: {
@@ -330,11 +362,14 @@ const styles = StyleSheet.create({
     input: {
         height: 50,
         borderBottomWidth: 2,
-        borderBottomColor: 'blue',
+        borderBottomColor: 'black',
+        fontFamily: 'Poppins_600SemiBold',
     },
     logoImage: {
         width: 250,
         height: 250,
+        borderRadius: 250,
+        borderColor: 'grey',
     },
     imageContainer: {
         marginTop: 20,
@@ -342,7 +377,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     ktpImage: {
-        width: Dimensions.get('window').width / 2,
+        width: Dimensions.get('window').width / 1.5,
         height: Dimensions.get('window').width / 2,
+        borderRadius: 10,
     },
 })

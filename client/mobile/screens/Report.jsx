@@ -12,10 +12,11 @@ import {
     Image,
     Dimensions,
     ActivityIndicator,
-    // TouchableOpacity,
+    TouchableOpacity,
 } from 'react-native'
 
 import Toast from 'react-native-toast-message'
+import CustomButton from '../components/CustomButton'
 
 // import { Camera } from 'expo-camera'
 import * as Location from 'expo-location'
@@ -29,7 +30,14 @@ import { fetchAllCategory } from '../store/categories/action'
 import { fetchAllDinas } from '../store/dinas/action'
 import { addReport } from '../store/reports/action'
 
+import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
+import AppLoading from 'expo-app-loading'
+
 export default function Report({ navigation }) {
+    let [fontsLoaded] = useFonts({
+        Poppins_600SemiBold,
+    })
+
     if (!Firebase.apps.length) {
         Firebase.initializeApp(firebaseConfig)
     }
@@ -218,11 +226,15 @@ export default function Report({ navigation }) {
     //     )
     // }
 
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
+
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.headingContainer}>
-                    <Ionicons name={'arrow-down-circle-sharp'} size={30} color={'#1A73E9'} />
+                    <Ionicons name={'arrow-down-circle-sharp'} size={30} color={'white'} />
                     <Text style={styles.headingText}>Punya keluhan?</Text>
                     <Text style={styles.headingText}>Yuk sampaikan disini!</Text>
                 </View>
@@ -246,7 +258,7 @@ export default function Report({ navigation }) {
 
                     <Text style={styles.label}>Kategori Permasalahan:</Text>
                     {loadingCategories ? (
-                        <ActivityIndicator size="large" color="#1A73E9" />
+                        <ActivityIndicator size="large" color="black" />
                     ) : (
                         <View style={styles.pickerContainer}>
                             <Picker
@@ -269,7 +281,7 @@ export default function Report({ navigation }) {
                     <Text style={styles.label}>Pilih instansi terkait:</Text>
 
                     {loadingDinas ? (
-                        <ActivityIndicator size="large" color="#1A73E9" />
+                        <ActivityIndicator size="large" color="black" />
                     ) : (
                         <View style={styles.pickerContainer}>
                             <Picker
@@ -309,22 +321,26 @@ export default function Report({ navigation }) {
                         </View>
                     ) : (
                         <View style={styles.buttonContainer}>
-                            <Button
-                                title="Pilih Foto dari Galeri"
-                                color="#05DAA7"
-                                onPress={selectPhoto}
-                            />
+                            <TouchableOpacity onPress={selectPhoto}>
+                                <CustomButton
+                                    buttonName={'Pilih foto dari Galeri'}
+                                    buttonColor={'tomato'}
+                                />
+                            </TouchableOpacity>
+
                             {/* <View style={styles.textContainer}>
                                 <Text style={styles.text}>Atau</Text>
                             </View>
                             <Button title="Ambil Foto" color="#05DAA7" onPress={openCamera} /> */}
                         </View>
                     )}
-                    <View style={styles.buttonContainer}>
+                    <View style={styles.buttonContainerBottom}>
                         {uploadingImage || loadingSendReport ? (
-                            <ActivityIndicator size="large" color="#1A73E9" />
+                            <ActivityIndicator size="large" color="black" />
                         ) : (
-                            <Button title="Lapor" color="#1A73E9" onPress={sendReport} />
+                            <TouchableOpacity onPress={sendReport}>
+                                <CustomButton buttonName={'Lapor'} buttonColor={'black'} />
+                            </TouchableOpacity>
                         )}
                     </View>
                 </View>
@@ -338,7 +354,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
-        marginBottom: 50,
+        marginBottom: '30%',
     },
     notesEmphasize: {
         fontWeight: 'bold',
@@ -356,10 +372,13 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 20,
+    },
+    buttonContainerBottom: {
+        marginTop: 20,
         marginBottom: 20,
     },
     headingContainer: {
-        backgroundColor: '#cce5ff',
+        backgroundColor: 'tomato',
         borderWidth: 1,
         borderColor: '#ececec',
         width: '96%',
@@ -377,31 +396,31 @@ const styles = StyleSheet.create({
     },
     pickerContainer: {
         borderBottomWidth: 2,
-        borderBottomColor: '#1A73E9',
+        borderBottomColor: 'tomato',
         paddingBottom: 10,
     },
     headingText: {
         textAlign: 'center',
-        color: '#1c5d9b',
-        fontWeight: 'bold',
+        color: 'white',
+        fontFamily: 'Poppins_600SemiBold',
         fontSize: 20,
     },
     label: {
         marginBottom: 5,
         marginTop: 20,
         fontSize: 15,
-        color: '#1A73E9',
-        fontWeight: 'bold',
+        color: 'tomato',
+        fontFamily: 'Poppins_600SemiBold',
     },
     input: {
         height: 50,
         borderBottomWidth: 2,
-        borderBottomColor: '#1A73E9',
+        borderBottomColor: 'tomato',
     },
     inputTextArea: {
         height: 50,
         borderWidth: 2,
-        borderColor: '#1A73E9',
+        borderColor: 'tomato',
         padding: 8,
         borderRadius: 5,
     },

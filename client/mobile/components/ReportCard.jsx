@@ -6,8 +6,19 @@ import { useNavigation } from '@react-navigation/native'
 
 import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
 
+import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
+import AppLoading from 'expo-app-loading'
+
 export default function ReportCard(props) {
+    let [fontsLoaded] = useFonts({
+        Poppins_600SemiBold,
+    })
+
     const navigation = useNavigation()
+
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
 
     return (
         <TouchableOpacity
@@ -23,13 +34,12 @@ export default function ReportCard(props) {
                 />
             </View>
             <View style={styles.reportCardContent}>
-                <Text style={styles.textId}>{props.report._id}</Text>
                 <Text style={styles.textTitle}>{props.report.title}</Text>
                 <Text style={styles.textDescription}>
                     {formatCharactersByLimit(props.report.description)}
                 </Text>
                 <View style={styles.categorySection}>
-                    <AntDesign name={'tago'} size={18} color={'#1A73E9'} style={styles.logo} />
+                    <AntDesign name={'tago'} size={18} color={'tomato'} style={styles.logo} />
                     <Text style={styles.textCategory}>{props.report.category.name}</Text>
                 </View>
                 <Text style={styles.textDate}>
@@ -51,22 +61,23 @@ const styles = StyleSheet.create({
         color: '#a2a4aa',
     },
     textTitle: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        color: '#062158',
+        marginTop: 6,
+        fontSize: 16,
+        color: 'black',
+        fontFamily: 'Poppins_600SemiBold',
     },
     textDescription: {
         fontSize: 12,
         color: '#737375',
     },
     textCategory: {
-        marginTop: 5,
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#062158',
+        marginTop: 8,
+        fontSize: 10,
+        color: 'black',
+        fontFamily: 'Poppins_600SemiBold',
     },
     textDate: {
-        fontSize: 10,
+        fontSize: 9,
         marginTop: 3,
         color: '#737375',
     },
@@ -98,7 +109,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     logo: {
-        marginTop: 5,
+        marginTop: 8,
         marginRight: 5,
     },
 })
