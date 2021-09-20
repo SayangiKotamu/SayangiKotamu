@@ -10,9 +10,16 @@ import ReportCard from '../components/ReportCard'
 
 import SkeletonContent from 'react-native-skeleton-content'
 
+import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
+import AppLoading from 'expo-app-loading'
+
 const windowWidth = Dimensions.get('window').width
 
 export default function Home({ navigation }) {
+    let [fontsLoaded] = useFonts({
+        Poppins_600SemiBold,
+    })
+
     const dispatch = useDispatch()
 
     const { reports, loadingReports } = useSelector((state) => state.reports)
@@ -28,6 +35,10 @@ export default function Home({ navigation }) {
     useEffect(() => {
         dispatch(fetchAllReports())
     }, [])
+
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
 
     return (
         <ScrollView
@@ -49,7 +60,7 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Lapor')}
                         >
-                            <AntDesign name={'customerservice'} size={28} color={'#1A73E9'} />
+                            <AntDesign name={'customerservice'} size={28} color={'white'} />
                             <Text style={styles.textColor}>KotaReport</Text>
                         </TouchableOpacity>
                     </View>
@@ -58,7 +69,7 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Pengumuman')}
                         >
-                            <AntDesign name={'filetext1'} size={28} color={'#1A73E9'} />
+                            <AntDesign name={'filetext1'} size={28} color={'white'} />
                             <Text style={styles.textColor}>KotaNews</Text>
                         </TouchableOpacity>
                     </View>
@@ -67,8 +78,8 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Aspirasi')}
                         >
-                            <AntDesign name={'carryout'} size={28} color={'#1A73E9'} />
-                            <Text style={styles.textColor}>KotaAspire</Text>
+                            <AntDesign name={'carryout'} size={28} color={'white'} />
+                            <Text style={styles.textColor}>KotaAspiration</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -116,13 +127,16 @@ export default function Home({ navigation }) {
 
 const styles = StyleSheet.create({
     textColor: {
-        color: '#a2a4aa',
+        color: 'white',
+        fontSize: 13,
+        fontFamily: 'Poppins_600SemiBold',
     },
     title: {
         fontSize: 25,
         marginTop: '5%',
         color: '#1A73E9',
         fontWeight: 'bold',
+        fontFamily: 'Poppins_600SemiBold',
     },
     loading: {
         marginTop: '40%',
@@ -134,11 +148,11 @@ const styles = StyleSheet.create({
     innerMenu: {
         borderWidth: 1,
         borderColor: '#ececec',
-        backgroundColor: 'white',
+        backgroundColor: 'tomato',
         padding: 5,
-        borderRadius: 5,
-        height: 90,
-        width: 90,
+        borderRadius: 30,
+        height: 110,
+        width: 130,
         justifyContent: 'center',
         shadowOffset: { width: 0, height: 0 },
         shadowColor: '#ececec',
@@ -151,12 +165,12 @@ const styles = StyleSheet.create({
         color: 'grey',
     },
     heading: {
-        fontSize: 20,
+        fontSize: 18,
         marginTop: '1%',
         color: '#062158',
-        fontWeight: 'bold',
         textAlign: 'left',
         marginLeft: '3%',
+        fontFamily: 'Poppins_600SemiBold',
     },
     logoImage: {
         width: 250,
@@ -184,14 +198,15 @@ const styles = StyleSheet.create({
         marginTop: '4%',
         width: '100%',
         alignItems: 'center',
+        marginBottom: '80%',
     },
     menuContainer: {
         marginTop: '5%',
         flexDirection: 'row',
         padding: 5,
         borderRadius: 10,
-        width: '80%',
-        justifyContent: 'space-between',
+        width: '90%',
+        justifyContent: 'center',
     },
     buttonContainer: {
         alignItems: 'center',

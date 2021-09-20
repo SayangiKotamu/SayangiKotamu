@@ -6,8 +6,19 @@ import { useNavigation } from '@react-navigation/native'
 
 import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
 
+import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
+import AppLoading from 'expo-app-loading'
+
 export default function AnnouncementCard(props) {
+    let [fontsLoaded] = useFonts({
+        Poppins_600SemiBold,
+    })
+
     const navigation = useNavigation()
+
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
 
     return (
         <TouchableOpacity
@@ -15,7 +26,7 @@ export default function AnnouncementCard(props) {
             onPress={() => navigation.navigate('Detail Pengumuman', { id: props.announcement._id })}
         >
             <View style={styles.notificationLogo}>
-                <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
+                <Ionicons name={'information-circle-sharp'} size={30} color={'tomato'} />
             </View>
             <View style={styles.announcementCardContent}>
                 <Text style={styles.textTitle}>{props.announcement.title}</Text>
@@ -56,13 +67,14 @@ const styles = StyleSheet.create({
     },
     textTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
         color: '#062158',
+        fontFamily: 'Poppins_600SemiBold',
     },
     textDescription: {
-        fontSize: 12,
+        fontSize: 10,
         marginTop: 10,
         color: 'black',
+        fontFamily: 'Poppins_600SemiBold',
     },
     textDate: {
         fontSize: 11,

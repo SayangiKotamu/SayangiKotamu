@@ -2,12 +2,13 @@ import React from 'react'
 
 import { useSelector } from 'react-redux'
 
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import Ionicons from '@expo/vector-icons/Ionicons'
+import AntDesign from '@expo/vector-icons/AntDesign'
 import 'react-native-gesture-handler'
 
 import HomeScreen from './HomeScreen'
@@ -51,6 +52,23 @@ export default function App() {
                         },
                         tabBarActiveTintColor: 'tomato',
                         tabBarInactiveTintColor: 'gray',
+                        tabBarStyle: {
+                            backgroundColor: 'white',
+                            height: '6.2%',
+                            borderRadius: 10,
+                            padding: 5,
+                            marginLeft: 10,
+                            marginBottom: 15,
+                            marginRight: 10,
+                            position: 'absolute',
+                            shadowColor: '#000',
+                            shadowOpacity: 0.06,
+                            shadowOffset: {
+                                height: 10,
+                                width: 10,
+                            },
+                        },
+                        tabBarShowLabel: false,
                     })}
                 >
                     <Tab.Screen
@@ -63,7 +81,17 @@ export default function App() {
                         component={AnnouncementScreen}
                         options={{ headerShown: false }}
                     />
-                    <Tab.Screen name="Lapor" component={Report} />
+                    <Tab.Screen
+                        name="Lapor"
+                        component={Report}
+                        options={{
+                            tabBarIcon: ({ focused }) => (
+                                <View style={styles.reportIcon}>
+                                    <AntDesign name={'upcircle'} size={60} color={'tomato'} />
+                                </View>
+                            ),
+                        }}
+                    ></Tab.Screen>
                     <Tab.Screen name="Aspirasi" component={Aspiration} />
                     <Tab.Screen name="Notifikasi" component={Notification} />
                 </Tab.Navigator>
@@ -100,5 +128,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    reportIcon: {
+        marginBottom: 40,
     },
 })

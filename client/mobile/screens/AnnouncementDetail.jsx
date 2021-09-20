@@ -9,9 +9,16 @@ import SkeletonContent from 'react-native-skeleton-content'
 
 import { fetchAnnouncementById } from '../store/announcements/action'
 
+import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
+import AppLoading from 'expo-app-loading'
+
 const windowWidth = Dimensions.get('window').width
 
 export default function AnnouncementDetail({ route }) {
+    let [fontsLoaded] = useFonts({
+        Poppins_600SemiBold,
+    })
+
     const { id } = route.params
 
     const isFocused = useIsFocused()
@@ -26,6 +33,10 @@ export default function AnnouncementDetail({ route }) {
             dispatch(fetchAnnouncementById(id))
         }
     }, [isFocused])
+
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
 
     return (
         <ScrollView>
@@ -50,7 +61,7 @@ export default function AnnouncementDetail({ route }) {
                             <Ionicons
                                 name={'information-circle-sharp'}
                                 size={40}
-                                color={'#1A73E9'}
+                                color={'tomato'}
                             />
                         </View>
                         <View style={styles.announcementCardContent}>
@@ -83,7 +94,7 @@ const styles = StyleSheet.create({
     },
     horizontalLine: {
         marginTop: 10,
-        borderBottomColor: 'grey',
+        borderBottomColor: '#ddd',
         borderBottomWidth: 1,
     },
     announcementCardContainer: {
@@ -113,19 +124,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     textOrganization: {
-        backgroundColor: '#05DAA7',
-        width: '70%',
+        backgroundColor: 'tomato',
         padding: 8,
         marginTop: 8,
         borderRadius: 10,
         marginLeft: 2,
+        marginRight: 5,
         color: 'white',
         fontWeight: 'bold',
     },
     textDescription: {
-        fontSize: 15,
+        padding: 3,
+        textAlign: 'justify',
+        marginRight: 12,
+        fontSize: 13,
         marginTop: 20,
         marginBottom: 30,
+        fontFamily: 'Poppins_600SemiBold',
     },
     textDate: {
         marginTop: 10,
