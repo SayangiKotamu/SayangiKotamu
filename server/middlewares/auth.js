@@ -82,9 +82,10 @@ async function authZDinas(req, res, next) {
   const { id } = req.params;
   const { id: userId, email, role } = req.user;
   try {
-    const foundReport = await Report.findById({ _id: id });
+    const foundReport = await Report.findOne({ _id: id });
     if (foundReport) {
-      if (foundReport.dinas === userId) {
+      if (foundReport.dinas.toString() === userId.toString()) {
+        next();
       } else {
         throw { name: "NoAccessReport" };
       }
