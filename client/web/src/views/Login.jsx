@@ -46,19 +46,7 @@ function Login() {
     } else {
       dispatch(logining(payload));
 
-      if (accessToken === "") {
-        toast.error("Terdapat kesalahan input email atau password", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      } else {
-        history.push("/beranda");
-      }
+      history.push("/beranda");
     }
   };
 

@@ -22,7 +22,7 @@ function Content(props) {
         <a
           href="#"
           onClick={() => {
-            handleToDetail(props.report._id);
+            handleToDetail(props?.report?._id);
           }}
           key={id}
         >
@@ -33,7 +33,7 @@ function Content(props) {
             }}
           >
             <img
-              src={props.report.picture}
+              src={props?.report?.picture}
               alt="No Image"
               style={{ height: "168px", width: "100%" }}
             />
@@ -52,11 +52,11 @@ function Content(props) {
             <div className="mr-3">
               <div className="mb-6">
                 <h1 className="mb-1 text-l font-bold">Laporan Pengaduan</h1>
-                <p className="truncate text-m">{props.report.title}</p>
+                <p className="truncate text-m">{props?.report?.title}</p>
               </div>
               <div>
                 <h1 className="mb-1 text-l font-bold">Deskripsi</h1>
-                <p className="truncate text-m">{props.report.description}</p>
+                <p className="truncate text-m">{props?.report?.description}</p>
               </div>
             </div>
             <div className="ml-3">
@@ -65,13 +65,13 @@ function Content(props) {
                   Tanggal Masuk
                 </h1>
                 <p className="truncate text-m text-right">
-                  {props.report.issued_date}
+                  {getFormatedDate(props?.report?.issuedDate)}
                 </p>
               </div>
               <div>
                 <h1 className="mb-1 text-l font-bold text-right">Lokasi</h1>
                 <p className="truncate text-m text-right">
-                  {props.report.location}
+                  {props?.report?.location}
                 </p>
               </div>
             </div>
