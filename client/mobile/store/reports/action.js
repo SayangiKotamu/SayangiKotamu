@@ -4,11 +4,12 @@ import {
     SET_DETAIL_REPORT,
     SET_LOADING_DETAIL,
     SET_LOADING_SEND_REPORT,
+    SET_LOADING_UPVOTE_REPORT,
+    SET_LOADING_DOWNVOTE_REPORT,
 } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
 import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setReportsList(payload) {
@@ -42,6 +43,20 @@ function setLoadingDetailReport(payload) {
 function setLoadingSendReport(payload) {
     return {
         type: SET_LOADING_SEND_REPORT,
+        payload,
+    }
+}
+
+function setLoadingUpVoteReport(payload) {
+    return {
+        type: SET_LOADING_UPVOTE_REPORT,
+        payload,
+    }
+}
+
+function setLoadingDownVoteReport(payload) {
+    return {
+        type: SET_LOADING_DOWNVOTE_REPORT,
         payload,
     }
 }
@@ -151,3 +166,7 @@ export function addReport(payload) {
         }
     }
 }
+
+export function upVoteReport() {}
+
+export function downVoteReport() {}

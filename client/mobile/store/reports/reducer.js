@@ -4,6 +4,8 @@ import {
     SET_DETAIL_REPORT,
     SET_LOADING_DETAIL,
     SET_LOADING_SEND_REPORT,
+    SET_LOADING_UPVOTE_REPORT,
+    SET_LOADING_DOWNVOTE_REPORT,
 } from './actionType'
 
 const initialState = {
@@ -12,6 +14,8 @@ const initialState = {
     detailReport: [], // Fetch By ID
     loadingDetailReport: false,
     loadingSendReport: false,
+    loadingUpVote: false,
+    loadingDownVote: false,
 }
 
 export default function reducer(state = initialState, action) {
@@ -40,6 +44,16 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 loadingSendReport: action.payload,
+            }
+        case SET_LOADING_UPVOTE_REPORT:
+            return {
+                ...state,
+                loadingUpVote: action.payload,
+            }
+        case SET_LOADING_DOWNVOTE_REPORT:
+            return {
+                ...state,
+                loadingDownVote: action.payload,
             }
         default:
             return state
