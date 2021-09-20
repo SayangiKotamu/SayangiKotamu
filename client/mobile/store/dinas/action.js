@@ -2,7 +2,7 @@ import { SET_DINAS, SET_LOADING_DINAS } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
+import sayangiKotamuApi from '../../apis/sayangiKotamuApi'
 
 function setDinas(payload) {
     return {
