@@ -99,7 +99,7 @@ afterAll((done) => {
 });
 
 // ! LATER: MUNGKIN ADA TAMBAHAN
-
+// ! REPORTS
 /* GET ALL REPORTS */
 describe("GET /reports [CASE SUCCESS]", () => {
   test("Should return array of object and status code (200)", (done) => {
@@ -379,3 +379,4 @@ describe("DELETE /report/:id [CASE FAILED / NO AUTHORIZE]", () => {
 });
 
 // ! END OF DINAS REPORS
+// ! USER
