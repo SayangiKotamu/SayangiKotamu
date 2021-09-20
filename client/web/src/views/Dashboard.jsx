@@ -59,37 +59,61 @@ function Dashboard() {
           ></lottie-player>
         ) : (
           <>
-            <Bar
-              // data={{
-              //   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-              //   datasets: [
-              //     {
-              //       label: "# of Votes",
-              //       data: [12, 19, 3, 5, 2, 3],
-              //       backgroundColor: [
-              //         "rgba(255, 99, 132, 0.2)",
-              //         "rgba(54, 162, 235, 0.2)",
-              //         "rgba(255, 206, 86, 0.2)",
-              //         "rgba(75, 192, 192, 0.2)",
-              //         "rgba(153, 102, 255, 0.2)",
-              //         "rgba(255, 159, 64, 0.2)",
-              //       ],
-              //       borderColor: [
-              //         "rgba(255, 99, 132, 1)",
-              //         "rgba(54, 162, 235, 1)",
-              //         "rgba(255, 206, 86, 1)",
-              //         "rgba(75, 192, 192, 1)",
-              //         "rgba(153, 102, 255, 1)",
-              //         "rgba(255, 159, 64, 1)",
-              //       ],
-              //       borderWidth: 1,
-              //     },
-              //   ],
-              // }}
-              width={100}
-              height={50}
-              // options={{ maintainAspectRatio: false }}
-            />
+            <div
+              className="container"
+              style={{
+                marginLeft: "10%",
+                marginTop: "2%",
+              }}
+            >
+              <h2 className="mb-5 text-3xl font-bold">Progress Pengaduan</h2>
+              <div
+                className="card"
+                style={{
+                  backgroundColor: "white",
+                  borderWidth: 2,
+                }}
+              >
+                <Bar
+                  data={{
+                    labels: [
+                      "Lalu Lintas",
+                      "Sarana/Pra Sarana",
+                      "Kriminal",
+                      "Kesehatan",
+                      "Kebersihan",
+                      "Lainnya",
+                    ],
+                    datasets: [
+                      {
+                        label: "Laporan Masuk Per Kategori",
+                        data: [1, 1, 0, 1, 0, 0],
+                        backgroundColor: [
+                          "rgba(255, 99, 132, 0.2)",
+                          "rgba(54, 162, 235, 0.2)",
+                          "rgba(255, 206, 86, 0.2)",
+                          "rgba(75, 192, 192, 0.2)",
+                          "rgba(153, 102, 255, 0.2)",
+                          "rgba(255, 159, 64, 0.2)",
+                        ],
+                        borderColor: [
+                          "rgba(255, 99, 132, 1)",
+                          "rgba(54, 162, 235, 1)",
+                          "rgba(255, 206, 86, 1)",
+                          "rgba(75, 192, 192, 1)",
+                          "rgba(153, 102, 255, 1)",
+                          "rgba(255, 159, 64, 1)",
+                        ],
+                        borderWidth: 1,
+                      },
+                    ],
+                  }}
+                  width={100}
+                  height={30}
+                  style={{ margin: "2%" }}
+                />
+              </div>
+            </div>
             <div
               className="container"
               style={{ marginLeft: "10%", marginTop: "5%" }}
