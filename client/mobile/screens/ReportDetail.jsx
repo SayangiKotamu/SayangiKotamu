@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     StyleSheet,
     Text,
@@ -7,6 +7,7 @@ import {
     ScrollView,
     Dimensions,
     ActivityIndicator,
+    RefreshControl,
 } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
@@ -14,53 +15,54 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import MapView, { Marker } from 'react-native-maps'
 
-import { useIsFocused } from '@react-navigation/native'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchReportById } from '../store/reports/action'
 
 import SkeletonContent from 'react-native-skeleton-content'
 
-import Toast from 'react-native-toast-message'
+import { upVoteReport, downVoteReport } from '../store/reports/action'
 
 const windowWidth = Dimensions.get('window').width
 
 export default function ReportDetail({ route }) {
     const { id } = route.params
 
-    const isFocused = useIsFocused()
     const dispatch = useDispatch()
 
-    const { detailReport, loadingDetailReport } = useSelector((state) => state.reports)
+    const { detailReport, loadingDetailReport, loadingUpVote, loadingDownVote } = useSelector(
+        (state) => state.reports
+    )
 
-    function upVoteReport() {
-        Toast.show({
-            type: 'success',
-            position: 'bottom',
-            bottomOffset: 70,
-            text1: 'SayangiKotamu',
-            text2: 'Berhasil mendukung laporan ini',
+    const [isRefreshing, setIsRefreshing] = useState(false)
+    const [upVote, setUpVote] = useState(detailReport?.upVote)
+    const [downVote, setDownVote] = useState(detailReport?.downVote)
+
+    function onRefresh() {
+        setIsRefreshing(true)
+        dispatch(fetchReportById(id))
+        setIsRefreshing(false)
+    }
+
+    function onUpVoteClick() {
+        dispatch(upVoteReport(id)).then(() => {
+            setUpVote(upVote + 1)
         })
     }
 
-    function downVoteReport() {
-        Toast.show({
-            type: 'success',
-            position: 'bottom',
-            bottomOffset: 70,
-            text1: 'SayangiKotamu',
-            text2: 'Berhasil melaporkan laporan ini',
+    function onDownVoteClick() {
+        dispatch(downVoteReport(id)).then(() => {
+            setDownVote(downVote + 1)
         })
     }
 
     useEffect(() => {
-        if (isFocused) {
-            dispatch(fetchReportById(id))
-        }
-    }, [isFocused])
+        dispatch(fetchReportById(id))
+    }, [])
 
     return (
-        <ScrollView>
+        <ScrollView
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+        >
             {loadingDetailReport ? (
                 <SkeletonContent
                     containerStyle={{ flex: 1, width: windowWidth, marginTop: 5 }}
@@ -107,21 +109,29 @@ export default function ReportDetail({ route }) {
                             </Text>
                             <Text style={styles.description}>{detailReport?.description}</Text>
                             <View style={styles.respondContainer}>
-                                <TouchableOpacity onPress={upVoteReport}>
-                                    <Ionicons
-                                        name={'ios-thumbs-up-outline'}
-                                        size={25}
-                                        color={'#1A73E9'}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={downVoteReport}>
-                                    <Ionicons
-                                        name={'ios-thumbs-down-outline'}
-                                        size={25}
-                                        color={'#1A73E9'}
-                                        style={styles.logo}
-                                    />
-                                </TouchableOpacity>
+                                {loadingUpVote ? (
+                                    <ActivityIndicator size="small" color="#1A73E9" />
+                                ) : (
+                                    <TouchableOpacity onPress={onUpVoteClick}>
+                                        <Ionicons
+                                            name={'ios-thumbs-up-outline'}
+                                            size={25}
+                                            color={'#1A73E9'}
+                                        />
+                                    </TouchableOpacity>
+                                )}
+                                {loadingDownVote ? (
+                                    <ActivityIndicator size="small" color="#1A73E9" />
+                                ) : (
+                                    <TouchableOpacity onPress={onDownVoteClick}>
+                                        <Ionicons
+                                            name={'ios-thumbs-down-outline'}
+                                            size={25}
+                                            color={'#1A73E9'}
+                                            style={styles.logo}
+                                        />
+                                    </TouchableOpacity>
+                                )}
                             </View>
                         </View>
                     </View>
@@ -155,7 +165,7 @@ export default function ReportDetail({ route }) {
                                                 color={'#1A73E9'}
                                             />
                                             <Text style={styles.detailDescContentVote}>
-                                                {detailReport?.upVote}
+                                                {upVote}
                                             </Text>
                                             <View style={styles.separator}>
                                                 <Ionicons
@@ -164,7 +174,7 @@ export default function ReportDetail({ route }) {
                                                     color={'#1A73E9'}
                                                 />
                                                 <Text style={styles.detailDescContentVote}>
-                                                    {detailReport?.downVote}
+                                                    {downVote}
                                                 </Text>
                                             </View>
                                         </View>

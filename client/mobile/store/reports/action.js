@@ -167,6 +167,74 @@ export function addReport(payload) {
     }
 }
 
-export function upVoteReport() {}
+export function upVoteReport(id) {
+    return async function (dispatch, getState) {
+        try {
+            const { auth } = getState()
 
-export function downVoteReport() {}
+            dispatch(setLoadingUpVoteReport(true))
+
+            await sayangiKotamuApi({
+                method: 'PATCH',
+                url: `/reportUser/up/${id}`,
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
+
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Berhasil melakukan upvote terhadap laporan ini',
+            })
+        } catch (err) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: err.response.data.message,
+            })
+        } finally {
+            dispatch(setLoadingUpVoteReport(false))
+        }
+    }
+}
+
+export function downVoteReport(id) {
+    return async function (dispatch, getState) {
+        try {
+            const { auth } = getState()
+
+            dispatch(setLoadingDownVoteReport(true))
+
+            await sayangiKotamuApi({
+                method: 'PATCH',
+                url: `/reportUser/down/${id}`,
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
+
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Berhasil melakukan downvote terhadap laporan ini',
+            })
+        } catch (err) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: err.response.data.message,
+            })
+        } finally {
+            dispatch(setLoadingDownVoteReport(false))
+        }
+    }
+}
