@@ -2,7 +2,6 @@ import { SET_CATEGORIES, SET_LOADING_CATEGORIES } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
 import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setCategories(payload) {
@@ -28,13 +27,12 @@ export function fetchAllCategory() {
 
             let response = await sayangiKotamuApi({
                 method: 'GET',
-                url: '/dinas/categories',
+                url: '/categories',
                 headers: {
                     access_token: auth.accessToken,
                 },
             })
 
-            console.log(response.data, '<< all category data')
             dispatch(setCategories(response.data))
         } catch (err) {
             Toast.show({

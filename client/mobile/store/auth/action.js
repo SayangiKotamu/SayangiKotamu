@@ -51,7 +51,7 @@ export function doRegister(payload) {
                     email: payload.email,
                     password: payload.password,
                     kota: payload.kota,
-                    // ktp: payload.ktp, //! Ini link ktp dari firebase. Belum ada di server
+                    ktp: payload.ktp,
                 },
             })
 

@@ -2,7 +2,7 @@ import { SET_LOADING_SEND_ASPIRATION } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
+import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setLoadingSendAspiration(payload) {
     return {
@@ -12,46 +12,40 @@ function setLoadingSendAspiration(payload) {
 }
 
 export function sendAspiration(payload) {
-    //! Di body request fetch:
-    //! -- Sementara user yang ngebuat di hardcode dulu. Nanti kasih akses token di headers
-    //! -- Ini masih coba-coba aja, nanti sesuaiin sama server belakangan
-    //! -- Nanti kirim dinas harus ID ke server
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingSendAspiration(true))
 
-            let response = await fetch(`${baseURL}/aspiration`, {
+            await sayangiKotamuApi({
                 method: 'POST',
+                url: '/aspirations/create',
                 headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
+                    access_token: auth.accessToken,
                 },
-                body: JSON.stringify({
+                data: {
                     type: payload.type,
+                    dinas: payload.dinas,
+                    title: payload.title,
                     description: payload.description,
-                    //! Kebawah masih di hardcode sementara
-                    dinas: {
-                        id: 'D0001',
-                        name: 'Dinas Perhubungan',
-                    },
-                    user: {
-                        email: 'jokowi@mail.com',
-                        password: '$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6',
-                        NIK: '314012401204901',
-                        full_name: 'Joko Widodo',
-                        kota: 'Jakarta',
-                        id: 1,
-                    },
-                }),
+                },
+            })
+
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Aspirasi Anda berhasil kami terima, terimakasih atas aspirasinya!',
             })
         } catch (err) {
-            console.log(err)
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, untuk saat ini kamu tidak bisa mengirim aspirasi. Tunggu ya!',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingSendAspiration(false))
