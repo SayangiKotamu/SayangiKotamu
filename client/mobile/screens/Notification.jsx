@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, ScrollView, RefreshControl, Dimensions } from 'react-native'
+import { StyleSheet, View, ScrollView, RefreshControl, Dimensions, Text } from 'react-native'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchNotification } from '../store/notification/action'
@@ -7,6 +7,8 @@ import { fetchNotification } from '../store/notification/action'
 import SkeletonContent from 'react-native-skeleton-content'
 
 import NotificationCard from '../components/NotificationCard'
+
+import AntDesign from '@expo/vector-icons/AntDesign'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -57,14 +59,23 @@ export default function Notification() {
                     />
                 ) : (
                     <>
-                        {notifications.map((notification, idx) => {
-                            return (
-                                <NotificationCard
-                                    notification={notification}
-                                    key={'notification' + idx}
-                                />
-                            )
-                        })}
+                        {notifications.length === 0 ? (
+                            <View style={styles.emptyContainer}>
+                                <AntDesign name={'search1'} size={40} color={'grey'} />
+                                <Text stlye={styles.text}>Notifikasi mu masih kosong</Text>
+                            </View>
+                        ) : (
+                            <>
+                                {notifications.map((notification, idx) => {
+                                    return (
+                                        <NotificationCard
+                                            notification={notification}
+                                            key={'notification' + idx}
+                                        />
+                                    )
+                                })}
+                            </>
+                        )}
                     </>
                 )}
             </View>
@@ -77,5 +88,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
+    },
+    emptyContainer: {
+        flex: 1,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '80%',
+        marginBottom: '80%',
+    },
+    text: {
+        marginTop: '20',
+        color: 'grey',
     },
 })

@@ -8,6 +8,7 @@ import {
     Image,
     ActivityIndicator,
     Dimensions,
+    Text,
 } from 'react-native'
 
 import Toast from 'react-native-toast-message'
@@ -39,6 +40,7 @@ export default function Register({ navigation }) {
 
     const [image, setImage] = useState(null)
     const [uploadingImage, setUploadingImage] = useState(false)
+    const [analyzingImage, setAnalyzingImage] = useState(false)
 
     useEffect(() => {
         ;(async () => {
@@ -72,6 +74,8 @@ export default function Register({ navigation }) {
 
     async function submitToGoogle() {
         try {
+            setAnalyzingImage(true)
+
             let body = JSON.stringify({
                 requests: [
                     {
@@ -115,6 +119,8 @@ export default function Register({ navigation }) {
             })
         } catch (error) {
             console.log(error)
+        } finally {
+            setAnalyzingImage(false)
         }
     }
 
@@ -223,12 +229,19 @@ export default function Register({ navigation }) {
                         value={fullName}
                         onChangeText={(text) => setFullName(text)}
                     />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Nomor Induk Kependudukan (NIK)"
-                        value={NIK}
-                        onChangeText={(text) => setNIK(text)}
-                    />
+                    {analyzingImage ? (
+                        <View style={styles.loadingKTP}>
+                            <ActivityIndicator size="small" color="#1A73E9" />
+                            <Text style={styles.loadingKTPText}>Menganalisa KTP</Text>
+                        </View>
+                    ) : (
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Nomor Induk Kependudukan (NIK)"
+                            value={NIK}
+                            onChangeText={(text) => setNIK(text)}
+                        />
+                    )}
                     <TextInput
                         style={styles.input}
                         placeholder="Kota"
@@ -275,6 +288,17 @@ export default function Register({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    loadingKTP: {
+        flexDirection: 'row',
+        height: 50,
+        borderBottomWidth: 2,
+        borderBottomColor: 'blue',
+    },
+    loadingKTPText: {
+        marginTop: 15,
+        marginLeft: 10,
+        color: 'grey',
+    },
     container: {
         flex: 1,
         backgroundColor: 'white',

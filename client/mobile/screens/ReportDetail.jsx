@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     StyleSheet,
     Text,
@@ -7,6 +7,7 @@ import {
     ScrollView,
     Dimensions,
     ActivityIndicator,
+    RefreshControl,
 } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
@@ -14,53 +15,48 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import MapView, { Marker } from 'react-native-maps'
 
-import { useIsFocused } from '@react-navigation/native'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchReportById } from '../store/reports/action'
 
 import SkeletonContent from 'react-native-skeleton-content'
 
-import Toast from 'react-native-toast-message'
+import { upVoteReport, downVoteReport } from '../store/reports/action'
 
 const windowWidth = Dimensions.get('window').width
 
 export default function ReportDetail({ route }) {
     const { id } = route.params
 
-    const isFocused = useIsFocused()
     const dispatch = useDispatch()
 
-    const { detailReport, loadingDetailReport } = useSelector((state) => state.reports)
+    const { detailReport, loadingDetailReport, loadingUpVote, loadingDownVote } = useSelector(
+        (state) => state.reports
+    )
 
-    function upVoteReport() {
-        Toast.show({
-            type: 'success',
-            position: 'bottom',
-            bottomOffset: 70,
-            text1: 'SayangiKotamu',
-            text2: 'Berhasil mendukung laporan ini',
-        })
+    const [isRefreshing, setIsRefreshing] = useState(false)
+
+    function onRefresh() {
+        setIsRefreshing(true)
+        dispatch(fetchReportById(id))
+        setIsRefreshing(false)
     }
 
-    function downVoteReport() {
-        Toast.show({
-            type: 'success',
-            position: 'bottom',
-            bottomOffset: 70,
-            text1: 'SayangiKotamu',
-            text2: 'Berhasil melaporkan laporan ini',
-        })
+    function onUpVoteClick() {
+        dispatch(upVoteReport(id))
+    }
+
+    function onDownVoteClick() {
+        dispatch(downVoteReport(id))
     }
 
     useEffect(() => {
-        if (isFocused) {
-            dispatch(fetchReportById(id))
-        }
-    }, [isFocused])
+        dispatch(fetchReportById(id))
+    }, [])
 
     return (
-        <ScrollView>
+        <ScrollView
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+        >
             {loadingDetailReport ? (
                 <SkeletonContent
                     containerStyle={{ flex: 1, width: windowWidth, marginTop: 5 }}
@@ -103,25 +99,33 @@ export default function ReportDetail({ route }) {
                         <View style={styles.contentContainer}>
                             <Text style={styles.header}>{detailReport?.title}</Text>
                             <Text style={styles.small}>
-                                Laporan dibuat oleh {detailReport?.user?.full_name}
+                                Laporan dibuat oleh {detailReport?.user?.fullname}
                             </Text>
                             <Text style={styles.description}>{detailReport?.description}</Text>
                             <View style={styles.respondContainer}>
-                                <TouchableOpacity onPress={upVoteReport}>
-                                    <Ionicons
-                                        name={'ios-thumbs-up-outline'}
-                                        size={25}
-                                        color={'#1A73E9'}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={downVoteReport}>
-                                    <Ionicons
-                                        name={'ios-thumbs-down-outline'}
-                                        size={25}
-                                        color={'#1A73E9'}
-                                        style={styles.logo}
-                                    />
-                                </TouchableOpacity>
+                                {loadingUpVote ? (
+                                    <ActivityIndicator size="small" color="#1A73E9" />
+                                ) : (
+                                    <TouchableOpacity onPress={onUpVoteClick}>
+                                        <Ionicons
+                                            name={'ios-thumbs-up-outline'}
+                                            size={25}
+                                            color={'#1A73E9'}
+                                        />
+                                    </TouchableOpacity>
+                                )}
+                                {loadingDownVote ? (
+                                    <ActivityIndicator size="small" color="#1A73E9" />
+                                ) : (
+                                    <TouchableOpacity onPress={onDownVoteClick}>
+                                        <Ionicons
+                                            name={'ios-thumbs-down-outline'}
+                                            size={25}
+                                            color={'#1A73E9'}
+                                            style={styles.logo}
+                                        />
+                                    </TouchableOpacity>
+                                )}
                             </View>
                         </View>
                     </View>
@@ -135,7 +139,7 @@ export default function ReportDetail({ route }) {
                                     <View style={styles.detailDescription}>
                                         <Text style={styles.detailDescHeader}>Nomor Laporan</Text>
                                         <Text style={styles.detailDescContent}>
-                                            {detailReport?.id}
+                                            {detailReport?._id}
                                         </Text>
                                     </View>
                                     <View style={styles.detailDescription}>
@@ -180,7 +184,7 @@ export default function ReportDetail({ route }) {
                                     <View style={styles.detailDescription}>
                                         <Text style={styles.detailDescHeader}>Laporan Dibuat</Text>
                                         <Text style={styles.detailDescContent}>
-                                            {detailReport?.issued_date?.split('T')[0]}
+                                            {detailReport?.issuedDate?.split('T')[0]}
                                         </Text>
                                     </View>
                                     <View style={styles.detailDescription}>
@@ -188,7 +192,7 @@ export default function ReportDetail({ route }) {
                                             Kategori Permasalahan
                                         </Text>
                                         <Text style={styles.detailDescContent}>
-                                            {detailReport?.category}
+                                            {detailReport?.category?.name}
                                         </Text>
                                     </View>
                                 </View>
@@ -203,24 +207,16 @@ export default function ReportDetail({ route }) {
                         <MapView
                             style={styles.map}
                             region={{
-                                latitude: detailReport?.lat?.$numberDecimal
-                                    ? Number(detailReport.lat.$numberDecimal)
-                                    : 0,
-                                longitude: detailReport?.long?.$numberDecimal
-                                    ? Number(detailReport.long.$numberDecimal)
-                                    : 0,
+                                latitude: detailReport?.lat ? detailReport?.lat : 0,
+                                longitude: detailReport?.long ? detailReport?.long : 0,
                                 latitudeDelta: 0.009,
                                 longitudeDelta: 0.009,
                             }}
                         >
                             <Marker
                                 coordinate={{
-                                    latitude: detailReport?.lat?.$numberDecimal
-                                        ? Number(detailReport.lat.$numberDecimal)
-                                        : 0,
-                                    longitude: detailReport?.long?.$numberDecimal
-                                        ? Number(detailReport.long.$numberDecimal)
-                                        : 0,
+                                    latitude: detailReport?.lat ? detailReport?.lat : 0,
+                                    longitude: detailReport?.long ? detailReport?.long : 0,
                                     latitudeDelta: 0.009,
                                     longitudeDelta: 0.009,
                                 }}
