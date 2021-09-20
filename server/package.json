@@ -8,6 +8,7 @@
     "dev_win": "set NODE_ENV=development&&npx nodemon bin/www",
     "start": "node app.js",
     "test": "set NODE_ENV=testing&&jest --detectOpenHandles --forceExit ",
+    "test_coverage": "set NODE_ENV=testing&&jest --collectCoverage --detectOpenHandles --forceExit ",
     "tunnel": "ngrok http 3000"
   },
   "jest": {
