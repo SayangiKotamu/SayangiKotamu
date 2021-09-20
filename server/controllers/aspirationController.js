@@ -31,10 +31,13 @@ class AspirationController {
 
   static async getById(req, res, next) {
     const { id } = req.params;
-
     try {
       const getAspiration = await Aspiration.findOne({ _id: id });
-      res.status(200).json(getAspiration);
+      if (getAspiration) {
+        res.status(200).json(getAspiration);
+      } else {
+        throw {name:"NotFound", message:`aspirations with id ${id} not found`}
+      }
     } catch (err) {
       if (!err.errors) {
         next(err);
