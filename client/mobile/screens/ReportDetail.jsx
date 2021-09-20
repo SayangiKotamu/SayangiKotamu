@@ -103,7 +103,7 @@ export default function ReportDetail({ route }) {
                         <View style={styles.contentContainer}>
                             <Text style={styles.header}>{detailReport?.title}</Text>
                             <Text style={styles.small}>
-                                Laporan dibuat oleh {detailReport?.user?.full_name}
+                                Laporan dibuat oleh {detailReport?.user?.fullname}
                             </Text>
                             <Text style={styles.description}>{detailReport?.description}</Text>
                             <View style={styles.respondContainer}>
@@ -135,7 +135,7 @@ export default function ReportDetail({ route }) {
                                     <View style={styles.detailDescription}>
                                         <Text style={styles.detailDescHeader}>Nomor Laporan</Text>
                                         <Text style={styles.detailDescContent}>
-                                            {detailReport?.id}
+                                            {detailReport?._id}
                                         </Text>
                                     </View>
                                     <View style={styles.detailDescription}>
@@ -180,7 +180,7 @@ export default function ReportDetail({ route }) {
                                     <View style={styles.detailDescription}>
                                         <Text style={styles.detailDescHeader}>Laporan Dibuat</Text>
                                         <Text style={styles.detailDescContent}>
-                                            {detailReport?.issued_date?.split('T')[0]}
+                                            {detailReport?.issuedDate?.split('T')[0]}
                                         </Text>
                                     </View>
                                     <View style={styles.detailDescription}>
@@ -188,7 +188,7 @@ export default function ReportDetail({ route }) {
                                             Kategori Permasalahan
                                         </Text>
                                         <Text style={styles.detailDescContent}>
-                                            {detailReport?.category}
+                                            {detailReport?.category?.name}
                                         </Text>
                                     </View>
                                 </View>
@@ -203,24 +203,16 @@ export default function ReportDetail({ route }) {
                         <MapView
                             style={styles.map}
                             region={{
-                                latitude: detailReport?.lat?.$numberDecimal
-                                    ? Number(detailReport.lat.$numberDecimal)
-                                    : 0,
-                                longitude: detailReport?.long?.$numberDecimal
-                                    ? Number(detailReport.long.$numberDecimal)
-                                    : 0,
+                                latitude: detailReport?.lat ? detailReport?.lat : 0,
+                                longitude: detailReport?.long ? detailReport?.long : 0,
                                 latitudeDelta: 0.009,
                                 longitudeDelta: 0.009,
                             }}
                         >
                             <Marker
                                 coordinate={{
-                                    latitude: detailReport?.lat?.$numberDecimal
-                                        ? Number(detailReport.lat.$numberDecimal)
-                                        : 0,
-                                    longitude: detailReport?.long?.$numberDecimal
-                                        ? Number(detailReport.long.$numberDecimal)
-                                        : 0,
+                                    latitude: detailReport?.lat ? detailReport?.lat : 0,
+                                    longitude: detailReport?.long ? detailReport?.long : 0,
                                     latitudeDelta: 0.009,
                                     longitudeDelta: 0.009,
                                 }}

@@ -77,26 +77,28 @@ export function fetchAllReports() {
 }
 
 export function fetchReportById(id) {
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingDetailReport(true))
 
-            let response = await fetch(`${baseURL}/reports/${id}`)
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: `/reportUser/${id}`,
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
 
-            if (response.ok) {
-                response = await response.json()
-
-                dispatch(setDetailReport(response))
-            } else {
-                throw Error
-            }
+            dispatch(setDetailReport(response.data))
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, data laporan sedang tidak bisa diakses',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingDetailReport(false))
