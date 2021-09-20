@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: '80%',
-        marginBottom: '80%',
+        marginTop: '90%',
+        marginBottom: '90%',
     },
     text: {
         marginTop: '20',

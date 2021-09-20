@@ -2,9 +2,7 @@ import { SET_NOTIFICATION, SET_LOADING_NOTIFICATION } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
-
-import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
+import sayangiKotamuApi from '../../apis/sayangiKotamuApi'
 
 function setNotifications(payload) {
     return {

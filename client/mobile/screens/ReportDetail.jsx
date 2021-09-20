@@ -222,6 +222,12 @@ export default function ReportDetail({ route }) {
                                 }}
                             />
                         </MapView>
+
+                        <View style={styles.contentContainer}>
+                            <Text style={styles.header}>Detail Lokasi</Text>
+
+                            <Text style={styles.description}>{detailReport?.location}</Text>
+                        </View>
                     </View>
                 </>
             )}

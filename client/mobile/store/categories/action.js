@@ -2,7 +2,7 @@ import { SET_CATEGORIES, SET_LOADING_CATEGORIES } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
+import sayangiKotamuApi from '../../apis/sayangiKotamuApi'
 
 function setCategories(payload) {
     return {
