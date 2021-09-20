@@ -8,6 +8,7 @@ const User = require("../models/user");
 class ReportController {
   // ! USER REPORT
   static async showAll(req, res, next) {
+    console.log(req.user);
     try {
       let data = await Report.find();
       res.status(200).json(data);

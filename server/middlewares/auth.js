@@ -1,6 +1,7 @@
 const { jwtVerify } = require("../helpers/jwt");
 const Dinas = require("../models/dinas");
-const User = require("../models/user")
+const Report = require("../models/report");
+const User = require("../models/user");
 
 async function dinasAuth(req, res, next) {
   const { access_token: accessToken } = req.headers;
@@ -18,7 +19,6 @@ async function dinasAuth(req, res, next) {
           email: verifiedId.email,
           role: verifiedId.role,
         };
-        // console.log(req.user);
         next();
       } else {
         throw { name: "IdNotVerified" };
@@ -27,16 +27,15 @@ async function dinasAuth(req, res, next) {
       throw { name: "NoAccessToken" };
     }
   } catch (err) {
-    console.log(err);
     next(err);
   }
 }
 
-async function Userauth(req,res,next){
-  const {access_token} = req.headers
+async function Userauth(req, res, next) {
+  const { access_token } = req.headers;
   try {
     if (access_token) {
-      const payload = jwtVerify(access_token)
+      const payload = jwtVerify(access_token);
       const verifiedId = await User.findOne({
         _id: payload.id,
       });
@@ -44,9 +43,9 @@ async function Userauth(req,res,next){
         req.user = {
           id: verifiedId._id,
           email: verifiedId.email,
-          role: verifiedId.role
-        }
-        next()
+          role: verifiedId.role,
+        };
+        next();
       } else {
         throw { name: "IdNotVerified" };
       }
@@ -54,8 +53,47 @@ async function Userauth(req,res,next){
       throw { name: "NoAccessToken" };
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
-module.exports = { dinasAuth,Userauth };
+async function authEmailUser(req, res, next) {
+  const { id: userId, email, role } = req.user;
+
+  try {
+    const foundUser = await User.findById({ _id: userId });
+
+    if (!foundUser) {
+      throw { name: "IdNotVerified" };
+    } else {
+      if (!foundUser.isActive) {
+        throw { name: "ActivateAccount" };
+      } else {
+        next();
+      }
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
+// AUTHORIZATION
+async function authZDinas(req, res, next) {
+  const { id } = req.params;
+  const { id: userId, email, role } = req.user;
+  try {
+    const foundReport = await Report.findById({ _id: id });
+    if (foundReport) {
+      if (foundReport.dinas === userId) {
+      } else {
+        throw { name: "NoAccessReport" };
+      }
+    } else {
+      throw { name: "ReportNotFound" };
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { dinasAuth, Userauth, authZDinas, authEmailUser };
