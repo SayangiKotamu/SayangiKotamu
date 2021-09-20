@@ -161,8 +161,6 @@ export default function Register({ navigation }) {
                 snapshot.snapshot.ref.getDownloadURL().then((url) => {
                     setUploadingImage(false)
                     setKTPLink(url)
-                    submitToGoogle()
-
                     blob.close()
                     return url
                 })
