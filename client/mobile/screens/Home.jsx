@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 18,
         marginTop: '1%',
-        color: '#062158',
+        color: 'black',
         textAlign: 'left',
         marginLeft: '3%',
         fontFamily: 'Poppins_600SemiBold',

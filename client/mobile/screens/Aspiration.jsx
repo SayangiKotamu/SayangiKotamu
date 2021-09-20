@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 'react-native'
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity,
+    ActivityIndicator,
+} from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
@@ -8,6 +15,7 @@ import { fetchAllDinas } from '../store/dinas/action'
 import { sendAspiration } from '../store/aspiration/action'
 
 import Toast from 'react-native-toast-message'
+import CustomButton from '../components/CustomButton'
 
 export default function Aspiration({ navigation }) {
     const dispatch = useDispatch()
@@ -58,7 +66,7 @@ export default function Aspiration({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.headingContainer}>
-                <Ionicons name={'arrow-down-circle-sharp'} size={30} color={'#1A73E9'} />
+                <Ionicons name={'arrow-down-circle-sharp'} size={30} color={'white'} />
                 <Text style={styles.headingText}>Punya aspirasi untuk pemerintah?</Text>
                 <Text style={styles.headingText}>Yuk sampaikan disini!</Text>
             </View>
@@ -77,7 +85,7 @@ export default function Aspiration({ navigation }) {
                 </View>
                 <Text style={styles.label}>Pilih instansi terkait:</Text>
                 {loadingDinas ? (
-                    <ActivityIndicator size="large" color="#1A73E9" />
+                    <ActivityIndicator size="large" color="black" />
                 ) : (
                     <View style={styles.pickerContainer}>
                         <Picker
@@ -115,7 +123,9 @@ export default function Aspiration({ navigation }) {
                     {loadingSendAspiration ? (
                         <ActivityIndicator size="large" color="#1A73E9" />
                     ) : (
-                        <Button title="Kirim" color="#1A73E9" onPress={onSubmitClick} />
+                        <TouchableOpacity onPress={onSubmitClick}>
+                            <CustomButton buttonName={'Kirim'} buttonColor={'black'} />
+                        </TouchableOpacity>
                     )}
                 </View>
             </View>
@@ -130,7 +140,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headingContainer: {
-        backgroundColor: '#cce5ff',
+        backgroundColor: 'tomato',
         borderWidth: 1,
         borderColor: '#ececec',
         width: '96%',
@@ -148,7 +158,7 @@ const styles = StyleSheet.create({
     },
     headingText: {
         textAlign: 'center',
-        color: '#1c5d9b',
+        color: 'white',
         fontWeight: 'bold',
         fontSize: 20,
     },
@@ -162,12 +172,12 @@ const styles = StyleSheet.create({
     input: {
         height: 50,
         borderBottomWidth: 2,
-        borderBottomColor: '#1A73E9',
+        borderBottomColor: 'tomato',
     },
     inputTextArea: {
         height: 50,
         borderWidth: 2,
-        borderColor: '#1A73E9',
+        borderColor: 'tomato',
         padding: 8,
         borderRadius: 5,
     },
@@ -175,12 +185,12 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginTop: 20,
         fontSize: 15,
-        color: '#1A73E9',
+        color: 'tomato',
         fontWeight: 'bold',
     },
     pickerContainer: {
         borderBottomWidth: 2,
-        borderBottomColor: '#1A73E9',
+        borderBottomColor: 'tomato',
         paddingBottom: 10,
     },
 })

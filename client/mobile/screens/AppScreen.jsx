@@ -110,10 +110,31 @@ export default function App() {
                         },
                         tabBarActiveTintColor: 'tomato',
                         tabBarInactiveTintColor: 'gray',
+                        tabBarStyle: {
+                            backgroundColor: 'white',
+                            height: '6.2%',
+                            borderRadius: 10,
+                            padding: 5,
+                            marginLeft: 10,
+                            marginBottom: 15,
+                            marginRight: 10,
+                            position: 'absolute',
+                            shadowColor: '#000',
+                            shadowOpacity: 0.06,
+                            shadowOffset: {
+                                height: 10,
+                                width: 10,
+                            },
+                        },
+                        tabBarShowLabel: false,
                     })}
                 >
-                    <Tab.Screen name="Masuk" component={Login} />
-                    <Tab.Screen name="Daftar" component={Register} />
+                    <Tab.Screen name="Masuk" component={Login} options={{ headerShown: false }} />
+                    <Tab.Screen
+                        name="Daftar"
+                        component={Register}
+                        options={{ headerShown: false }}
+                    />
                 </Tab.Navigator>
             )}
 

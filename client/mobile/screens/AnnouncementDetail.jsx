@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderWidth: 1,
         borderRadius: 5,
-        width: '100%',
         flexDirection: 'row',
         shadowOffset: { width: 0, height: 0 },
         shadowColor: '#ececec',
@@ -114,7 +113,6 @@ const styles = StyleSheet.create({
     announcementCardContent: {
         marginLeft: 10,
         padding: 3,
-        width: '100%',
         flexGrow: 1,
         flex: 1,
     },

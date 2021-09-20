@@ -61,9 +61,9 @@ const styles = StyleSheet.create({
         color: '#a2a4aa',
     },
     textTitle: {
-        marginTop: 3,
-        fontSize: 20,
-        color: '#062158',
+        marginTop: 6,
+        fontSize: 16,
+        color: 'black',
         fontFamily: 'Poppins_600SemiBold',
     },
     textDescription: {
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     textCategory: {
         marginTop: 8,
         fontSize: 10,
-        color: '#062158',
+        color: 'black',
         fontFamily: 'Poppins_600SemiBold',
     },
     textDate: {
