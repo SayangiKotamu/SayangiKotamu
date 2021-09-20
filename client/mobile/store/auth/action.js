@@ -3,13 +3,10 @@ import {
     SET_ACCESS_TOKEN,
     SET_LOADING_LOGIN,
     SET_LOADING_REGISTER,
-    SET_FAIL_LOGIN,
-    SET_FAIL_REGISTER,
 } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
 import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 export function setIsLoggedIn(payload) {
