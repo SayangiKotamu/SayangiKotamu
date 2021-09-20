@@ -77,13 +77,11 @@ afterAll((done) => {
 describe("POST / [CASE SUCCESS]", () => {
   test("Should return object with id, email, description, NID, and status code (201)", (done) => {
     request(app)
-
       .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister1)
       .then((res) => {
         const firstWords = res.body.name.split(" ").map((el) => {
-
           return el[0].toLowerCase() + el[2].toLowerCase();
         });
         expect(res.status).toBe(201);
@@ -106,7 +104,6 @@ describe("POST / [CASE SUCCESS]", () => {
 describe("POST / [CASE FAILED / NO NAME]", () => {
   test("Should return ERROR because of [NO NAME] and status code(400)", (done) => {
     request(app)
-
       .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister2)
@@ -129,7 +126,6 @@ describe("POST / [CASE FAILED / NO NAME]", () => {
 describe("POST / [CASE FAILED / NO EMAIL]", () => {
   test("Should return ERROR because of [NO EMAIL] and status code(400)", (done) => {
     request(app)
-
       .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister3)
@@ -151,7 +147,6 @@ describe("POST / [CASE FAILED / NO EMAIL]", () => {
 describe("POST / [CASE FAILED / NO PASSWORD]", () => {
   test("Should return ERROR because of [NO PASSWORD] and status code(400)", (done) => {
     request(app)
-
       .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister4)
@@ -173,7 +168,6 @@ describe("POST / [CASE FAILED / NO PASSWORD]", () => {
 describe("POST / [CASE FAILED / EMAIL INVALID]", () => {
   test("Should return ERROR because of [EMAIL INVALID] and status code(400)", (done) => {
     request(app)
-
       .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister5)
@@ -191,7 +185,6 @@ describe("POST / [CASE FAILED / EMAIL INVALID]", () => {
       });
   });
 });
-
 
 /* USER LOGIN */
 describe("POST /login [CASE SUCCESS]", () => {
@@ -237,6 +230,27 @@ describe("POST /login [CASE FAILED / NO EMAIL]", () => {
       .then((res) => {
         expect(res.status).toBe(401);
         expect(res.body).toHaveProperty("message", "Email / Password is wrong");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("POST /login [CASE FAILED / DINAS ATTEMPT]", () => {
+  test("Should return ERROR because of [DINAS] and status code(401)", (done) => {
+    request(app)
+      .post("/login")
+      .set("Accept", "application/json")
+      .send(dinasLogin1)
+      .then((res) => {
+        expect(res.status).toBe(401);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            message: "Email / Password is wrong",
+          })
+        );
         done();
       })
       .catch((err) => {
