@@ -163,13 +163,7 @@ export default function Report({ navigation }) {
                         dispatch(addReport(payload)).then(() => {
                             resetAllForm()
                             navigation.navigate('Beranda')
-                            Toast.show({
-                                type: 'success',
-                                position: 'bottom',
-                                bottomOffset: 70,
-                                text1: 'SayangiKotamu',
-                                text2: 'Laporan Anda berhasil kami terima, terimakasih atas laporan Anda! Akan kami segera proses ya!',
-                            })
+                            
                         })
 
                         blob.close()
