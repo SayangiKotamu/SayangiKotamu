@@ -9,6 +9,7 @@ import {
 import Toast from 'react-native-toast-message'
 
 import baseURL from '../../apis/sayangiKotamu'
+import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setReportsList(payload) {
     return {
@@ -46,26 +47,28 @@ function setLoadingSendReport(payload) {
 }
 
 export function fetchAllReports(payload) {
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
             dispatch(setLoadingReports(true))
 
-            let response = await fetch(`${baseURL}/reports`)
+            const { auth } = getState()
 
-            if (response.ok) {
-                response = await response.json()
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: '/reportUser',
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
 
-                dispatch(setReportsList(response))
-            } else {
-                throw Error
-            }
+            dispatch(setReportsList(response.data))
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, data laporan sedang tidak bisa diakses',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingReports(false))
