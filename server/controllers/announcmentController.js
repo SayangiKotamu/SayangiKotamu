@@ -44,11 +44,13 @@ class AnnouncmentController {
     const { id, role } = req.user;
     try {
       if (!role) {
-        const getAllAnnouncments = await Announcment.find();
+        const getAllAnnouncments = await Announcment.find().populate("dinas");
         //   console.log(getAllAnnouncments);
         res.status(200).json(getAllAnnouncments);
       } else {
-        const getAllAnnouncments = await Announcment.find({ dinas: id });
+        const getAllAnnouncments = await Announcment.find({
+          dinas: id,
+        }).populate("dinas");
         //   console.log(getAllAnnouncments);
         res.status(200).json(getAllAnnouncments);
       }
@@ -60,7 +62,9 @@ class AnnouncmentController {
   static async getById(req, res, next) {
     const { id } = req.params;
     try {
-      const getAllAnnouncment = await Announcment.findOne({ _id: id });
+      const getAllAnnouncment = await Announcment.findOne({ _id: id }).populate(
+        "dinas"
+      );
       if (getAllAnnouncment) {
         res.status(200).json(getAllAnnouncment);
       } else {
@@ -84,7 +88,7 @@ class AnnouncmentController {
         { _id: id },
         payload,
         { new: true, useFindAndModify: false }
-      );
+      ).populate("dinas");
 
       if (editAnnouncment) {
         await Dinas.updateOne(

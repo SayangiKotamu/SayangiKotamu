@@ -17,6 +17,7 @@ export default function Aspiration({ navigation }) {
 
     const [type, setType] = useState('Kritik')
     const [selectedDinas, setSelectedDinas] = useState('')
+    const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 
     useEffect(() => {
@@ -25,12 +26,13 @@ export default function Aspiration({ navigation }) {
 
     function resetAllForm() {
         setType('Kritik')
+        setTitle('')
         setSelectedDinas('')
         setDescription('')
     }
 
     function onSubmitClick() {
-        if (!type || !selectedDinas || !description.trim()) {
+        if (!title.trim() || !type || !selectedDinas || !description.trim()) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
@@ -39,24 +41,16 @@ export default function Aspiration({ navigation }) {
                 text2: 'Mohon input form aspirasi dengan lengkap!',
             })
         } else {
-            //! Sementara payload ini dulu, beberapa di hardcode di action. Nanti nyesuaiin kalo server udah jadi.
             const payload = {
                 type,
+                dinas: selectedDinas,
+                title,
                 description,
             }
 
             dispatch(sendAspiration(payload)).then(() => {
                 resetAllForm()
-
                 navigation.navigate('Beranda')
-
-                Toast.show({
-                    type: 'success',
-                    position: 'bottom',
-                    bottomOffset: 70,
-                    text1: 'SayangiKotamu',
-                    text2: 'Aspirasi Anda berhasil kami terima, terimakasih atas aspirasinya!',
-                })
             })
         }
     }
@@ -95,7 +89,7 @@ export default function Aspiration({ navigation }) {
                                 return (
                                     <Picker.Item
                                         label={eachDinas.name}
-                                        value={eachDinas.id}
+                                        value={eachDinas._id}
                                         key={'dinas' + idx}
                                     />
                                 )
@@ -103,6 +97,13 @@ export default function Aspiration({ navigation }) {
                         </Picker>
                     </View>
                 )}
+                <Text style={styles.label}>Berikan judul aspirasi mu:</Text>
+                <TextInput
+                    style={styles.inputTextArea}
+                    placeholder="judul aspirasi dengan singkat..."
+                    value={title}
+                    onChangeText={(text) => setTitle(text)}
+                />
                 <Text style={styles.label}>Ceritakan aspirasi mu disini:</Text>
                 <TextInput
                     style={styles.inputTextArea}

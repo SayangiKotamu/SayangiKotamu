@@ -2,7 +2,7 @@ import { SET_CATEGORIES, SET_LOADING_CATEGORIES } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
+import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setCategories(payload) {
     return {
@@ -19,26 +19,28 @@ function setLoadingCategories(payload) {
 }
 
 export function fetchAllCategory() {
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingCategories(true))
 
-            let response = await fetch(`${baseURL}/categories`)
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: '/categories',
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
 
-            if (response.ok) {
-                response = await response.json()
-
-                dispatch(setCategories(response))
-            } else {
-                throw Error
-            }
+            dispatch(setCategories(response.data))
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, data kategori sedang tidak bisa diakses',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingCategories(false))

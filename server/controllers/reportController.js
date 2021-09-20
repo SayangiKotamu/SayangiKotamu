@@ -10,16 +10,39 @@ class ReportController {
   static async showAll(req, res, next) {
     console.log(req.user);
     try {
-      let data = await Report.find();
+      let data = await Report.find()
+        .populate("dinas")
+        .populate("user")
+        .populate("category");
       res.status(200).json(data);
     } catch (error) {
       next(error);
     }
   }
 
+  static async getById(req, res, next) {
+    const { id } = req.params;
+    try {
+      const foundReport = await Report.findOne({ _id: id })
+        .populate("dinas")
+        .populate("user")
+        .populate("category");
+      if (foundReport) {
+        res.status(200).json(foundReport);
+      } else {
+        throw { name: "ReportNotFound" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async showByCategory(req, res, next) {
     try {
-      const data = await Report.find({ category: req.params.category });
+      const data = await Report.find({ category: req.params.category })
+        .populate("dinas")
+        .populate("user")
+        .populate("category");
       if (data) {
         res.status(200).json(data);
       } else {
@@ -210,13 +233,22 @@ class ReportController {
     const { status, category } = req.query;
     try {
       if (status) {
-        const allReports = await Report.find({ dinas: id, status });
+        const allReports = await Report.find({ dinas: id, status })
+          .populate("dinas")
+          .populate("user")
+          .populate("category");
         res.status(200).json(allReports);
       } else if (category) {
-        const allReports = await Report.find({ dinas: id, category });
+        const allReports = await Report.find({ dinas: id, category })
+          .populate("dinas")
+          .populate("user")
+          .populate("category");
         res.status(200).json(allReports);
       } else {
-        const allReports = await Report.find({ dinas: id });
+        const allReports = await Report.find({ dinas: id })
+          .populate("dinas")
+          .populate("user")
+          .populate("category");
         res.status(200).json(allReports);
       }
     } catch (err) {
@@ -227,7 +259,10 @@ class ReportController {
   static async dinasGetByIdReport(req, res, next) {
     const { id } = req.params;
     try {
-      const foundReport = await Report.findOne({ _id: id });
+      const foundReport = await Report.findOne({ _id: id })
+        .populate("dinas")
+        .populate("user")
+        .populate("category");
       if (foundReport) {
         res.status(200).json(foundReport);
       } else {
