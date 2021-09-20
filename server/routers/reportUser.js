@@ -4,6 +4,8 @@ const { Userauth, authEmailUser } = require("../middlewares/auth");
 
 routers.use(Userauth, authEmailUser);
 routers.get("/", ReportController.showAll);
+routers.get("/:id", ReportController.getById);
+
 routers.get("/:category", ReportController.showByCategory);
 routers.post("/", ReportController.addReport);
 routers.patch("/up/:id", ReportController.upVoteByIdReport);
