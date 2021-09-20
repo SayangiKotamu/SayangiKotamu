@@ -65,7 +65,7 @@ export default function AnnouncementDetail({ route }) {
                             <View style={styles.horizontalLine} />
 
                             <Text style={styles.textDescription}>
-                                {announcementDetail?.announcement}
+                                {announcementDetail?.announcment}
                             </Text>
                         </View>
                     </View>
