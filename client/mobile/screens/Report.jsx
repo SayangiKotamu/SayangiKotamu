@@ -154,16 +154,16 @@ export default function Report({ navigation }) {
                             title,
                             description,
                             location: locationDescription,
+                            lat: location.coords.latitude,
+                            long: location.coords.longitude,
+                            picture: url,
+                            dinas: selectedDinas,
                             category,
-                            lat: location.coords.latitude, //! Dapet location disini
-                            long: location.coords.longitude, //! Dapet location disini
-                            picture: url, //! Dapet url image disini
                         }
 
                         dispatch(addReport(payload)).then(() => {
                             resetAllForm()
                             navigation.navigate('Beranda')
-                            
                         })
 
                         blob.close()
@@ -258,7 +258,7 @@ export default function Report({ navigation }) {
                                     return (
                                         <Picker.Item
                                             label={category.name}
-                                            value={category.id}
+                                            value={category._id}
                                             key={'category' + idx}
                                         />
                                     )
@@ -283,7 +283,7 @@ export default function Report({ navigation }) {
                                     return (
                                         <Picker.Item
                                             label={eachDinas.name}
-                                            value={eachDinas.id}
+                                            value={eachDinas._id}
                                             key={'dinas' + idx}
                                         />
                                     )

@@ -8,10 +8,12 @@ import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
 
 export default function ReportCard(props) {
     const navigation = useNavigation()
+    console.log(props)
+
     return (
         <TouchableOpacity
             style={styles.reportCardContainer}
-            onPress={() => navigation.navigate('Detail Laporan', { id: props.report.id })}
+            onPress={() => navigation.navigate('Detail Laporan', { id: props.report._id })}
         >
             <View>
                 <Image
@@ -22,7 +24,7 @@ export default function ReportCard(props) {
                 />
             </View>
             <View style={styles.reportCardContent}>
-                <Text style={styles.textId}>{props.report.id}</Text>
+                <Text style={styles.textId}>{props.report._id}</Text>
                 <Text style={styles.textTitle}>{props.report.title}</Text>
                 <Text style={styles.textDescription}>
                     {formatCharactersByLimit(props.report.description)}
@@ -32,8 +34,8 @@ export default function ReportCard(props) {
                     <Text style={styles.textCategory}>{props.report.category}</Text>
                 </View>
                 <Text style={styles.textDate}>
-                    Laporan dibuat pada {props.report.issued_date.split('T')[0]} oleh{' '}
-                    {props.report.user.full_name}
+                    Laporan dibuat pada {props.report.issuedDate.split('T')[0]} oleh{' '}
+                    {props.report.user}
                 </Text>
             </View>
         </TouchableOpacity>
