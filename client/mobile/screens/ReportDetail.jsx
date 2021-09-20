@@ -34,8 +34,6 @@ export default function ReportDetail({ route }) {
     )
 
     const [isRefreshing, setIsRefreshing] = useState(false)
-    const [upVote, setUpVote] = useState(detailReport?.upVote)
-    const [downVote, setDownVote] = useState(detailReport?.downVote)
 
     function onRefresh() {
         setIsRefreshing(true)
@@ -44,15 +42,11 @@ export default function ReportDetail({ route }) {
     }
 
     function onUpVoteClick() {
-        dispatch(upVoteReport(id)).then(() => {
-            setUpVote(upVote + 1)
-        })
+        dispatch(upVoteReport(id))
     }
 
     function onDownVoteClick() {
-        dispatch(downVoteReport(id)).then(() => {
-            setDownVote(downVote + 1)
-        })
+        dispatch(downVoteReport(id))
     }
 
     useEffect(() => {
@@ -165,7 +159,7 @@ export default function ReportDetail({ route }) {
                                                 color={'#1A73E9'}
                                             />
                                             <Text style={styles.detailDescContentVote}>
-                                                {upVote}
+                                                {detailReport?.upVote}
                                             </Text>
                                             <View style={styles.separator}>
                                                 <Ionicons
@@ -174,7 +168,7 @@ export default function ReportDetail({ route }) {
                                                     color={'#1A73E9'}
                                                 />
                                                 <Text style={styles.detailDescContentVote}>
-                                                    {downVote}
+                                                    {detailReport?.downVote}
                                                 </Text>
                                             </View>
                                         </View>
