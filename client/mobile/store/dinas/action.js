@@ -2,7 +2,6 @@ import { SET_DINAS, SET_LOADING_DINAS } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
 import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setDinas(payload) {
@@ -29,16 +28,14 @@ export function fetchAllDinas() {
                 url: '/dinas',
             })
 
-            console.log(response.data, '<< all dinas data')
-
-            // dispatch(setDinas(response))
+            dispatch(setDinas(response.data))
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, data dinas sedang tidak bisa diakses',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingDinas(false))
