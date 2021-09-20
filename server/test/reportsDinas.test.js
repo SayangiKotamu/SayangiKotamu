@@ -18,7 +18,14 @@ const userRegister = {
   password: "test1234",
   isActivate: true,
   kota: "depok",
+  ktp: "test",
 };
+let dinas = {};
+let user = {};
+let categorien = {};
+
+let reportId = "";
+
 beforeAll((done) => {
   const category = {
     name: "kecelakaan",
@@ -28,11 +35,6 @@ beforeAll((done) => {
     status: "diproses",
   };
 
-  let dinas = {};
-  let user = {};
-  let categorien = {};
-
-  let reportId = "";
   Dinas.create(dinasRegister)
     .then((res) => {
       dinas = res;
@@ -45,23 +47,36 @@ beforeAll((done) => {
     })
     .then((res) => {
       user = res;
+
       const createReport = {
         title: "Kecelakaan margond",
-        dinas: dinas._id,
-        user: user._id,
+        status: "diterima",
         description: "kecelakaan di jalan margonda raya dekat margo city",
-        issuedDate: new Date(),
         location: "Depok",
-        lat: -6.372639,
         long: 106.832989,
+        lat: -6.372639,
         category: categorien._id,
+        upVote: 2,
+        downVote: 1,
+        issuedDate: new Date(),
+        user: user._id,
+        dinas: dinas._id,
         picture:
           "http://sman3rks.sch.id/media_library/posts/post-image-1594363147962.png",
       };
+      console.log(
+        "🚀 ~ file: reportsDinas.test.js ~ line 67 ~ .then ~ dinas",
+        dinas
+      );
       return Report.create(createReport);
     })
     .then((res) => {
-      reportId = res.body;
+      console.log(
+        "🚀 ~ file: reportsDinas.test.js ~ line 74 ~ .then ~ res",
+        res
+      );
+
+      reportId = res._id;
       done();
     })
     .catch((err) => done(err));
@@ -91,11 +106,6 @@ describe("GET /reports [CASE SUCCESS]", () => {
       .set("Accept", "application/json")
       .send({ email: dinasRegister.email, password: dinasRegister.password })
       .then((res) => {
-        console.log(
-          "🚀 ~ file: reportsDinas.test.js ~ line 94 ~ .then ~ res",
-          res.body
-        );
-
         return request(app)
           .get("/dinas/reports")
           .set("access_token", res.body.accessToken)
@@ -103,17 +113,22 @@ describe("GET /reports [CASE SUCCESS]", () => {
             expect(res.status).toBe(200);
             expect(res.body).toEqual(
               expect.arrayContaining([
-                expect.toHaveProperty("_id"),
-                expect.toHaveProperty("userId"),
-                expect.toHaveProperty("dinasId"),
-                expect.toHaveProperty("description"),
-                expect.toHaveProperty("issuedDate"),
-                expect.toHaveProperty("finishedDate"),
-                expect.toHaveProperty("location"),
-                expect.toHaveProperty("lat"),
-                expect.toHaveProperty("long"),
-                expect.toHaveProperty("category"),
-                expect.toHaveProperty("picture"),
+                expect.objectContaining({
+                  _id: expect.any(String),
+                  title: expect.any(String),
+                  status: expect.any(String),
+                  description: expect.any(String),
+                  location: expect.any(String),
+                  long: expect.any(Number),
+                  lat: expect.any(Number),
+                  category: expect.any(String),
+                  upVote: expect.any(Number),
+                  downVote: expect.any(Number),
+                  issuedDate: expect.any(String),
+                  user: expect.any(String),
+                  dinas: expect.any(String),
+                  picture: expect.any(String),
+                }),
               ])
             );
 
@@ -131,22 +146,41 @@ describe("GET /reports [CASE SUCCESS]", () => {
 describe("GET /report/:id [CASE SUCCESS]", () => {
   test("Should return object with id, userId, dinasId, description, issuedDate, finishedDate, location, lat, long, category, picture and status code (200)", (done) => {
     request(app)
-      .get(`/dinas/reports/${reportId}`)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister.email, password: dinasRegister.password })
       .then((res) => {
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty("_id");
-        expect(res.body).toHaveProperty("userId");
-        expect(res.body).toHaveProperty("dinasId");
-        expect(res.body).toHaveProperty("description");
-        expect(res.body).toHaveProperty("issuedDate");
-        expect(res.body).toHaveProperty("finishedDate");
-        expect(res.body).toHaveProperty("location");
-        expect(res.body).toHaveProperty("lat");
-        expect(res.body).toHaveProperty("long");
-        expect(res.body).toHaveProperty("category");
-        expect(res.body).toHaveProperty("picture");
+        console.log(
+          "🚀 ~ file: reportsDinas.test.js ~ line 143 ~ .then ~ res",
+          res.body
+        );
 
-        done();
+        return request(app)
+          .get("/dinas/reports/" + reportId)
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(
+              expect.objectContaining({
+                _id: expect.any(String),
+                title: expect.any(String),
+                status: expect.any(String),
+                description: expect.any(String),
+                location: expect.any(String),
+                long: expect.any(Number),
+                lat: expect.any(Number),
+                category: expect.any(String),
+                upVote: expect.any(Number),
+                downVote: expect.any(Number),
+                issuedDate: expect.any(String),
+                user: expect.any(String),
+                dinas: expect.any(String),
+                picture: expect.any(String),
+              })
+            );
+
+            done();
+          });
       })
       .catch((err) => {
         done(err);
