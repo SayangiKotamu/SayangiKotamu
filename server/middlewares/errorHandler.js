@@ -32,11 +32,9 @@ function errorHandler(err, req, res, next) {
       res.status(401).json({ message: "You have no access to this report" });
       break;
     case "ActivateAccount":
-      res
-        .status(401)
-        .json({
-          message: "Please check your email and activate your account first. ",
-        });
+      res.status(401).json({
+        message: "Please check your email and activate your account first. ",
+      });
       break;
     // ! HANDI ANGGA COBA INI BUAT APA
     // case "Invalid Login":
@@ -53,7 +51,7 @@ function errorHandler(err, req, res, next) {
       res.status(401).json({ message: err.message });
       break;
     case "NotFound":
-      res.status(401).json({ message: err.message });
+      res.status(404).json({ message: err.message });
       break;
     default:
       res.status(500).json({ message: "Internal Server Error" });
