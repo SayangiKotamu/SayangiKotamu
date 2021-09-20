@@ -77,6 +77,31 @@ export function fetchReportById(id) {
   };
 }
 
+export function fetchReportByCategory(id) {
+  return function (dispatch, getState) {
+    const { auth } = getState();
+
+    dispatch(setError(null));
+    dispatch(setLoading(true));
+    sayangiKotamu({
+      method: "GET",
+      url: `/reports/?categoryId=${id}`,
+      headers: {
+        access_token: auth.accessToken,
+      },
+    })
+      .then((response) => {
+        dispatch(setReports(response.data));
+      })
+      .catch((err) => {
+        dispatch(setError(err));
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
+}
+
 export function patchReport(id, payload) {
   return function (dispatch, getState) {
     const { auth } = getState();
