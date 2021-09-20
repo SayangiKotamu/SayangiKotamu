@@ -92,8 +92,7 @@ function Announcement() {
                     <thead>
                       <tr>
                         <th></th>
-                        <th>Nama</th>
-                        <th>Dinas</th>
+                        <th>Judul</th>
                         <th>Deskripsi</th>
                         <th>Kategori</th>
                       </tr>

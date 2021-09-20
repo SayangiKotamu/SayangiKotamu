@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchReports } from "../stores/reports/action";
 import { toast, ToastContainer } from "react-toastify";
@@ -6,13 +6,14 @@ import { Bar } from "react-chartjs-2";
 
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
-import Category from "../components/Category";
 import { fetchCategories } from "../stores/categories/action";
 
 function Dashboard() {
   const dispatch = useDispatch();
+  const [kategori, setKategori] = useState();
   const { reports, loading, error } = useSelector((state) => state.report);
   const { categories } = useSelector((state) => state.category);
+  console.log(kategori);
 
   useEffect(() => {
     dispatch(fetchReports());
@@ -21,6 +22,11 @@ function Dashboard() {
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
+
+  const forKategori = (e) => {
+    e.preventDefault();
+    setKategori(e.target.value);
+  };
 
   if (error) {
     toast.error("Mohon maaf, terjadi kesalahan pada server.", {
@@ -134,7 +140,18 @@ function Dashboard() {
                     Kategori Pengaduan
                   </h2>
                   {categories.map((category) => {
-                    return <Category category={category} />;
+                    return (
+                      <div>
+                        <button
+                          className="btn btn-block mb-3"
+                          style={{ backgroundColor: "#05DAA7" }}
+                          onClick={forKategori}
+                          value={category.name}
+                        >
+                          {category.name}
+                        </button>
+                      </div>
+                    );
                   })}
                 </div>
                 <div
@@ -157,7 +174,13 @@ function Dashboard() {
                     }}
                   >
                     {reports.map((report) => {
-                      return <Content report={report} key={report.id} />;
+                      return (
+                        <Content
+                          kategori={kategori}
+                          report={report}
+                          key={report.id}
+                        />
+                      );
                     })}
                   </div>
                 </div>

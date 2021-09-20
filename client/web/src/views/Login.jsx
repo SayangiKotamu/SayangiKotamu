@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,6 +10,7 @@ function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { accessToken } = useSelector((state) => state.auth);
 
   const handleToRegister = () => {
     history.push("/daftar");
@@ -44,7 +45,20 @@ function Login() {
       });
     } else {
       dispatch(logining(payload));
-      history.push("/beranda");
+
+      if (accessToken === "") {
+        toast.error("Terdapat kesalahan input email atau password", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        history.push("/beranda");
+      }
     }
   };
 

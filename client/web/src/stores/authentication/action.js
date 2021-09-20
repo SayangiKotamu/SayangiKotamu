@@ -1,5 +1,5 @@
 import { SET_IS_LOGGED_IN, SET_ACCESS_TOKEN, SET_LOADING } from "./actionType";
-import axios from "axios";
+import sayangiKotamu from "../../apis/sayangiKotamuAPI";
 
 export function setLogStatus(payload) {
   return { type: SET_IS_LOGGED_IN, payload };
@@ -15,14 +15,16 @@ export function setLoading(payload) {
 
 export function logining(payload) {
   return function (dispatch) {
-    return axios({
+    console.log(payload);
+    return sayangiKotamu({
       method: `POST`,
-      url: `http://localhost:3001/login`,
+      url: `/login`,
       data: payload,
     })
       .then((response) => {
         dispatch(setLogStatus(true));
         dispatch(setToken(response.data.accessToken));
+        console.log(response);
       })
       .catch((err) => {
         console.log(err);
@@ -32,9 +34,9 @@ export function logining(payload) {
 
 export function registering(payload) {
   return function () {
-    axios({
+    sayangiKotamu({
       method: `POST`,
-      url: `http://localhost:3001/register`,
+      url: `/register`,
       data: payload,
     })
       .then((response) => {

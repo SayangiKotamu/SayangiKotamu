@@ -3,9 +3,8 @@ function AspirationView(props) {
     <>
       <tbody>
         <tr>
-          <th>{props.aspirasi.id}</th>
-          <td>{props.aspirasi.user.full_name}</td>
-          <td>{props.aspirasi.dinas.name}</td>
+          <th>{props.aspirasi._id}</th>
+          <td>{props.aspirasi.title}</td>
           <td>{props.aspirasi.description}</td>
           <td>{props.aspirasi.type}</td>
         </tr>
