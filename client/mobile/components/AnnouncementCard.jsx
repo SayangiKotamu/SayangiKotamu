@@ -26,7 +26,7 @@ export default function AnnouncementCard(props) {
             onPress={() => navigation.navigate('Detail Pengumuman', { id: props.announcement._id })}
         >
             <View style={styles.notificationLogo}>
-                <Ionicons name={'information-circle-sharp'} size={30} color={'tomato'} />
+                <Ionicons name={'information-circle-sharp'} size={35} color={'tomato'} />
             </View>
             <View style={styles.announcementCardContent}>
                 <Text style={styles.textTitle}>{props.announcement.title}</Text>

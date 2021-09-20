@@ -69,6 +69,7 @@ export default function App() {
                             },
                         },
                         tabBarShowLabel: false,
+                        tabBarHideOnKeyboard: true,
                     })}
                 >
                     <Tab.Screen
@@ -106,7 +107,7 @@ export default function App() {
                             } else if (route.name === 'Daftar') {
                                 iconName = focused ? 'newspaper-sharp' : 'newspaper-outline'
                             }
-                            return <Ionicons name={iconName} size={size} color={color} />
+                            return <Ionicons name={iconName} size={35} color={color} />
                         },
                         tabBarActiveTintColor: 'tomato',
                         tabBarInactiveTintColor: 'gray',
@@ -115,9 +116,9 @@ export default function App() {
                             height: '6.2%',
                             borderRadius: 10,
                             padding: 5,
-                            marginLeft: 10,
-                            marginBottom: 15,
-                            marginRight: 10,
+                            marginLeft: 15,
+                            marginBottom: 20,
+                            marginRight: 15,
                             position: 'absolute',
                             shadowColor: '#000',
                             shadowOpacity: 0.06,
@@ -127,6 +128,7 @@ export default function App() {
                             },
                         },
                         tabBarShowLabel: false,
+                        tabBarHideOnKeyboard: true,
                     })}
                 >
                     <Tab.Screen name="Masuk" component={Login} options={{ headerShown: false }} />
@@ -151,6 +153,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     reportIcon: {
-        marginBottom: 40,
+        marginBottom: 35,
     },
 })

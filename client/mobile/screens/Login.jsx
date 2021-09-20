@@ -77,7 +77,7 @@ export default function Login() {
 
             <View style={styles.buttonContainer}>
                 {loadingLogin ? (
-                    <ActivityIndicator size="large" color="#black" />
+                    <ActivityIndicator size="large" color="black" />
                 ) : (
                     <TouchableOpacity onPress={onLoginClick}>
                         <CustomButton buttonName={'Masuk'} buttonColor={'black'} />
