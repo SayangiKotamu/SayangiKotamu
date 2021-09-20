@@ -84,41 +84,32 @@ export function doLogin(payload) {
         try {
             dispatch(setLoadingLogin(true))
 
-            let response = await fetch(`${baseURL}/login`, {
+            let response = await sayangiKotamuApi({
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify({
+                url: '/login',
+                data: {
                     email: payload.email,
                     password: payload.password,
-                }),
+                },
             })
 
-            if (response.ok) {
-                response = await response.json()
+            dispatch(setIsLoggedIn(true))
+            dispatch(setAccessToken(response.access_token))
 
-                dispatch(setIsLoggedIn(true))
-                dispatch(setAccessToken(response.accessToken))
-
-                Toast.show({
-                    type: 'success',
-                    position: 'bottom',
-                    bottomOffset: 70,
-                    text1: 'SayangiKotamu',
-                    text2: 'Berhasil login!',
-                })
-            } else {
-                throw Error
-            }
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Berhasil login!',
+            })
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, login tidak berhasil',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingLogin(false))
