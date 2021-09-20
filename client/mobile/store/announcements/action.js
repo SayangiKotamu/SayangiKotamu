@@ -7,7 +7,6 @@ import {
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
 import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setAnnouncements(payload) {
