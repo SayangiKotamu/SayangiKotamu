@@ -91,7 +91,7 @@ export function doLogin(payload) {
             })
 
             dispatch(setIsLoggedIn(true))
-            dispatch(setAccessToken(response.access_token))
+            dispatch(setAccessToken(response.data.access_token))
 
             Toast.show({
                 type: 'success',
