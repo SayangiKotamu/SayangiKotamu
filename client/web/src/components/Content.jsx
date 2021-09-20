@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+
 import getFormatedDate from "../helpers/formatedDate";
+import { fetchReportByCategory } from "../stores/reports/action";
 
 function Content(props) {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
+  const { reports, loading, error } = useSelector((state) => state.report);
 
   const handleToDetail = (id) => {
     history.push(`/detail/${id}`);
   };
 
+  useEffect(() => {
+    if (props?.kategori !== undefined) {
+      dispatch(fetchReportByCategory(props?.kategori));
+    }
+  }, []);
+
+  console.log("ini di konten", reports);
   return (
     <>
       <div
@@ -65,7 +77,7 @@ function Content(props) {
                   Tanggal Masuk
                 </h1>
                 <p className="truncate text-m text-right">
-                  {getFormatedDate(props?.report?.issuedDate)}
+                  {props?.report?.issuedDate}
                 </p>
               </div>
               <div>

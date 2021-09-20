@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchReports } from "../stores/reports/action";
 import { toast, ToastContainer } from "react-toastify";
 import { Bar } from "react-chartjs-2";
 
@@ -11,22 +10,14 @@ import { fetchCategories } from "../stores/categories/action";
 function Dashboard() {
   const dispatch = useDispatch();
   const [kategori, setKategori] = useState();
-  const { reports, loading, error } = useSelector((state) => state.report);
-  const { categories } = useSelector((state) => state.category);
-  console.log(kategori);
-
-  useEffect(() => {
-    dispatch(fetchReports());
-  }, []);
+  const { categories, loading, error } = useSelector((state) => state.category);
+  // console.log(kategori);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
 
-  const forKategori = (e) => {
-    e.preventDefault();
-    setKategori(e.target.value);
-  };
+  console.log(categories);
 
   if (error) {
     toast.error("Mohon maaf, terjadi kesalahan pada server.", {
@@ -145,8 +136,11 @@ function Dashboard() {
                         <button
                           className="btn btn-block mb-3"
                           style={{ backgroundColor: "#05DAA7" }}
-                          onClick={forKategori}
-                          value={category.name}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            // setKategori(e.target.value);
+                          }}
+                          value={category._id}
                         >
                           {category.name}
                         </button>
@@ -173,15 +167,7 @@ function Dashboard() {
                       maxHeight: "500px",
                     }}
                   >
-                    {reports.map((report) => {
-                      return (
-                        <Content
-                          kategori={kategori}
-                          report={report}
-                          key={report.id}
-                        />
-                      );
-                    })}
+                    <Content kategori={kategori} />
                   </div>
                 </div>
               </div>

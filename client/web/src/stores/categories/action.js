@@ -70,28 +70,3 @@ export function postCategories(payload) {
       });
   };
 }
-
-export function fetchReportByCategory() {
-  return function (dispatch, getState) {
-    const { auth } = getState();
-
-    dispatch(setError(null));
-    dispatch(setLoading(true));
-    sayangiKotamu({
-      method: "GET",
-      url: "/categories",
-      headers: {
-        access_token: auth.accessToken,
-      },
-    })
-      .then((response) => {
-        dispatch(setCategories(response.data));
-      })
-      .catch((err) => {
-        dispatch(setError(err));
-      })
-      .finally(() => {
-        dispatch(setLoading(false));
-      });
-  };
-}
