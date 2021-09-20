@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions, RefreshControl } from 'react-native'
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    ScrollView,
+    Dimensions,
+    RefreshControl,
+    ActivityIndicator,
+} from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Picker } from '@react-native-picker/picker'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllReports } from '../store/reports/action'
+import { fetchAllReports, fetchReportByCategory } from '../store/reports/action'
+import { fetchAllCategory } from '../store/categories/action'
 
 import ReportCard from '../components/ReportCard'
 
@@ -23,18 +34,30 @@ export default function Home({ navigation }) {
     const dispatch = useDispatch()
 
     const { reports, loadingReports } = useSelector((state) => state.reports)
+    const { categories } = useSelector((state) => state.categories)
 
     const [isRefreshing, setIsRefreshing] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState('')
 
     function onRefresh() {
         setIsRefreshing(true)
         dispatch(fetchAllReports())
+        dispatch(fetchAllCategory())
         setIsRefreshing(false)
     }
 
     useEffect(() => {
-        dispatch(fetchAllReports())
+        //! No need to fetchallreport here
+        dispatch(fetchAllCategory())
     }, [])
+
+    useEffect(() => {
+        if (!selectedCategory) {
+            dispatch(fetchAllReports()) //! Already handled here
+        } else {
+            dispatch(fetchReportByCategory(selectedCategory))
+        }
+    }, [selectedCategory])
 
     if (!fontsLoaded) {
         return <AppLoading />
@@ -85,7 +108,37 @@ export default function Home({ navigation }) {
                 </View>
 
                 <View style={styles.newsContainer}>
-                    <Text style={styles.heading}>Apa kabar kota mu hari ini?</Text>
+                    <View style={styles.headingSection}>
+                        <Text style={styles.heading}>Apa kabar kota mu hari ini?</Text>
+                        {categories.length > 0 && (
+                            <>
+                                <AntDesign
+                                    name={'filter'}
+                                    size={20}
+                                    color={'grey'}
+                                    style={styles.filterIcon}
+                                />
+                                <Picker
+                                    selectedValue={selectedCategory}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        setSelectedCategory(itemValue)
+                                    }
+                                    style={styles.pickerCategory}
+                                >
+                                    <Picker.Item label={'Semua Kategori'} value={''} />
+                                    {categories.map((category, idx) => {
+                                        return (
+                                            <Picker.Item
+                                                label={category.name}
+                                                value={category._id}
+                                                key={'category' + idx}
+                                            />
+                                        )
+                                    })}
+                                </Picker>
+                            </>
+                        )}
+                    </View>
 
                     <View style={styles.newsCardContainer}>
                         {loadingReports ? (
@@ -113,9 +166,19 @@ export default function Home({ navigation }) {
                             />
                         ) : (
                             <>
-                                {reports.map((report, idx) => {
-                                    return <ReportCard report={report} key={'report' + idx} />
-                                })}
+                                {reports.length > 0 ? (
+                                    <>
+                                        {reports.map((report, idx) => {
+                                            return (
+                                                <ReportCard report={report} key={'report' + idx} />
+                                            )
+                                        })}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Text style={styles.emptyReport}>Tidak ada laporan</Text>
+                                    </>
+                                )}
                             </>
                         )}
                     </View>
@@ -126,6 +189,10 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    emptyReport: {
+        color: 'grey',
+        fontFamily: 'Poppins_600SemiBold',
+    },
     textColor: {
         color: 'white',
         fontSize: 13,
@@ -138,12 +205,22 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontFamily: 'Poppins_600SemiBold',
     },
+    filterIcon: {
+        marginLeft: 10,
+        marginTop: 5,
+    },
     loading: {
         marginTop: '40%',
         marginBottom: '40%',
     },
     buttonContainer: {
         marginTop: 50,
+    },
+    pickerCategory: {
+        width: '10%',
+    },
+    headingSection: {
+        flexDirection: 'row',
     },
     innerMenu: {
         borderWidth: 1,

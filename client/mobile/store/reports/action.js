@@ -91,6 +91,36 @@ export function fetchAllReports() {
     }
 }
 
+export function fetchReportByCategory(categoryId) {
+    return async function (dispatch, getState) {
+        try {
+            const { auth } = getState()
+
+            dispatch(setLoadingReports(true))
+
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: `/reportUser/category/${categoryId}`,
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
+
+            dispatch(setReportsList(response.data))
+        } catch (err) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: err.response.data.message,
+            })
+        } finally {
+            dispatch(setLoadingReports(false))
+        }
+    }
+}
+
 export function fetchReportById(id) {
     return async function (dispatch, getState) {
         try {
