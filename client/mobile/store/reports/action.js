@@ -9,6 +9,7 @@ import {
 import Toast from 'react-native-toast-message'
 
 import baseURL from '../../apis/sayangiKotamu'
+import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setReportsList(payload) {
     return {
@@ -45,27 +46,29 @@ function setLoadingSendReport(payload) {
     }
 }
 
-export function fetchAllReports(payload) {
-    return async function (dispatch) {
+export function fetchAllReports() {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingReports(true))
 
-            let response = await fetch(`${baseURL}/reports`)
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: '/reportUser',
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
 
-            if (response.ok) {
-                response = await response.json()
-
-                dispatch(setReportsList(response))
-            } else {
-                throw Error
-            }
+            dispatch(setReportsList(response.data))
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, data laporan sedang tidak bisa diakses',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingReports(false))
@@ -102,52 +105,36 @@ export function fetchReportById(id) {
 }
 
 export function addReport(payload) {
-    //! Di body request fetch:
-    //! -- Sementara user yang ngebuat di hardcode dulu. Nanti kasih akses token di headers
-    //! -- Ini masih coba-coba aja, nanti sesuaiin sama server belakangan
-    //! -- Nanti kirim category harus ID, kirim dinas harus ID ke server
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingSendReport(true))
 
-            let response = await fetch(`${baseURL}/reports`, {
+            await sayangiKotamuApi({
                 method: 'POST',
+                url: '/reportUser',
                 headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
+                    access_token: auth.accessToken,
                 },
-                body: JSON.stringify({
+                data: {
                     title: payload.title,
                     description: payload.description,
                     location: payload.location,
-                    category: payload.category, //! Ini masih ngirim value nya (harusnya ID)
-                    // dinas: payload.dinas,
-                    lat: {
-                        $numberDecimal: payload.lat,
-                    },
-                    long: {
-                        $numberDecimal: payload.long,
-                    },
+                    lat: String(payload.lat),
+                    long: String(payload.long),
                     picture: payload.picture,
-                    //! Kebawah masih di hardcode sementara
-                    user: {
-                        email: 'jokowi@mail.com',
-                        password: '$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6',
-                        NIK: '314012401204901',
-                        full_name: 'Joko Widodo',
-                        kota: 'Jakarta',
-                        id: 1,
-                    },
-                    dinas: {
-                        id: 'D0001',
-                        name: 'Dinas Perhubungan',
-                    },
-                    status: 'Diterima',
-                    issued_date: '2021-09-18T04:45:22.074Z',
-                    finished_date: null,
-                    upVote: 0,
-                    downVote: 0,
-                }),
+                    dinas: payload.dinas,
+                    category: payload.category,
+                },
+            })
+
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Laporan Anda berhasil kami terima, terimakasih atas laporan Anda! Akan kami segera proses ya!',
             })
         } catch (err) {
             Toast.show({
@@ -155,7 +142,7 @@ export function addReport(payload) {
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, untuk saat ini kamu tidak bisa mengirim laporan. Tunggu ya!',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingSendReport(false))

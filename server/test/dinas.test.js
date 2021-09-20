@@ -65,9 +65,10 @@ beforeAll((done) => {
 // ! LATER: COBA CARI TAU CASCADE
 afterAll((done) => {
   Dinas.deleteMany()
-    .then((_) =>{ 
-      mongoose.connection.close()
-      done()
+
+    .then(() => {
+      mongoose.connection.close();
+      done();
     })
     .catch((err) => done(err));
 });
@@ -76,12 +77,14 @@ afterAll((done) => {
 describe("POST / [CASE SUCCESS]", () => {
   test("Should return object with id, email, description, NID, and status code (201)", (done) => {
     request(app)
-      .post("/dinas")
+
+      .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister1)
       .then((res) => {
         const firstWords = res.body.name.split(" ").map((el) => {
-          return el[0];
+
+          return el[0].toLowerCase() + el[2].toLowerCase();
         });
         expect(res.status).toBe(201);
         expect(res.body).toHaveProperty(
@@ -89,8 +92,8 @@ describe("POST / [CASE SUCCESS]", () => {
           `${firstWords.join("").toLowerCase()}${res.body._id}`
         );
         expect(res.body).toHaveProperty("email", dinasRegister1.email);
-        //   ! LATER: COBA PIKIRKAN INI ID
-        //   expect(res.body).toHaveProperty("_id", expect.any(new ObjectId(expect.any)));
+
+        expect(res.body).toHaveProperty("_id");
         expect(res.body).not.toHaveProperty("password");
         done();
       })
@@ -103,11 +106,11 @@ describe("POST / [CASE SUCCESS]", () => {
 describe("POST / [CASE FAILED / NO NAME]", () => {
   test("Should return ERROR because of [NO NAME] and status code(400)", (done) => {
     request(app)
-      .post("/dinas")
+
+      .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister2)
       .then((res) => {
-        console.log(res.body, "<<<<<");
         expect(res.status).toBe(400);
         expect(res.body).toEqual(
           expect.objectContaining({
@@ -126,7 +129,8 @@ describe("POST / [CASE FAILED / NO NAME]", () => {
 describe("POST / [CASE FAILED / NO EMAIL]", () => {
   test("Should return ERROR because of [NO EMAIL] and status code(400)", (done) => {
     request(app)
-      .post("/dinas")
+
+      .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister3)
       .then((res) => {
@@ -147,7 +151,8 @@ describe("POST / [CASE FAILED / NO EMAIL]", () => {
 describe("POST / [CASE FAILED / NO PASSWORD]", () => {
   test("Should return ERROR because of [NO PASSWORD] and status code(400)", (done) => {
     request(app)
-      .post("/dinas")
+
+      .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister4)
       .then((res) => {
@@ -168,7 +173,8 @@ describe("POST / [CASE FAILED / NO PASSWORD]", () => {
 describe("POST / [CASE FAILED / EMAIL INVALID]", () => {
   test("Should return ERROR because of [EMAIL INVALID] and status code(400)", (done) => {
     request(app)
-      .post("/dinas")
+
+      .post("/dinas/register")
       .set("Accept", "application/json")
       .send(dinasRegister5)
       .then((res) => {
@@ -186,7 +192,8 @@ describe("POST / [CASE FAILED / EMAIL INVALID]", () => {
   });
 });
 
-// /* USER LOGIN */
+
+/* USER LOGIN */
 describe("POST /login [CASE SUCCESS]", () => {
   test("Should return object with access_token and status code(200)", (done) => {
     request(app)
@@ -230,6 +237,36 @@ describe("POST /login [CASE FAILED / NO EMAIL]", () => {
       .then((res) => {
         expect(res.status).toBe(401);
         expect(res.body).toHaveProperty("message", "Email / Password is wrong");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+/** LIST ALL DINAS*/
+describe("GET /dinas [CASE SUCCESS]", () => {
+  test("Should return array of object of all dinas and status code(200)", (done) => {
+    request(app)
+      .get("/dinas")
+      .then((res) => {
+        expect(res.status).toBe(200);
+        expect(res.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              _id: expect.any(String),
+              name: expect.any(String),
+              NID: expect.any(String),
+              email: expect.any(String),
+              role: expect.any(String),
+              reports: expect.any(Array),
+              aspirations: expect.any(Array),
+              announcments: expect.any(Array),
+            }),
+          ])
+        );
+
         done();
       })
       .catch((err) => {
