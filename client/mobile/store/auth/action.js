@@ -51,7 +51,7 @@ export function doRegister(payload) {
                     email: payload.email,
                     password: payload.password,
                     kota: payload.kota,
-                    // ktp: payload.ktp, //! Ini link ktp dari firebase. Belum ada di server
+                    ktp: payload.ktp,
                 },
             })
 
@@ -91,7 +91,7 @@ export function doLogin(payload) {
             })
 
             dispatch(setIsLoggedIn(true))
-            dispatch(setAccessToken(response.access_token))
+            dispatch(setAccessToken(response.data.access_token))
 
             Toast.show({
                 type: 'success',

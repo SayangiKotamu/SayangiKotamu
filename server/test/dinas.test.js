@@ -237,3 +237,33 @@ describe("POST /login [CASE FAILED / NO EMAIL]", () => {
       });
   });
 });
+
+/** LIST ALL DINAS*/
+describe("GET /dinas [CASE SUCCESS]", () => {
+  test("Should return array of object of all dinas and status code(200)", (done) => {
+    request(app)
+      .get("/dinas")
+      .then((res) => {
+        expect(res.status).toBe(200);
+        expect(res.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              _id: expect.any(String),
+              name: expect.any(String),
+              NID: expect.any(String),
+              email: expect.any(String),
+              role: expect.any(String),
+              reports: expect.any(Array),
+              aspirations: expect.any(Array),
+              announcments: expect.any(Array),
+            }),
+          ])
+        );
+
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
