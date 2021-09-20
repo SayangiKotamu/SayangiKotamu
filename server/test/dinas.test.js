@@ -65,9 +65,9 @@ beforeAll((done) => {
 // ! LATER: COBA CARI TAU CASCADE
 afterAll((done) => {
   Dinas.deleteMany()
-    .then((_) =>{ 
-      mongoose.connection.close()
-      done()
+    .then((_) => {
+      mongoose.connection.close();
+      done();
     })
     .catch((err) => done(err));
 });
@@ -76,20 +76,12 @@ afterAll((done) => {
 describe("POST / [CASE SUCCESS]", () => {
   test("Should return object with id, email, description, NID, and status code (201)", (done) => {
     request(app)
-<<<<<<< HEAD
-      .post("/dinas")
-=======
       .post("/dinas/register")
->>>>>>> testing-announcment
       .set("Accept", "application/json")
       .send(dinasRegister1)
       .then((res) => {
         const firstWords = res.body.name.split(" ").map((el) => {
-<<<<<<< HEAD
-          return el[0];
-=======
           return el[0].toLowerCase() + el[2].toLowerCase();
->>>>>>> testing-announcment
         });
         expect(res.status).toBe(201);
         expect(res.body).toHaveProperty(
@@ -111,11 +103,7 @@ describe("POST / [CASE SUCCESS]", () => {
 describe("POST / [CASE FAILED / NO NAME]", () => {
   test("Should return ERROR because of [NO NAME] and status code(400)", (done) => {
     request(app)
-<<<<<<< HEAD
-      .post("/dinas")
-=======
       .post("/dinas/register")
->>>>>>> testing-announcment
       .set("Accept", "application/json")
       .send(dinasRegister2)
       .then((res) => {
@@ -138,11 +126,7 @@ describe("POST / [CASE FAILED / NO NAME]", () => {
 describe("POST / [CASE FAILED / NO EMAIL]", () => {
   test("Should return ERROR because of [NO EMAIL] and status code(400)", (done) => {
     request(app)
-<<<<<<< HEAD
-      .post("/dinas")
-=======
       .post("/dinas/register")
->>>>>>> testing-announcment
       .set("Accept", "application/json")
       .send(dinasRegister3)
       .then((res) => {
@@ -163,11 +147,7 @@ describe("POST / [CASE FAILED / NO EMAIL]", () => {
 describe("POST / [CASE FAILED / NO PASSWORD]", () => {
   test("Should return ERROR because of [NO PASSWORD] and status code(400)", (done) => {
     request(app)
-<<<<<<< HEAD
-      .post("/dinas")
-=======
       .post("/dinas/register")
->>>>>>> testing-announcment
       .set("Accept", "application/json")
       .send(dinasRegister4)
       .then((res) => {
@@ -188,11 +168,7 @@ describe("POST / [CASE FAILED / NO PASSWORD]", () => {
 describe("POST / [CASE FAILED / EMAIL INVALID]", () => {
   test("Should return ERROR because of [EMAIL INVALID] and status code(400)", (done) => {
     request(app)
-<<<<<<< HEAD
-      .post("/dinas")
-=======
       .post("/dinas/register")
->>>>>>> testing-announcment
       .set("Accept", "application/json")
       .send(dinasRegister5)
       .then((res) => {
