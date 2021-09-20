@@ -7,7 +7,7 @@ import {
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
+import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 export function setIsLoggedIn(payload) {
     return {
@@ -42,42 +42,33 @@ export function doRegister(payload) {
         try {
             dispatch(setLoadingRegister(true))
 
-            let response = await fetch(`${baseURL}/register`, {
+            await sayangiKotamuApi({
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify({
-                    full_name: payload.fullName,
+                url: '/register',
+                data: {
+                    NIK: payload.NIK,
+                    fullname: payload.fullName,
                     email: payload.email,
                     password: payload.password,
-                    NIK: payload.NIK,
-                    ktp: payload.ktp, //! Ini link ktp dari firebase
                     kota: payload.kota,
-                }),
+                    // ktp: payload.ktp, //! Ini link ktp dari firebase. Belum ada di server
+                },
             })
 
-            if (response.ok) {
-                response = await response.json()
-
-                Toast.show({
-                    type: 'success',
-                    position: 'bottom',
-                    bottomOffset: 70,
-                    text1: 'SayangiKotamu',
-                    text2: 'Berhasil register! Sebelum login, silahkan aktivasi akun mu dengan akun yang terdaftar',
-                })
-            } else {
-                throw Error
-            }
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Berhasil register! Sebelum login, silahkan aktivasi akun mu dengan akun yang terdaftar',
+            })
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, register tidak berhasil',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingRegister(false))
@@ -90,41 +81,32 @@ export function doLogin(payload) {
         try {
             dispatch(setLoadingLogin(true))
 
-            let response = await fetch(`${baseURL}/login`, {
+            let response = await sayangiKotamuApi({
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify({
+                url: '/login',
+                data: {
                     email: payload.email,
                     password: payload.password,
-                }),
+                },
             })
 
-            if (response.ok) {
-                response = await response.json()
+            dispatch(setIsLoggedIn(true))
+            dispatch(setAccessToken(response.access_token))
 
-                dispatch(setIsLoggedIn(true))
-                dispatch(setAccessToken(response.accessToken))
-
-                Toast.show({
-                    type: 'success',
-                    position: 'bottom',
-                    bottomOffset: 70,
-                    text1: 'SayangiKotamu',
-                    text2: 'Berhasil login!',
-                })
-            } else {
-                throw Error
-            }
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Berhasil login!',
+            })
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, login tidak berhasil',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingLogin(false))

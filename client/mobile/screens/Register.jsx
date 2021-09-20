@@ -174,7 +174,7 @@ export default function Register({ navigation }) {
             !email.trim() ||
             !password.trim() ||
             !NIK.trim() ||
-            !KTPLink ||
+            // !KTPLink || !firebase lagi down, nanti ini enable lagi
             !city.trim()
         ) {
             Toast.show({
@@ -190,13 +190,11 @@ export default function Register({ navigation }) {
                 email,
                 password,
                 NIK,
-                ktp: KTPLink,
+                // ktp: KTPLink, !firebase lagi down, nanti ini enable lagi
                 kota: city,
             }
 
-            dispatch(doRegister(payload)).then(() => {
-                navigation.navigate('Masuk')
-            })
+            dispatch(doRegister(payload))
         }
     }
 
