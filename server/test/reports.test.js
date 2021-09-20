@@ -644,6 +644,34 @@ describe("GET /reportUser [CASE SUCCESS]", () => {
   });
 });
 
+describe("GET /reports [CASE FAILED / DINAS ATTEMPT]", () => {
+  test("Should ERROR because of [DINAS ATTEMPT] and status code (401)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        return request(app)
+          .get("/reportUser")
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(401);
+            expect(res.body).toEqual(
+              expect.objectContaining({
+                message: "Id is not verified",
+              })
+            );
+
+            done();
+          });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 /** SHOW REPORT */
 describe("GET /reportUser/:id [CASE SUCCESS]", () => {
   test("Should return of object and status code (200)", (done) => {
@@ -673,6 +701,34 @@ describe("GET /reportUser/:id [CASE SUCCESS]", () => {
                 user: expect.any(Object),
                 dinas: expect.any(Object),
                 picture: expect.any(String),
+              })
+            );
+
+            done();
+          });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("GET /reports/:id [CASE FAILED / DINAS ATTEMPT]", () => {
+  test("Should ERROR because of [DINAS ATTEMPT] and status code (401)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        return request(app)
+          .get(`/reportUser/${reportId2}`)
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(401);
+            expect(res.body).toEqual(
+              expect.objectContaining({
+                message: "Id is not verified",
               })
             );
 
@@ -759,6 +815,34 @@ describe("GET /reportUser/category:id [CASE SUCCESS]", () => {
   });
 });
 
+describe("GET /reportUser/category:id [CASE FAILED / DINAS ATTEMPT]", () => {
+  test("Should ERROR because of [DINAS ATTEMPT] and status code (401)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        return request(app)
+          .get(`/reportUser/category/${category._id}`)
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(401);
+            expect(res.body).toEqual(
+              expect.objectContaining({
+                message: "Id is not verified",
+              })
+            );
+
+            done();
+          });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 /* CREATE POST USER */
 describe("POST /reportUser [CASE SUCCESS]", () => {
   test("Should return created object report and status code (201)", (done) => {
@@ -800,6 +884,45 @@ describe("POST /reportUser [CASE SUCCESS]", () => {
             expect(res.body).toHaveProperty("picture", createReport.picture);
             expect(res.body).toHaveProperty("status", "diterima");
             expect(res.body).toHaveProperty("_id");
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("POST /reportUser [CASE FAILED / DINAS ATTEMPT]", () => {
+  test("Should ERROR becaue of [DINAS ATTEMPT] and status code (401)", (done) => {
+    let createReport = {
+      title: "Created title",
+      description: "Created description",
+      location: "Depok",
+      long: 106.832989,
+      lat: -6.372639,
+      dinas: dinas1._id,
+      category: category1._id,
+      picture:
+        "http://sman3rks.sch.id/media_library/posts/post-image-1594363147962.png",
+      user: user1._id,
+    };
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        return request(app)
+          .post(`/reportUser`)
+          .set("access_token", res.body.accessToken)
+          .send(createReport)
+          .then((res) => {
+            expect(res.status).toBe(401);
+            expect(res.body).toEqual(
+              expect.objectContaining({
+                message: "Id is not verified",
+              })
+            );
             done();
           });
       })
@@ -993,6 +1116,33 @@ describe("patch /reportUser/up/:id [CASE SUCCESS]", () => {
   });
 });
 
+describe("patch /reportUser/up/:id [CASE FAILED / DINAS ATTEMPT]", () => {
+  test("Should ERROR because of [DINAS ATTEMPT] and status code (401)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        return request(app)
+          .patch(`/reportUser/up/${reportId2}`)
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(401);
+            expect(res.body).toEqual(
+              expect.objectContaining({
+                message: "Id is not verified",
+              })
+            );
+
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 describe("patch /reportUser/up/:id [CASE FAILED / NOT FOUND]", () => {
   const falseID = "6139bfa08c2956b92b583291";
 
@@ -1037,6 +1187,33 @@ describe("patch /reportUser/down/:id [CASE SUCCESS]", () => {
           .then((res) => {
             expect(res.status).toBe(200);
             expect(res.body).toHaveProperty("acknowledged", true);
+
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("patch /reportUser/down/:id [CASE FAILED / DINAS ATTEMPT]", () => {
+  test("Should ERROR because of [DINAS ATTEMPT] and status code (401)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        return request(app)
+          .patch(`/reportUser/down/${reportId2}`)
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(401);
+            expect(res.body).toEqual(
+              expect.objectContaining({
+                message: "Id is not verified",
+              })
+            );
 
             done();
           });
