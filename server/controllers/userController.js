@@ -14,8 +14,7 @@ class UserController {
         password: req.body.password,
         kota: req.body.kota,
         isActive: false,
-        ktp: req.body.ktp,
-        //tambahain report []
+        ktp: req.body.ktp
       };
       const foundEmail = await User.findOne({ email: newUser.email });
       const foundNIK = await User.findOne({ NIK: newUser.NIK });
