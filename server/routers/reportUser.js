@@ -1,10 +1,11 @@
-const routers = require('express').Router();
-const ReportUserController = require('../controllers/reportUserController');
+const routers = require("express").Router();
+const ReportController = require("../controllers/reportController");
+const { Userauth } = require("../middlewares/auth");
 
-routers.get('/', ReportUserController.showAll)
-routers.get('/:category', ReportUserController.showByCategory)
-routers.post('/', ReportUserController.addReport)
-routers.put('/', ReportUserController.editReport)
-routers.delete('/:id', ReportUserController.deleteReport)
+routers.get("/", Userauth, ReportController.showAll);
+routers.get("/:category", Userauth, ReportController.showByCategory);
+routers.post("/", Userauth, ReportController.addReport);
+routers.patch("/up/:id", Userauth, ReportController.upVoteByIdReport);
+routers.patch("/down/:id", Userauth, ReportController.downVoteByIdReport);
 
-module.exports= routers
+module.exports = routers;

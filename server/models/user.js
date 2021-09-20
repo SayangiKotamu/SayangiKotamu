@@ -1,43 +1,88 @@
-const {getDatabase} = require('../config/mongodb')
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 const { ObjectId } = require("bson");
+const mongoose = require("mongoose");
+const validator = require("validator");
+const { hashPassword } = require("../helpers/bcrypt");
+const { jwtSignEmailActivate } = require("../helpers/jwt");
 
-class User {
-    static findAll(){
-      return getDatabase().collection("Users").find().toArray()
-    }
-
-    static async login(email) {
-      try {
-        let data = await getDatabase().collection("Users").findOne({ "email": email })
-        return data
-      } catch (error) {
-        return {
-          name:"Not Found",
-          message:error
-        }
+const userSchema = new mongoose.Schema({
+  fullname: {
+    type: String,
+    required: [true, "name is required"],
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: [true, "Email is required"],
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error("Email is invalid");
       }
-    } 
+    },
+  },
+  password: {
+    type: String,
+    required: [true, "Password is required"],
+  },
+  // ! ADDING MINIMAL LENGTH
+  NIK: {
+    type: String,
+    required: [true, "NIK is required"],
+  },
+  kota: {
+    type: String,
+    required: [true, "kota is required"],
+  },
+  isActive: {
+    type: Boolean,
+  },
+  activateEmailToken: {
+    type: String,
+  },
+  reports: [],
+  aspirations: [],
+});
 
-    static addUser(payload) {
-      return getDatabase().collection("Users").insertOne(payload);
-    }
-    
-    static editUser(payload, id) {
-      return getDatabase().collection("Users").updateOne({
-        _id: ObjectId(id)
-      },{
-        $set: payload,
-      }
-      );
-    }
-    
-    static deleteUser(id) {
-      return getDatabase().collection("Users").deleteOne({ _id: ObjectId(id) });
-    }
+userSchema.pre("save", function (next) {
+  const user = this;
+  if (!user.isModified("password")) return next();
+  user.password = hashPassword(user.password);
 
-    static deleteDbUser() {
-      return getDatabase().collection("Users").drop();
-    }    
-}
+  // ! EMAIL TOKEN
+  const emailToken = jwtSignEmailActivate({
+    NIK: user.NIK,
+    email: user.email,
+    password: user.password,
+  });
 
-module.exports = User
+  user.activateEmailToken = emailToken;
+
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_NODEMAILER,
+      pass: process.env.PASSWORD_EMAIL_NODEMAILER,
+    },
+  });
+
+  let mailOptions = {
+    from: "noreply@gmail.com",
+    to: `${user.email}`,
+    subject: "Verification Email",
+    html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}${emailToken}'>click here</a> to activate your email</p>`,
+  };
+
+  transporter.sendMail(mailOptions, function (err, data) {
+    // ! LATER: DI ERROR HANDLER
+    if (err) {
+      console.log("Error");
+    } else {
+      console.log("email sent");
+    }
+  });
+  next();
+});
+
+const User = mongoose.model("User", userSchema);
+module.exports = User;
