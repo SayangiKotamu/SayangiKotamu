@@ -3,6 +3,7 @@ import { SET_DINAS, SET_LOADING_DINAS } from './actionType'
 import Toast from 'react-native-toast-message'
 
 import baseURL from '../../apis/sayangiKotamu'
+import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
 
 function setDinas(payload) {
     return {
@@ -23,15 +24,14 @@ export function fetchAllDinas() {
         try {
             dispatch(setLoadingDinas(true))
 
-            let response = await fetch(`${baseURL}/dinas`)
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: '/dinas',
+            })
 
-            if (response.ok) {
-                response = await response.json()
+            console.log(response.data, '<< all dinas data')
 
-                dispatch(setDinas(response))
-            } else {
-                throw Error
-            }
+            // dispatch(setDinas(response))
         } catch (err) {
             Toast.show({
                 type: 'error',

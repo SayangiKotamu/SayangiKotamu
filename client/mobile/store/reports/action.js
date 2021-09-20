@@ -49,9 +49,9 @@ function setLoadingSendReport(payload) {
 export function fetchAllReports(payload) {
     return async function (dispatch, getState) {
         try {
-            dispatch(setLoadingReports(true))
-
             const { auth } = getState()
+
+            dispatch(setLoadingReports(true))
 
             let response = await sayangiKotamuApi({
                 method: 'GET',
@@ -109,56 +109,83 @@ export function addReport(payload) {
     //! -- Sementara user yang ngebuat di hardcode dulu. Nanti kasih akses token di headers
     //! -- Ini masih coba-coba aja, nanti sesuaiin sama server belakangan
     //! -- Nanti kirim category harus ID, kirim dinas harus ID ke server
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingSendReport(true))
 
-            let response = await fetch(`${baseURL}/reports`, {
+            await sayangiKotamuApi({
                 method: 'POST',
+                url: '/reportUser',
                 headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
+                    access_token: auth.accessToken,
                 },
-                body: JSON.stringify({
+                data: {
                     title: payload.title,
                     description: payload.description,
                     location: payload.location,
-                    category: payload.category, //! Ini masih ngirim value nya (harusnya ID)
-                    // dinas: payload.dinas,
-                    lat: {
-                        $numberDecimal: payload.lat,
-                    },
-                    long: {
-                        $numberDecimal: payload.long,
-                    },
+                    lat: String(payload.lat),
+                    long: String(payload.long),
                     picture: payload.picture,
-                    //! Kebawah masih di hardcode sementara
-                    user: {
-                        email: 'jokowi@mail.com',
-                        password: '$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6',
-                        NIK: '314012401204901',
-                        full_name: 'Joko Widodo',
-                        kota: 'Jakarta',
-                        id: 1,
-                    },
-                    dinas: {
-                        id: 'D0001',
-                        name: 'Dinas Perhubungan',
-                    },
-                    status: 'Diterima',
-                    issued_date: '2021-09-18T04:45:22.074Z',
-                    finished_date: null,
-                    upVote: 0,
-                    downVote: 0,
-                }),
+                    dinas: payload.dinasId,
+                    category: payload.categoryId,
+                },
             })
+
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Laporan Anda berhasil kami terima, terimakasih atas laporan Anda! Akan kami segera proses ya!',
+            })
+            // let response = await fetch(`${baseURL}/reports`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         Accept: 'application/json',
+            //     },
+            //     body: JSON.stringify({
+            //         title: payload.title,
+            //         description: payload.description,
+            //         location: payload.location,
+            //         category: payload.category, //! Ini masih ngirim value nya (harusnya ID)
+            //         // dinas: payload.dinas,
+            //         lat: {
+            //             $numberDecimal: payload.lat,
+            //         },
+            //         long: {
+            //             $numberDecimal: payload.long,
+            //         },
+            //         picture: payload.picture,
+            //         //! Kebawah masih di hardcode sementara
+            //         user: {
+            //             email: 'jokowi@mail.com',
+            //             password: '$2a$10$wEHiAkLO.R5mEG0Ujd.7/OksyIZlBju40zI6QjwOmSNk5G6hZNZF6',
+            //             NIK: '314012401204901',
+            //             full_name: 'Joko Widodo',
+            //             kota: 'Jakarta',
+            //             id: 1,
+            //         },
+            //         dinas: {
+            //             id: 'D0001',
+            //             name: 'Dinas Perhubungan',
+            //         },
+            //         status: 'Diterima',
+            //         issued_date: '2021-09-18T04:45:22.074Z',
+            //         finished_date: null,
+            //         upVote: 0,
+            //         downVote: 0,
+            //     }),
+            // })
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, untuk saat ini kamu tidak bisa mengirim laporan. Tunggu ya!',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingSendReport(false))
