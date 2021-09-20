@@ -11,6 +11,12 @@ const dinasRegister = {
   password: "test1234",
 };
 
+const dinasRegister2 = {
+  name: "Dinas Pengamanan",
+  email: "dinasPengamananeport@test.com",
+  password: "test1234",
+};
+
 const userRegister = {
   NIK: "6145b84486270d831670f492",
   fullname: "anthony taylor",
@@ -25,17 +31,21 @@ let user = {};
 let categorien = {};
 
 let reportId = "";
+let dinas2 = {};
 
+const statusChanged = {
+  status: "diproses",
+};
 beforeAll((done) => {
   const category = {
     name: "kecelakaan",
   };
 
-  const statusChanged = {
-    status: "diproses",
-  };
-
-  Dinas.create(dinasRegister)
+  Dinas.create(dinasRegister2)
+    .then((res) => {
+      dinas2 = res;
+      return Dinas.create(dinasRegister);
+    })
     .then((res) => {
       dinas = res;
 
@@ -64,18 +74,10 @@ beforeAll((done) => {
         picture:
           "http://sman3rks.sch.id/media_library/posts/post-image-1594363147962.png",
       };
-      console.log(
-        "🚀 ~ file: reportsDinas.test.js ~ line 67 ~ .then ~ dinas",
-        dinas
-      );
+
       return Report.create(createReport);
     })
     .then((res) => {
-      console.log(
-        "🚀 ~ file: reportsDinas.test.js ~ line 74 ~ .then ~ res",
-        res
-      );
-
       reportId = res._id;
       done();
     })
@@ -150,11 +152,6 @@ describe("GET /report/:id [CASE SUCCESS]", () => {
       .set("Accept", "application/json")
       .send({ email: dinasRegister.email, password: dinasRegister.password })
       .then((res) => {
-        console.log(
-          "🚀 ~ file: reportsDinas.test.js ~ line 143 ~ .then ~ res",
-          res.body
-        );
-
         return request(app)
           .get("/dinas/reports/" + reportId)
           .set("access_token", res.body.accessToken)
@@ -192,11 +189,40 @@ describe("GET /report/:id [CASE FAILED / ID NOT FOUND]", () => {
   const falseID = "6139bfa08c2956b92b583296";
   test("Should return ERROR because of [ID FALSE] and status code(404)", (done) => {
     request(app)
-      .get(`/dinas/reports/${falseID}`)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister.email, password: dinasRegister.password })
       .then((res) => {
-        expect(res.status).toBe(404);
+        return request(app)
+          .get(`/dinas/reports/${falseID}`)
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(404);
 
-        done();
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("GET /report/:id [CASE FAILED / NO AUTHORIZE ]", () => {
+  test("Should return ERROR because of [NO AUTHORIZE] and status code(401)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister2.email, password: dinasRegister2.password })
+      .then((res) => {
+        return request(app)
+          .get("/dinas/reports/" + reportId)
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(401);
+
+            done();
+          });
       })
       .catch((err) => {
         done(err);
@@ -208,12 +234,22 @@ describe("GET /report/:id [CASE FAILED / ID NOT FOUND]", () => {
 describe("PATCH /report/:id [CASE SUCCESS]", () => {
   test("Should return dinas status and status code (200)", (done) => {
     request(app)
-      .patch(`/dinas/reports/${reportId}`)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister.email, password: dinasRegister.password })
       .then((res) => {
-        expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty("status", statusChanged.status);
+        request(app)
+          .patch(`/dinas/reports/${reportId}`)
+          .set("access_token", res.body.accessToken)
+          .send(statusChanged)
 
-        done();
+          .then((res) => {
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty("status", statusChanged.status);
+            expect(res.body).toHaveProperty("finishedDate");
+
+            done();
+          });
       })
       .catch((err) => {
         done(err);
@@ -222,17 +258,124 @@ describe("PATCH /report/:id [CASE SUCCESS]", () => {
 });
 
 describe("PATCH /report/:id [CASE FAILED / ID NOT FOUND]", () => {
-  test("Should return dinas status and status code (404)", (done) => {
+  const falseID = "6139bfa08c2956b92b583296";
+  test("Should return ERROR because of [ID NOT FOUND] and status code (404)", (done) => {
     request(app)
-      .patch(`/dinas/reports/${reportId}`)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister.email, password: dinasRegister.password })
       .then((res) => {
-        expect(res.status).toBe(404);
-        expect(res.body).toHaveProperty("status", statusChanged.status);
+        request(app)
+          .patch(`/dinas/reports/${falseID}`)
+          .set("access_token", res.body.accessToken)
+          .send(statusChanged)
 
-        done();
+          .then((res) => {
+            expect(res.status).toBe(404);
+
+            done();
+          });
       })
       .catch((err) => {
         done(err);
       });
   });
 });
+
+describe("PATCH /report/:id [CASE FAILED / NO AUTHORIZE]", () => {
+  test("Should return ERROR because of [NO AUTHORIZE] and status code (401)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister2.email, password: dinasRegister2.password })
+      .then((res) => {
+        request(app)
+          .patch(`/dinas/reports/${reportId}`)
+          .set("access_token", res.body.accessToken)
+          .send(statusChanged)
+
+          .then((res) => {
+            expect(res.status).toBe(401);
+
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+/** DELETE REPORT */
+describe("DELETE /report/:id [CASE SUCCESS]", () => {
+  test("Should return status code (200)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister.email, password: dinasRegister.password })
+      .then((res) => {
+        request(app)
+          .delete(`/dinas/reports/${reportId}`)
+          .set("access_token", res.body.accessToken)
+
+          .then((res) => {
+            expect(res.status).toBe(200);
+
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("DELETE /report/:id [CASE FAILED / ID NOT FOUND]", () => {
+  const falseID = "6139bfa08c2956b92b583296";
+
+  test("Should ERROR because of [ID NOT FOUND] return status code (404)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister.email, password: dinasRegister.password })
+      .then((res) => {
+        request(app)
+          .delete(`/dinas/reports/${falseID}`)
+          .set("access_token", res.body.accessToken)
+
+          .then((res) => {
+            expect(res.status).toBe(404);
+
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("DELETE /report/:id [CASE FAILED / NO AUTHORIZE]", () => {
+  test("Should ERROR because of [NO AUTHORIZE] return status code (404)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasRegister2.email, password: dinasRegister2.password })
+      .then((res) => {
+        request(app)
+          .delete(`/dinas/reports/${reportId}`)
+          .set("access_token", res.body.accessToken)
+
+          .then((res) => {
+            expect(res.status).toBe(404);
+
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+// ! END OF DINAS REPORS
