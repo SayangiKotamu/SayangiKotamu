@@ -12,7 +12,7 @@ export default function AnnouncementCard(props) {
     return (
         <TouchableOpacity
             style={styles.announcementCardContainer}
-            onPress={() => navigation.navigate('Detail Pengumuman', { id: props.announcement.id })}
+            onPress={() => navigation.navigate('Detail Pengumuman', { id: props.announcement._id })}
         >
             <View style={styles.notificationLogo}>
                 <Ionicons name={'information-circle-sharp'} size={30} color={'#1A73E9'} />
@@ -24,7 +24,7 @@ export default function AnnouncementCard(props) {
                     Pengumuman dibuat pada {props.announcement.date.split('T')[0]}
                 </Text>
                 <Text style={styles.textDescription}>
-                    {formatCharactersByLimit(props.announcement.announcement)}
+                    {formatCharactersByLimit(props.announcement.announcment)}
                 </Text>
             </View>
         </TouchableOpacity>

@@ -8,7 +8,6 @@ import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
 
 export default function ReportCard(props) {
     const navigation = useNavigation()
-    console.log(props)
 
     return (
         <TouchableOpacity
@@ -31,11 +30,11 @@ export default function ReportCard(props) {
                 </Text>
                 <View style={styles.categorySection}>
                     <AntDesign name={'tago'} size={18} color={'#1A73E9'} style={styles.logo} />
-                    <Text style={styles.textCategory}>{props.report.category}</Text>
+                    <Text style={styles.textCategory}>{props.report.category.name}</Text>
                 </View>
                 <Text style={styles.textDate}>
                     Laporan dibuat pada {props.report.issuedDate.split('T')[0]} oleh{' '}
-                    {props.report.user}
+                    {props.report.user.fullname}
                 </Text>
             </View>
         </TouchableOpacity>

@@ -7,7 +7,7 @@ import {
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
+import sayangiKotamuApi from '../../apis/sayangiKotamuApi'
 
 function setAnnouncements(payload) {
     return {
@@ -38,26 +38,28 @@ function setLoadingAnnouncementDetail(payload) {
 }
 
 export function fetchAllAnnouncement() {
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingAnnouncements(true))
 
-            let response = await fetch(`${baseURL}/announcements`)
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: '/announcments',
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
 
-            if (response.ok) {
-                response = await response.json()
-
-                dispatch(setAnnouncements(response))
-            } else {
-                throw Error
-            }
+            dispatch(setAnnouncements(response.data))
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, data pengumuman sedang tidak bisa diakses',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingAnnouncements(false))
@@ -66,26 +68,28 @@ export function fetchAllAnnouncement() {
 }
 
 export function fetchAnnouncementById(id) {
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingAnnouncementDetail(true))
 
-            let response = await fetch(`${baseURL}/announcements/${id}`)
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: `/announcments/${id}`,
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
 
-            if (response.ok) {
-                response = await response.json()
-
-                dispatch(setAnnouncementDetail(response))
-            } else {
-                throw Error
-            }
+            dispatch(setAnnouncementDetail(response.data))
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, data pengumuman sedang tidak bisa diakses',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingAnnouncementDetail(false))

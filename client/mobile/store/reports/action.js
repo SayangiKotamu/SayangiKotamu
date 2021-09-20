@@ -4,12 +4,13 @@ import {
     SET_DETAIL_REPORT,
     SET_LOADING_DETAIL,
     SET_LOADING_SEND_REPORT,
+    SET_LOADING_UPVOTE_REPORT,
+    SET_LOADING_DOWNVOTE_REPORT,
 } from './actionType'
 
 import Toast from 'react-native-toast-message'
 
-import baseURL from '../../apis/sayangiKotamu'
-import sayangiKotamuApi from '../../apis/sayangiKotamuAxios'
+import sayangiKotamuApi from '../../apis/sayangiKotamuApi'
 
 function setReportsList(payload) {
     return {
@@ -46,6 +47,20 @@ function setLoadingSendReport(payload) {
     }
 }
 
+function setLoadingUpVoteReport(payload) {
+    return {
+        type: SET_LOADING_UPVOTE_REPORT,
+        payload,
+    }
+}
+
+function setLoadingDownVoteReport(payload) {
+    return {
+        type: SET_LOADING_DOWNVOTE_REPORT,
+        payload,
+    }
+}
+
 export function fetchAllReports() {
     return async function (dispatch, getState) {
         try {
@@ -77,26 +92,28 @@ export function fetchAllReports() {
 }
 
 export function fetchReportById(id) {
-    return async function (dispatch) {
+    return async function (dispatch, getState) {
         try {
+            const { auth } = getState()
+
             dispatch(setLoadingDetailReport(true))
 
-            let response = await fetch(`${baseURL}/reports/${id}`)
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: `/reportUser/${id}`,
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
 
-            if (response.ok) {
-                response = await response.json()
-
-                dispatch(setDetailReport(response))
-            } else {
-                throw Error
-            }
+            dispatch(setDetailReport(response.data))
         } catch (err) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
                 bottomOffset: 70,
                 text1: 'SayangiKotamu',
-                text2: 'Maaf, data laporan sedang tidak bisa diakses',
+                text2: err.response.data.message,
             })
         } finally {
             dispatch(setLoadingDetailReport(false))
@@ -146,6 +163,78 @@ export function addReport(payload) {
             })
         } finally {
             dispatch(setLoadingSendReport(false))
+        }
+    }
+}
+
+export function upVoteReport(id) {
+    return async function (dispatch, getState) {
+        try {
+            const { auth } = getState()
+
+            dispatch(setLoadingUpVoteReport(true))
+
+            await sayangiKotamuApi({
+                method: 'PATCH',
+                url: `/reportUser/up/${id}`,
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
+
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Berhasil melakukan upvote terhadap laporan ini',
+            })
+        } catch (err) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: err.response.data.message,
+            })
+        } finally {
+            dispatch(setLoadingUpVoteReport(false))
+        }
+    }
+}
+
+export function downVoteReport(id) {
+    return async function (dispatch, getState) {
+        try {
+            const { auth } = getState()
+
+            dispatch(setLoadingDownVoteReport(true))
+
+            await sayangiKotamuApi({
+                method: 'PATCH',
+                url: `/reportUser/down/${id}`,
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
+
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Berhasil melakukan downvote terhadap laporan ini',
+            })
+        } catch (err) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: err.response.data.message,
+            })
+        } finally {
+            dispatch(setLoadingDownVoteReport(false))
         }
     }
 }

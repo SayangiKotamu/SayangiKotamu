@@ -17,7 +17,7 @@ function errorHandler(err, req, res, next) {
       res.status(404).json({ message: "Report not found" });
       break;
     case "AnnouncmentNotFound":
-      res.status(404).json({ message: "Announcment not found" });
+      res.status(404).json({ message: "Announcement not found" });
       break;
     case "CastError":
       res.status(400).json({ message: "This field should be included" });
@@ -33,7 +33,7 @@ function errorHandler(err, req, res, next) {
       break;
     case "ActivateAccount":
       res.status(401).json({
-        message: "Please check your email and activate your account first. ",
+        message: "Please check your email and activate your account first.",
       });
       break;
     case "NIKInCollection":
