@@ -28,6 +28,16 @@ function errorHandler(err, req, res, next) {
     case "JsonWebTokenError":
       res.status(401).json({ message: "Invalid access token" });
       break;
+    case "NoAccessReport":
+      res.status(401).json({ message: "You have no access to this report" });
+      break;
+    case "ActivateAccount":
+      res
+        .status(401)
+        .json({
+          message: "Please check your email and activate your account first. ",
+        });
+      break;
     // ! HANDI ANGGA COBA INI BUAT APA
     // case "Invalid Login":
     case "NIKInCollection":
