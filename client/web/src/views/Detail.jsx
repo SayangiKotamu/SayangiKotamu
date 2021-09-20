@@ -66,16 +66,11 @@ function Detail() {
     history.push("/beranda");
   };
 
-  let position;
-
-  if (loading || !reportDetail) {
-    position = [0, 0];
-  } else {
-    position = [
-      +reportDetail.long.$numberDecimal,
-      +reportDetail.lat.$numberDecimal,
-    ];
-  }
+  const position = [
+    100, 21,
+    // +reportDetail?.long?.$numberDecimal,
+    // +reportDetail?.lat?.$numberDecimal,
+  ];
 
   console.log(position);
 
@@ -199,6 +194,7 @@ function Detail() {
                       class="mt-2"
                       style={{
                         height: "220px",
+                        width: "100%",
                         borderWidth: 1,
                       }}
                     >
@@ -206,11 +202,13 @@ function Detail() {
                         center={position}
                         zoom={13}
                         scrollWheelZoom={false}
+                        style={{ width: "100wh", height: "22.5vh" }}
                       >
                         <TileLayer
                           attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
                           url="https://api.maptiler.com/maps/streets/256/{z}/{x}/{y}.png?key=PbI47Jfo6miMbKKlBtFz"
                         />
+                        <div style={{ height: "218px", width: "100%" }}></div>
                         <Marker position={position}>
                           <Popup>Lokasi pelaporan</Popup>
                         </Marker>
@@ -298,7 +296,7 @@ function Detail() {
                             class="text-xl text-justify"
                             style={{ width: "100%" }}
                           >
-                            {getFormatedDate(reportDetail.issued_date)}
+                            {reportDetail.issued_date}
                           </p>
                         </div>
                         <div class="mt-8">

@@ -22,7 +22,7 @@ function Content(props) {
         <a
           href="#"
           onClick={() => {
-            handleToDetail(props.report.id);
+            handleToDetail(props.report._id);
           }}
           key={id}
         >
@@ -65,7 +65,7 @@ function Content(props) {
                   Tanggal Masuk
                 </h1>
                 <p className="truncate text-m text-right">
-                  {getFormatedDate(props.report.issued_date)}
+                  {props.report.issued_date}
                 </p>
               </div>
               <div>

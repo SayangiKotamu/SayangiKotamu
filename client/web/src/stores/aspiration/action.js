@@ -1,5 +1,5 @@
 import { SET_ASPIRATION, SET_LOADING, SET_ERROR } from "./actionType";
-import axios from "axios";
+import sayangiKotamu from "../../apis/sayangiKotamuAPI";
 
 function setAspiration(payload) {
   return { type: SET_ASPIRATION, payload };
@@ -14,12 +14,20 @@ function setError(payload) {
 }
 
 export function fetchAspiration() {
-  return function (dispatch) {
+  return function (dispatch, getState) {
+    const { auth } = getState();
+
     dispatch(setError(null));
     dispatch(setLoading(true));
-    axios
-      .get("http://localhost:3001/aspiration")
+    sayangiKotamu({
+      method: "GET",
+      url: "/aspirations",
+      headers: {
+        access_token: auth.accessToken,
+      },
+    })
       .then((response) => {
+        console.log(response.data);
         dispatch(setAspiration(response.data));
       })
       .catch((err) => {
