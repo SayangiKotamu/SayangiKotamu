@@ -9,7 +9,7 @@ export default function NotificationCard(props) {
                 <Ionicons name={'notifications-circle-sharp'} size={30} color={'#1A73E9'} />
             </View>
             <View style={styles.notificationCardContent}>
-                <Text style={styles.textTitle}>{props.notification.notification}</Text>
+                <Text style={styles.textTitle}>{props.notification.description}</Text>
                 <Text style={styles.textDate}>{props.notification.date.split('T')[0]}</Text>
             </View>
         </View>
