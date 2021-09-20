@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema({
   activateEmailToken: {
     type: String,
   },
+  ktp: {
+    type: String,
+    required: [true, "KTP is required"],
+  },
   reports: [],
   aspirations: [],
 });

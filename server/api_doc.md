@@ -19,6 +19,7 @@ SayangiKotamu is a super-app city platform designed as a one-stop service to hel
 | `email`    | `string` | **Required**. Your email    |
 | `password` | `string` | **Required**. Your password |
 | `kota`     | `string` | **Required**. Your kota     |
+| `ktp`      | `string` | **Required**. Your ktp      |
 
 _Response (201 - Created)_
 

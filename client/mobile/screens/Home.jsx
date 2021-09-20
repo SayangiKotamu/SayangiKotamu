@@ -1,201 +1,113 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, Button } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, RefreshControl } from 'react-native'
+import AntDesign from '@expo/vector-icons/AntDesign'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-export default function Home({ navigation }) {
-    return (
-        <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.brandingContainer}>
-                    <Image
-                        style={styles.logoImage}
-                        source={{
-                            uri: 'https://i.imgur.com/GKQ7zUt.jpeg',
-                        }}
-                    />
-                </View>
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllReports } from '../store/reports/action'
 
+import ReportCard from '../components/ReportCard'
+
+import SkeletonContent from 'react-native-skeleton-content'
+
+const windowWidth = Dimensions.get('window').width
+
+export default function Home({ navigation }) {
+    const dispatch = useDispatch()
+
+    const { reports, loadingReports } = useSelector((state) => state.reports)
+
+    const [isRefreshing, setIsRefreshing] = useState(false)
+
+    function onRefresh() {
+        setIsRefreshing(true)
+        dispatch(fetchAllReports())
+        setIsRefreshing(false)
+    }
+
+    useEffect(() => {
+        dispatch(fetchAllReports())
+    }, [])
+
+    return (
+        <ScrollView
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+        >
+            <View style={styles.brandingContainer}>
+                <Image
+                    style={styles.logoImage}
+                    source={{
+                        uri: 'https://i.imgur.com/GKQ7zUt.jpeg',
+                    }}
+                />
+            </View>
+
+            <View style={styles.container}>
                 <View style={styles.menuContainer}>
-                    <TouchableOpacity
-                        style={styles.buttonContainer}
-                        onPress={() => navigation.navigate('Lapor')}
-                    >
-                        <Ionicons name={'list-circle'} size={30} color={'#1A73E9'} />
-                        <Text>KotaReport</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.buttonContainer}
-                        onPress={() => navigation.navigate('Pengumuman')}
-                    >
-                        <Ionicons name={'newspaper'} size={30} color={'#1A73E9'} />
-                        <Text>KotaNews</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.buttonContainer}
-                        onPress={() => navigation.navigate('Aspirasi')}
-                    >
-                        <Ionicons name={'book-sharp'} size={30} color={'#1A73E9'} />
-                        <Text>KotaAspire</Text>
-                    </TouchableOpacity>
+                    <View style={styles.innerMenu}>
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => navigation.navigate('Lapor')}
+                        >
+                            <AntDesign name={'customerservice'} size={28} color={'#1A73E9'} />
+                            <Text style={styles.textColor}>KotaReport</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.innerMenu}>
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => navigation.navigate('Pengumuman')}
+                        >
+                            <AntDesign name={'filetext1'} size={28} color={'#1A73E9'} />
+                            <Text style={styles.textColor}>KotaNews</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.innerMenu}>
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={() => navigation.navigate('Aspirasi')}
+                        >
+                            <AntDesign name={'carryout'} size={28} color={'#1A73E9'} />
+                            <Text style={styles.textColor}>KotaAspire</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 <View style={styles.newsContainer}>
-                    <View style={styles.buttonContainer}>
-                        <Button title="Logout" color="#05DAA7" />
+                    <Text style={styles.heading}>Apa kabar kota mu hari ini?</Text>
+
+                    <View style={styles.newsCardContainer}>
+                        {loadingReports ? (
+                            <SkeletonContent
+                                containerStyle={{ flex: 1, width: windowWidth, marginTop: 5 }}
+                                animationDirection="horizontalLeft"
+                                layout={[
+                                    {
+                                        width: windowWidth,
+                                        height: 120,
+                                        marginTop: 10,
+                                    },
+                                    {
+                                        width: windowWidth,
+                                        height: 120,
+                                        marginTop: 10,
+                                    },
+                                    {
+                                        width: windowWidth,
+                                        height: 120,
+                                        marginTop: 10,
+                                    },
+                                ]}
+                                isLoading={loadingReports}
+                            />
+                        ) : (
+                            <>
+                                {reports.map((report, idx) => {
+                                    return <ReportCard report={report} key={'report' + idx} />
+                                })}
+                            </>
+                        )}
                     </View>
-
-                    <Text style={styles.heading}>Apa kabar kota hari ini?</Text>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={styles.reportCardContainer}
-                        onPress={() => navigation.navigate('Detail Laporan')}
-                    >
-                        <View style={styles.reportCardImage}>
-                            <Image
-                                style={styles.reportImage}
-                                source={{
-                                    uri: 'https://akcdn.detik.net.id/visual/2021/06/22/hari-pertama-penguatan-ppkm-mikro-jalanan-jakarta-ramai-lancar_169.jpeg?w=650',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.reportCardContent}>
-                            <Text style={styles.textId}>ID-XXXXXX</Text>
-                            <Text style={styles.textTitle}>Terjadi kemacetan di Jl. ABC</Text>
-                            <Text style={styles.textDescription}>
-                                Halo Pak Dinas Perhubungan, mohon dibantu ini sudah 5 jam macet...
-                            </Text>
-                            <Text style={styles.textCategory}>Lalu Lintas</Text>
-                            <Text style={styles.textDate}>
-                                Laporan dibuat pada 16 September 2021 oleh Joko Widodo
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
                 </View>
             </View>
         </ScrollView>
@@ -203,48 +115,48 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    textColor: {
+        color: '#a2a4aa',
+    },
     title: {
         fontSize: 25,
         marginTop: '5%',
         color: '#1A73E9',
         fontWeight: 'bold',
     },
+    loading: {
+        marginTop: '40%',
+        marginBottom: '40%',
+    },
     buttonContainer: {
         marginTop: 50,
+    },
+    innerMenu: {
+        borderWidth: 1,
+        borderColor: '#ececec',
+        backgroundColor: 'white',
+        padding: 5,
+        borderRadius: 5,
+        height: 90,
+        width: 90,
+        justifyContent: 'center',
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#ececec',
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 5,
     },
     paragraph: {
         fontSize: 13,
         color: 'grey',
     },
     heading: {
-        fontSize: 12,
+        fontSize: 20,
         marginTop: '1%',
-        color: '#1A73E9',
+        color: '#062158',
         fontWeight: 'bold',
-    },
-    textId: {
-        fontSize: 8,
-        marginBottom: 8,
-    },
-    textTitle: {
-        fontSize: 15,
-        fontWeight: 'bold',
-    },
-    textDescription: {
-        fontSize: 12,
-    },
-    textCategory: {
-        marginTop: 5,
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    textDate: {
-        fontSize: 10,
-        marginTop: 3,
-    },
-    reportImage: {
-        width: 130,
-        height: 130,
+        textAlign: 'left',
+        marginLeft: '3%',
     },
     logoImage: {
         width: 250,
@@ -252,44 +164,33 @@ const styles = StyleSheet.create({
     },
     brandingContainer: {
         flexDirection: 'row',
-    },
-    reportCardContainer: {
         backgroundColor: 'white',
-        borderColor: 'grey',
-        marginTop: 10,
-        borderWidth: 1,
-        borderRadius: 5,
-        width: '100%',
-        flexDirection: 'row',
-    },
-    reportCardContent: {
-        marginLeft: 10,
-        padding: 3,
-        width: '100%',
-        flexGrow: 1,
-        flex: 1,
+        justifyContent: 'center',
+        borderBottomRightRadius: 30,
+        borderBottomLeftRadius: 30,
     },
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#f2f3f7',
         alignItems: 'center',
     },
     newsContainer: {
         flex: 1,
         marginTop: '5%',
-        backgroundColor: '#fafafa',
-        alignItems: 'center',
         width: '100%',
+    },
+    newsCardContainer: {
+        flex: 1,
+        marginTop: '4%',
+        width: '100%',
+        alignItems: 'center',
     },
     menuContainer: {
         marginTop: '5%',
         flexDirection: 'row',
-        backgroundColor: 'white',
-        borderColor: 'grey',
-        borderWidth: 1,
         padding: 5,
         borderRadius: 10,
-        width: '70%',
+        width: '80%',
         justifyContent: 'space-between',
     },
     buttonContainer: {

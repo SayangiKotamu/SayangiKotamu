@@ -14,6 +14,7 @@ class UserController {
         password: req.body.password,
         kota: req.body.kota,
         isActive: false,
+        ktp: req.body.ktp,
         //tambahain report []
       };
       const foundEmail = await User.findOne({ email: newUser.email });
@@ -47,27 +48,29 @@ class UserController {
     }
   }
   static async login(req, res, next) {
-    const data = await User.findOne({ email: req.body.email });
-    if (data) {
-      if (comparePassword(req.body.password, data.password)) {
-        let payload = {
-          id: data._id,
-          email: data.email,
-        };
-        let access_token = jwtSign(payload);
-        //token belum diset ke database
-        res.status(200).json({ access_token });
+    try {
+      const data = await User.findOne({ email: req.body.email });
+      if (data) {
+        if (data.isActive) {
+          if (comparePassword(req.body.password, data.password)) {
+            let payload = {
+              id: data._id,
+              email: data.email,
+            };
+            let access_token = jwtSign(payload);
+            //token belum diset ke database
+            res.status(200).json({ access_token });
+          } else {
+            throw { name: "WrongEmailPassword" };
+          }
+        } else {
+          throw { name: "ActivateAccount" };
+        }
       } else {
-        next({
-          name: "invalidLogin",
-          message: `email or password not match`,
-        });
+        throw { name: "WrongEmailPassword" };
       }
-    } else {
-      next({
-        name: "invalidLogin",
-        message: "email or password not match",
-      });
+    } catch (err) {
+      next(err);
     }
   }
   static googleLogin(req, res, next) {

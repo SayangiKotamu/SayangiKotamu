@@ -1,44 +1,76 @@
-import React from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
-export default function AnnouncementDetail() {
+import { useDispatch, useSelector } from 'react-redux'
+import { useIsFocused } from '@react-navigation/native'
+
+import SkeletonContent from 'react-native-skeleton-content'
+
+import { fetchAnnouncementById } from '../store/announcements/action'
+
+const windowWidth = Dimensions.get('window').width
+
+export default function AnnouncementDetail({ route }) {
+    const { id } = route.params
+
+    const isFocused = useIsFocused()
+    const dispatch = useDispatch()
+
+    const { announcementDetail, loadingAnnouncementDetail } = useSelector(
+        (state) => state.announcements
+    )
+
+    useEffect(() => {
+        if (isFocused) {
+            dispatch(fetchAnnouncementById(id))
+        }
+    }, [isFocused])
+
     return (
         <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.announcementCardContainer}>
-                    <View>
-                        <Ionicons name={'information-circle-sharp'} size={40} color={'#1A73E9'} />
-                    </View>
-                    <View style={styles.announcementCardContent}>
-                        <Text style={styles.textTitle}>Pengalihan Jalan</Text>
-                        <Text style={styles.textOrganization}>Dinas Perhubungan</Text>
-                        <Text style={styles.textDate}>
-                            Pengumuman dibuat pada 12 September 2021
-                        </Text>
+            {loadingAnnouncementDetail ? (
+                <SkeletonContent
+                    containerStyle={{ flex: 1, width: windowWidth, marginTop: 5 }}
+                    animationDirection="horizontalLeft"
+                    layout={[
+                        {
+                            width: windowWidth,
+                            height: 400,
+                            marginRight: 30,
+                            marginTop: 10,
+                        },
+                    ]}
+                    isLoading={loadingAnnouncementDetail}
+                />
+            ) : (
+                <View style={styles.container}>
+                    <View style={styles.announcementCardContainer}>
+                        <View>
+                            <Ionicons
+                                name={'information-circle-sharp'}
+                                size={40}
+                                color={'#1A73E9'}
+                            />
+                        </View>
+                        <View style={styles.announcementCardContent}>
+                            <Text style={styles.textTitle}>{announcementDetail?.title}</Text>
+                            <Text style={styles.textOrganization}>
+                                {announcementDetail?.dinas?.name}
+                            </Text>
+                            <Text style={styles.textDate}>
+                                Pengumuman dibuat pada {announcementDetail?.date?.split('T')[0]}
+                            </Text>
 
-                        <View style={styles.horizontalLine} />
+                            <View style={styles.horizontalLine} />
 
-                        <Text style={styles.textDescription}>
-                            Diumumkan untuk warga yang tinggal di sekitar daerah Lorem Ipsum, bahwa
-                            pada hari Senin s.d. Rabu, Jl. ABC akan dialihkan ke JL. XYZ. Selain
-                            itu, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                            sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                            mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                            qui officia deserunt mollit anim id est laborum.
-                        </Text>
+                            <Text style={styles.textDescription}>
+                                {announcementDetail?.announcement}
+                            </Text>
+                        </View>
                     </View>
                 </View>
-            </View>
+            )}
         </ScrollView>
     )
 }
@@ -56,12 +88,17 @@ const styles = StyleSheet.create({
     },
     announcementCardContainer: {
         backgroundColor: 'white',
-        borderColor: 'grey',
+        borderColor: '#ececec',
         marginTop: 10,
         borderWidth: 1,
         borderRadius: 5,
         width: '100%',
         flexDirection: 'row',
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#ececec',
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 2,
     },
     announcementCardContent: {
         marginLeft: 10,
