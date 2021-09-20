@@ -74,7 +74,7 @@ userSchema.pre("save", function (next) {
     from: "noreply@gmail.com",
     to: `${user.email}`,
     subject: "Verification Email",
-    html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}${emailToken}'>click here</a> to activate your email</p>`,
+    html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}/${emailToken}'>click here</a> to activate your email</p>`,
   };
 
   transporter.sendMail(mailOptions, function (err, data) {
