@@ -36,8 +36,6 @@ function errorHandler(err, req, res, next) {
         message: "Please check your email and activate your account first. ",
       });
       break;
-    // ! HANDI ANGGA COBA INI BUAT APA
-    // case "Invalid Login":
     case "NIKInCollection":
       res.status(400).json({ message: "NIK is already registered" });
       break;
