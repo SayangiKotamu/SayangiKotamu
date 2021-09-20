@@ -1,6 +1,7 @@
 import {
   SET_REPORTS,
   SET_DETAIL_REPORT,
+  EDIT_REPORT,
   SET_LOADING,
   SET_ERROR,
 } from "./actionType";
@@ -20,6 +21,10 @@ function setLoading(payload) {
 
 function setError(payload) {
   return { type: SET_ERROR, payload };
+}
+
+function editReport(payload) {
+  return { type: EDIT_REPORT, payload };
 }
 
 export function fetchReports() {
@@ -48,6 +53,24 @@ export function fetchReportById(id) {
       .get(`http://localhost:3001/reports/${id}`)
       .then((response) => {
         dispatch(setDetailReport(response.data));
+      })
+      .catch((err) => {
+        dispatch(setError(err));
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
+}
+
+export function patchReport(payload) {
+  return function (dispatch) {
+    dispatch(setError(null));
+    dispatch(setLoading(true));
+    axios
+      .put(`http://localhost:3001/reports/${payload.id}`, payload)
+      .then((response) => {
+        dispatch(editReport(response.data));
       })
       .catch((err) => {
         dispatch(setError(err));

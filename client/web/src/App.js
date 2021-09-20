@@ -10,6 +10,8 @@ import Dashboard from "./views/Dashboard";
 import History from "./views/History";
 import Aspiration from "./views/Aspiration";
 import Announcement from "./views/Announcement";
+import EmailActivated from "./views/EmailActivated";
+import ActivationEmail from "./views/ActivationEmail";
 
 function App() {
   return (
@@ -17,6 +19,12 @@ function App() {
       <Provider store={store}>
         <Router>
           <Switch>
+            <Route path="/email-terverifikasi">
+              <EmailActivated />
+            </Route>
+            <Route path="/aktifasi-email">
+              <ActivationEmail />
+            </Route>
             <Route path="/aspirasi">
               <Aspiration />
             </Route>
