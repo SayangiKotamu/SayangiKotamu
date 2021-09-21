@@ -205,7 +205,6 @@ class ReportController {
         throw { name: "ReportNotFound" };
       }
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -370,7 +369,6 @@ class ReportController {
       }
     } catch (err) {
       next(err);
-      console.log(err);
     }
   }
 }

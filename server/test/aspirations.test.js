@@ -24,6 +24,7 @@ beforeAll((done) => {
     name: "Dinas perhubungan",
     email: "perhubungan@gmail.com",
     password: "123456",
+    role: "dinas",
   };
   const dummyAspiration = {
     title: "test aspiration",
@@ -75,6 +76,39 @@ describe("GET /aspirations [SUCCESS CASE]", () => {
     });
     request(app)
       .get("/aspirations")
+      .set("Accept", "application/json")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              _id: expect.any(String),
+              title: expect.any(String),
+              description: expect.any(String),
+              type: expect.any(String),
+              user: expect.any(String),
+              dinas: expect.any(String),
+            }),
+          ])
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("GET /aspirations [SUCCESS CASE]", () => {
+  test("should return an object with key: id,title,description, type, user, dinas", (done) => {
+    let access_token = jwtSign({
+      id: dinas._id,
+      email: dinas.email,
+      role: dinas.role,
+    });
+    request(app)
+      .get("/dinas/aspirations")
       .set("Accept", "application/json")
       .set("access_token", access_token)
       .then((response) => {

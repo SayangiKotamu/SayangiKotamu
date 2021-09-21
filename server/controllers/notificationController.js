@@ -9,7 +9,6 @@ class NotificationController {
       });
       res.status(200).json(getNotifications);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
