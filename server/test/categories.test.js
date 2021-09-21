@@ -245,8 +245,40 @@ describe("PUT /dinas/categories/:id [SUCCESS CASE]", () => {
   });
 });
 
+describe("PUT /dinas/categories/:id [FAILED CASE]", () => {
+  const falseID = "6139bfa08c2956b92b583296";
+
+  test("should return ERROR with status code (404)", (done) => {
+    let access_token = jwtSign({
+      id: dinas._id,
+      email: dinas.email,
+    });
+    let payload = {
+      name: "Masalah Lainnya",
+    };
+
+    request(app)
+      .put(`/dinas/categories/${falseID}`)
+      .send(payload)
+      .set("Accept", "application/json")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            message: "Categories Not Found",
+          })
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 describe("DELETE /dinas/categories/:id [SUCCESS CASE]", () => {
-  test("should return an object with key: id,name,slug", (done) => {
+  test('"should return an object with key: id,name,slug"', (done) => {
     let access_token = jwtSign({
       id: dinas._id,
       email: dinas.email,
@@ -263,6 +295,34 @@ describe("DELETE /dinas/categories/:id [SUCCESS CASE]", () => {
             _id: expect.any(String),
             name: expect.any(String),
             slug: expect.any(String),
+          })
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("DELETE /dinas/categories/:id [FAILED CASE]", () => {
+  const falseID = "6139bfa08c2956b92b583296";
+
+  test("should return ERROR with status code (404)", (done) => {
+    let access_token = jwtSign({
+      id: dinas._id,
+      email: dinas.email,
+    });
+    let id = categories._id;
+    request(app)
+      .delete(`/dinas/categories/${falseID}`)
+      .set("Accept", "application/json")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            message: "Categories Not Found",
           })
         );
         done();

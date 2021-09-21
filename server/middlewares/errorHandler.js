@@ -1,5 +1,4 @@
 function errorHandler(err, req, res, next) {
-  console.log(err.name);
   switch (err.name) {
     case "EmailInCollection":
       res.status(400).json({ message: "Email is already registered" });
@@ -58,6 +57,7 @@ function errorHandler(err, req, res, next) {
       break;
     case "EmailError":
       res.status(400).json({ message: "Error sent email" });
+      break;
     default:
       res.status(500).json({ message: "Internal Server Error" });
   }

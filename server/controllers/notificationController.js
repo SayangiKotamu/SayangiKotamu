@@ -7,7 +7,6 @@ class NotificationController {
       const getNotifications = await Notification.find({ user: id });
       res.status(200).json(getNotifications);
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }
