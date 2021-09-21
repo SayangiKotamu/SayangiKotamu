@@ -63,6 +63,7 @@ class ReportController {
         picture: req.body.picture,
         upVote: 0,
         downVote: 0,
+        rating: 0,
       };
       let categories = await Categories.findOne({ _id: req.body.category });
       newReport.category = categories;

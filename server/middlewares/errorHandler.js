@@ -53,7 +53,7 @@ function errorHandler(err, req, res, next) {
       res.status(404).json({ message: err.message });
       break;
     case "duplicateRating":
-      res.status(400).json({ message: err.message });
+      res.status(400).json({ message: "You have already rate this report" });
       break;
     case "EmailError":
       res.status(400).json({ message: "Error sent email" });
