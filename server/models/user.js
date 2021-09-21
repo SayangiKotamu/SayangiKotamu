@@ -77,15 +77,15 @@ userSchema.pre("save", function (next) {
     html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}/${emailToken}'>click here</a> to activate your email</p>`,
   };
 
-  transporter.sendMail(mailOptions, function (err, data) {
+  transporter.sendMail(mailOptions, function (err, data, cb) {
     // ! LATER: DI ERROR HANDLER
     if (err) {
-      console.log("Error");
+      next({ name: "EmailError" });
     } else {
       console.log("email sent");
+      next();
     }
   });
-  next();
 });
 
 const User = mongoose.model("User", userSchema);

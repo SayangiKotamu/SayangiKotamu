@@ -14,7 +14,7 @@ class UserController {
         password: req.body.password,
         kota: req.body.kota,
         isActive: false,
-        ktp: req.body.ktp
+        ktp: req.body.ktp,
       };
       const foundEmail = await User.findOne({ email: newUser.email });
       const foundNIK = await User.findOne({ NIK: newUser.NIK });
@@ -71,48 +71,6 @@ class UserController {
     } catch (err) {
       next(err);
     }
-  }
-  static googleLogin(req, res, next) {
-    let payload = null;
-    const { id_token } = req.body;
-    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-    client
-      .verifyIdToken({
-        idToken: id_token,
-        audience: process.env.GOOGLE_CLIENT_ID,
-      })
-      .then((data) => {
-        payload = data.getPayload();
-        return User.login(payload.email);
-      })
-      .then((user) => {
-        if (user) {
-          return User.login(payload.email);
-        } else {
-          const fullname = payload.name;
-          const email = payload.email;
-          const kota = "jakarta";
-          // const phoneNumber = ""
-          const password = process.env.RANDOM_PASSWORD + Date.now() / 1000;
-          return User.create({
-            fullname,
-            password,
-            email,
-          });
-        }
-      })
-      .then((data) => {
-        let payload = {
-          id: data.id,
-          email: data.email,
-          role: data.role,
-        };
-        let access_token = jwtSign(payload);
-        res.status(200).json({ access_token });
-      })
-      .catch((err) => {
-        next(err);
-      });
   }
 
   static async activateEmail(req, res, next) {

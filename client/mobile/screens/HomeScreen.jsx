@@ -40,9 +40,13 @@ export default function HomeScreen() {
                 options={{
                     headerRight: () => (
                         <TouchableOpacity style={styles.buttonContainer} onPress={onLogoutClick}>
-                            <Ionicons name={'exit-outline'} size={30} color={'red'} />
+                            <Ionicons name={'exit-outline'} size={30} color={'white'} />
                         </TouchableOpacity>
                     ),
+                    headerStyle: {
+                        backgroundColor: 'tomato',
+                    },
+                    headerTintColor: '#fff',
                 }}
             />
             <Stack.Screen name="Detail Laporan" component={ReportDetail} />

@@ -22,9 +22,16 @@ import SkeletonContent from 'react-native-skeleton-content'
 
 import { upVoteReport, downVoteReport } from '../store/reports/action'
 
+import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
+import AppLoading from 'expo-app-loading'
+
 const windowWidth = Dimensions.get('window').width
 
 export default function ReportDetail({ route }) {
+    let [fontsLoaded] = useFonts({
+        Poppins_600SemiBold,
+    })
+
     const { id } = route.params
 
     const dispatch = useDispatch()
@@ -52,6 +59,10 @@ export default function ReportDetail({ route }) {
     useEffect(() => {
         dispatch(fetchReportById(id))
     }, [])
+
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
 
     return (
         <ScrollView
@@ -110,7 +121,7 @@ export default function ReportDetail({ route }) {
                                         <Ionicons
                                             name={'ios-thumbs-up-outline'}
                                             size={25}
-                                            color={'#1A73E9'}
+                                            color={'tomato'}
                                         />
                                     </TouchableOpacity>
                                 )}
@@ -121,7 +132,7 @@ export default function ReportDetail({ route }) {
                                         <Ionicons
                                             name={'ios-thumbs-down-outline'}
                                             size={25}
-                                            color={'#1A73E9'}
+                                            color={'tomato'}
                                             style={styles.logo}
                                         />
                                     </TouchableOpacity>
@@ -156,7 +167,7 @@ export default function ReportDetail({ route }) {
                                             <Ionicons
                                                 name={'ios-thumbs-up-outline'}
                                                 size={14}
-                                                color={'#1A73E9'}
+                                                color={'tomato'}
                                             />
                                             <Text style={styles.detailDescContentVote}>
                                                 {detailReport?.upVote}
@@ -165,7 +176,7 @@ export default function ReportDetail({ route }) {
                                                 <Ionicons
                                                     name={'ios-thumbs-down-outline'}
                                                     size={14}
-                                                    color={'#1A73E9'}
+                                                    color={'tomato'}
                                                 />
                                                 <Text style={styles.detailDescContentVote}>
                                                     {detailReport?.downVote}
@@ -223,7 +234,7 @@ export default function ReportDetail({ route }) {
                             />
                         </MapView>
 
-                        <View style={styles.contentContainer}>
+                        <View style={styles.contentContainerBottom}>
                             <Text style={styles.header}>Detail Lokasi</Text>
 
                             <Text style={styles.description}>{detailReport?.location}</Text>
@@ -243,7 +254,7 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily: 'Poppins_600SemiBold',
     },
     small: {
         fontSize: 10,
@@ -255,6 +266,11 @@ const styles = StyleSheet.create({
     detailDescHeader: {
         fontSize: 10,
         color: 'gray',
+        fontFamily: 'Poppins_600SemiBold',
+    },
+    contentContainerBottom: {
+        padding: 15,
+        marginBottom: '30%',
     },
     detailDescContent: {
         fontSize: 13,

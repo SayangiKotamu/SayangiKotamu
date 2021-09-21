@@ -1,12 +1,28 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Button, Image, ActivityIndicator } from 'react-native'
+import {
+    StyleSheet,
+    View,
+    TextInput,
+    TouchableOpacity,
+    Image,
+    ActivityIndicator,
+} from 'react-native'
 
 import Toast from 'react-native-toast-message'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { doLogin } from '../store/auth/action'
 
+import CustomButton from '../components/CustomButton'
+
+import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
+import AppLoading from 'expo-app-loading'
+
 export default function Login() {
+    let [fontsLoaded] = useFonts({
+        Poppins_600SemiBold,
+    })
+
     const dispatch = useDispatch()
 
     const [email, setEmail] = useState('')
@@ -26,6 +42,10 @@ export default function Login() {
         } else {
             dispatch(doLogin({ email, password }))
         }
+    }
+
+    if (!fontsLoaded) {
+        return <AppLoading />
     }
 
     return (
@@ -57,9 +77,11 @@ export default function Login() {
 
             <View style={styles.buttonContainer}>
                 {loadingLogin ? (
-                    <ActivityIndicator size="large" color="#1A73E9" />
+                    <ActivityIndicator size="large" color="black" />
                 ) : (
-                    <Button title="Masuk" color="#1A73E9" onPress={onLoginClick} />
+                    <TouchableOpacity onPress={onLoginClick}>
+                        <CustomButton buttonName={'Masuk'} buttonColor={'black'} />
+                    </TouchableOpacity>
                 )}
             </View>
         </View>
@@ -69,8 +91,9 @@ export default function Login() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#f5f5f5',
         alignItems: 'center',
+        marginTop: '15%',
     },
     formContainer: {
         width: '80%',
@@ -80,6 +103,12 @@ const styles = StyleSheet.create({
     },
     headingContainer: {
         marginTop: 30,
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#ececec',
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 2,
+        borderRadius: 250,
     },
     buttonContainer: {
         marginTop: 90,
@@ -88,7 +117,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#1A73E9',
+        color: 'black',
         textAlign: 'center',
     },
     slogan: {
@@ -97,10 +126,13 @@ const styles = StyleSheet.create({
     input: {
         height: 50,
         borderBottomWidth: 2,
-        borderBottomColor: 'blue',
+        borderBottomColor: 'black',
+        fontFamily: 'Poppins_600SemiBold',
     },
     logoImage: {
         width: 250,
         height: 250,
+        borderRadius: 250,
+        borderColor: 'grey',
     },
 })
