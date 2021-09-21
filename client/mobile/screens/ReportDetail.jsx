@@ -158,7 +158,7 @@ export default function ReportDetail({ route }) {
                                         </Text>
                                     </View>
                                     <View style={styles.detailDescription}>
-                                        <Text style={styles.detailDescHeader}>Laporan Dibuat</Text>
+                                        <Text style={styles.detailDescHeader}>Dibuat pada</Text>
                                         <Text style={styles.detailDescContent}>
                                             {formatDateWithHour(detailReport?.issuedDate)}
                                         </Text>
