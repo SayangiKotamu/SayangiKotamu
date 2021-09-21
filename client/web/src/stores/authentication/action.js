@@ -13,7 +13,7 @@ export function setLoading(payload) {
   return { type: SET_LOADING, payload };
 }
 
-export function logining(payload, history) {
+export function logining(payload, history, toast) {
   return function (dispatch) {
     console.log(payload);
     return sayangiKotamu({
@@ -29,6 +29,15 @@ export function logining(payload, history) {
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Terjadi kesalahan dalam input email/password!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
   };
 }
