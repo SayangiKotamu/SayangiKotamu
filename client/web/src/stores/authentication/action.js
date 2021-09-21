@@ -13,7 +13,7 @@ export function setLoading(payload) {
   return { type: SET_LOADING, payload };
 }
 
-export function logining(payload) {
+export function logining(payload, history) {
   return function (dispatch) {
     console.log(payload);
     return sayangiKotamu({
@@ -24,7 +24,8 @@ export function logining(payload) {
       .then((response) => {
         dispatch(setLogStatus(true));
         dispatch(setToken(response.data.accessToken));
-        console.log(response);
+        localStorage.setItem("access_token", response.data.accessToken);
+        history.push("/beranda");
       })
       .catch((err) => {
         console.log(err);

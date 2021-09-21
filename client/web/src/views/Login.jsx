@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +10,6 @@ function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { accessToken } = useSelector((state) => state.auth);
 
   const handleToRegister = () => {
     history.push("/daftar");
@@ -44,9 +43,13 @@ function Login() {
         progress: undefined,
       });
     } else {
-      dispatch(logining(payload));
-
-      history.push("/beranda");
+      dispatch(logining(payload, history));
+      // .then(() => {
+      //   history.push("/beranda");
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
     }
   };
 

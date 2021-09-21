@@ -14,16 +14,14 @@ function setError(payload) {
 }
 
 export function fetchAspiration() {
-  return function (dispatch, getState) {
-    const { auth } = getState();
-
+  return function (dispatch) {
     dispatch(setError(null));
     dispatch(setLoading(true));
     sayangiKotamu({
       method: "GET",
       url: "/aspirations",
       headers: {
-        access_token: auth.accessToken,
+        access_token: localStorage.getItem("access_token"),
       },
     })
       .then((response) => {
