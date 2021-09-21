@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    ScrollView,
-    Dimensions,
-    RefreshControl,
-    ActivityIndicator,
-} from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, RefreshControl } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Picker } from '@react-native-picker/picker'
