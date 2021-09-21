@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Picker } from '@react-native-picker/picker'
+import { useFocusEffect } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import {
     Platform,
@@ -32,8 +33,6 @@ import { addReport } from '../store/reports/action'
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
-
-import { useFocusEffect } from '@react-navigation/native'
 
 let camera = Camera
 

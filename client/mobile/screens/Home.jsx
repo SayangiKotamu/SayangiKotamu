@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions, RefreshControl } from 'react-native'
-import AntDesign from '@expo/vector-icons/AntDesign'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Picker } from '@react-native-picker/picker'
 
@@ -9,9 +8,9 @@ import { fetchAllReports, fetchReportByCategory } from '../store/reports/action'
 import { fetchAllCategory } from '../store/categories/action'
 
 import ReportCard from '../components/ReportCard'
-
 import SkeletonContent from 'react-native-skeleton-content'
 
+import AntDesign from '@expo/vector-icons/AntDesign'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 
@@ -38,13 +37,12 @@ export default function Home({ navigation }) {
     }
 
     useEffect(() => {
-        //! No need to fetchallreport here
         dispatch(fetchAllCategory())
     }, [])
 
     useEffect(() => {
         if (!selectedCategory) {
-            dispatch(fetchAllReports()) //! Already handled here
+            dispatch(fetchAllReports())
         } else {
             dispatch(fetchReportByCategory(selectedCategory))
         }

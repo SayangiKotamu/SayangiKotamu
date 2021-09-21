@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchNotification } from '../store/notification/action'
 
 import SkeletonContent from 'react-native-skeleton-content'
-
 import NotificationCard from '../components/NotificationCard'
 
 import AntDesign from '@expo/vector-icons/AntDesign'

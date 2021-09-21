@@ -1,17 +1,14 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import Home from './Home'
 import ReportDetail from './ReportDetail'
 
-import Ionicons from '@expo/vector-icons/Ionicons'
-
 import { setIsLoggedIn, setAccessToken } from '../store/auth/action'
-
 import { useDispatch } from 'react-redux'
 
+import Ionicons from '@expo/vector-icons/Ionicons'
 import Toast from 'react-native-toast-message'
 
 const Stack = createStackNavigator()
