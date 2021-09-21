@@ -30,6 +30,15 @@ let userTestData2 = {
   ktp: "google.com",
 };
 
+let userTestData3 = {
+  NIK: 1501111709990100,
+  fullname: "test",
+  email: "testing3@gmail.com",
+  password: "123456",
+  kota: "jakarta",
+  ktp: "google.com",
+};
+
 beforeAll((done) => {
   const dummyUser = {
     NIK: 1501111709990001,
@@ -275,6 +284,54 @@ describe("POST /login [ERROR CASE]", () => {
   });
 });
 
+describe("POST / [CASE FAILED / NO ACTIVATE EMAIL]", () => {
+  test("Should ERROR because of [NO ACTIVATE EMAIL] and status code (401)", (done) => {
+    request(app)
+      .post("/login")
+      .set("Accept", "application/json")
+      .send(userTestData)
+      .then((res) => {
+        expect(res.status).toBe(401);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            message: "Please check your email and activate your account first.",
+          })
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("POST / [CASE FAILED / ACTIVATE EMAIL INVALID]", () => {
+  test("Should ERROR because of [ACTIVATE EMAIL INVALID] and status code (401)", (done) => {
+    request(app)
+      .post("/register")
+      .set("Accept", "application/json")
+      .send(userTestData3)
+      .then((res) => {
+        User.findOne({ email: res.body.email }).then((res) => {
+          return request(app)
+            .patch("/activateEmail/" + res.activateEmailToken + 24)
+            .then((res) => {
+              expect(res.status).toBe(401);
+              expect(res.body).toEqual(
+                expect.objectContaining({
+                  message: "Invalid access token",
+                })
+              );
+              done();
+            });
+        });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 describe("POST / [CASE FAILED / DUPLICATE]", () => {
   test("Should ERROR because of [DUPLICATE EMAIL] and status code (400)", (done) => {
     request(app)
@@ -296,6 +353,7 @@ describe("POST / [CASE FAILED / DUPLICATE]", () => {
   });
 });
 
+let isEmailTrue = "";
 describe("PATCH / [CASE SUCCESS]", () => {
   test("Should be success  and status code (200)", (done) => {
     request(app)
@@ -304,6 +362,7 @@ describe("PATCH / [CASE SUCCESS]", () => {
       .send(userTestData2)
       .then((res) => {
         User.findOne({ email: res.body.email }).then((res) => {
+          isEmailTrue = res.activateEmailToken;
           return request(app)
             .patch("/activateEmail/" + res.activateEmailToken)
             .then((res) => {
@@ -316,6 +375,26 @@ describe("PATCH / [CASE SUCCESS]", () => {
               done();
             });
         });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("PATCH / [CASE FAILED / DONE ACTIVATE]", () => {
+  User.findOne;
+  test("Should ERROR because of [ALREADY ACTIVATE] and status code (401)", (done) => {
+    request(app)
+      .patch("/activateEmail/" + isEmailTrue)
+      .then((res) => {
+        expect(res.status).toBe(400);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            message: "You have already activate your email",
+          })
+        );
+        done();
       })
       .catch((err) => {
         done(err);

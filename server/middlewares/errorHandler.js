@@ -36,6 +36,11 @@ function errorHandler(err, req, res, next) {
         message: "Please check your email and activate your account first.",
       });
       break;
+    case "EmailTokenInvalid":
+      res.status(401).json({
+        message: "Email token is invalid",
+      });
+      break;
     case "NIKInCollection":
       res.status(400).json({ message: "NIK is already registered" });
       break;
