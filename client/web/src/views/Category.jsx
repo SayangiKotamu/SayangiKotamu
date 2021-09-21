@@ -84,32 +84,42 @@ function Announcement() {
               </button>
             </div>
           </div>
-          <div class="card" style={{ backgroundColor: "white", borderColor: "#f15447", borderWidth: 1 }}>
+          <div
+            class="card"
+            style={{
+              backgroundColor: "white",
+              borderColor: "#f15447",
+              borderWidth: 1,
+            }}
+          >
             <div class="m-8">
               <form action="" type="submit" onSubmit={handleSubmitCategory}>
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text" style={{color: "#f15447"}}>Judul Kategori</span>
+                    <span class="label-text" style={{ color: "#f15447" }}>
+                      Judul Kategori
+                    </span>
                   </label>
                   <input
                     placeholder=""
                     class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                     onChange={forName}
                     value={name}
-                    style={{color: "#f15447"}}
+                    style={{ color: "#f15447" }}
                   />
                 </div>
 
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text" style={{color: "#f15447"}}>Penanggung Jawab</span>
+                    <span class="label-text" style={{ color: "#f15447" }}>
+                      Penanggung Jawab
+                    </span>
                   </label>
                   <input
-                    
                     placeholder="Dinas terkait"
                     class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                     value={"Yang login kesini"}
-                    style={{color: "#f15447"}}
+                    style={{ color: "#f15447" }}
                     disabled
                   />
                 </div>
@@ -118,7 +128,7 @@ function Announcement() {
                     type="submit"
                     value="Buat Kategori"
                     class="btn"
-                    style={{backgroundColor: "black"}}
+                    style={{ backgroundColor: "black" }}
                   />
                 </div>
               </form>

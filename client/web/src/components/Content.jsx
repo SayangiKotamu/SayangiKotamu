@@ -29,7 +29,7 @@ function Content(props) {
         style={{
           height: "170px",
           borderWidth: 1,
-          borderColor: "white"
+          borderColor: "white",
         }}
       >
         <a
@@ -64,26 +64,55 @@ function Content(props) {
           >
             <div className="mr-3">
               <div className="mb-6">
-                <h1 className="mb-1 text-l font-bold" style={{color: "white"}}>Judul Pengaduan</h1>
-                <p className="truncate text-m" style={{color: "white"}}>{props?.report?.title}</p>
+                <h1
+                  className="mb-1 text-l font-bold"
+                  style={{ color: "white" }}
+                >
+                  Judul Pengaduan
+                </h1>
+                <p className="truncate text-m" style={{ color: "white" }}>
+                  {props?.report?.title}
+                </p>
               </div>
               <div>
-                <h1 className="mb-1 text-l font-bold" style={{color: "white"}}>Deskripsi</h1>
-                <p className="truncate text-m" style={{color: "white"}}> {props?.report?.description}</p>
+                <h1
+                  className="mb-1 text-l font-bold"
+                  style={{ color: "white" }}
+                >
+                  Deskripsi
+                </h1>
+                <p className="truncate text-m" style={{ color: "white" }}>
+                  {" "}
+                  {props?.report?.description}
+                </p>
               </div>
             </div>
             <div className="ml-3">
               <div div className="mb-6">
-                <h1 className="mb-1 text-l font-bold text-right" style={{color: "white"}}>
+                <h1
+                  className="mb-1 text-l font-bold text-right"
+                  style={{ color: "white" }}
+                >
                   Tanggal Masuk
                 </h1>
-                <p className="truncate text-m text-right" style={{color: "white"}}>
-                  {props?.report?.issuedDate}
+                <p
+                  className="truncate text-m text-right"
+                  style={{ color: "white" }}
+                >
+                  {getFormatedDate(props?.report?.issuedDate)}
                 </p>
               </div>
               <div>
-                <h1 className="mb-1 text-l font-bold text-right" style={{color: "white"}}>Lokasi</h1>
-                <p className="truncate text-m text-right" style={{color: "white"}}>
+                <h1
+                  className="mb-1 text-l font-bold text-right"
+                  style={{ color: "white" }}
+                >
+                  Lokasi
+                </h1>
+                <p
+                  className="truncate text-m text-right"
+                  style={{ color: "white" }}
+                >
                   {props?.report?.location}
                 </p>
               </div>
