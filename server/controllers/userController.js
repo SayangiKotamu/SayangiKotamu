@@ -77,10 +77,7 @@ class UserController {
     const { token } = req.params;
     try {
       const verifiedToken = await jwtVerifyEmailActivate(token);
-      console.log(
-        "🚀 ~ file: userController.js ~ line 80 ~ UserController ~ activateEmail ~ verifiedToken",
-        verifiedToken
-      );
+
       if (verifiedToken) {
         const verifiedEmail = await User.findOne({
           email: verifiedToken.email,

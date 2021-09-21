@@ -2,6 +2,7 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const app = require("../app");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 let userTestData = {
   NIK: 1501111709990002,
@@ -39,6 +40,7 @@ let userTestData3 = {
   ktp: "google.com",
 };
 
+// let testUser = {};
 beforeAll((done) => {
   const dummyUser = {
     NIK: 1501111709990001,
@@ -49,8 +51,22 @@ beforeAll((done) => {
     isActive: true,
     ktp: "google.com",
   };
+
+  // const dummyUser1 = {
+  //   NIK: 1501111719990001,
+  //   fullname: "test",
+  //   email: "emaialtests@test.com",
+  //   password: "123456",
+  //   kota: "jakarta",
+  //   isActive: false,
+  //   ktp: "google.com",
+  // };
   User.create(dummyUser)
     .then(() => {
+      //   return User.create(dummyUser1);
+      // })
+      // .then((res) => {
+      //   testUser = res;
       done();
     })
     .catch((err) => {
@@ -402,31 +418,8 @@ describe("PATCH / [CASE FAILED / DONE ACTIVATE]", () => {
   });
 });
 
-// describe("PATCH / [CASE FAILED / ID NOT VERIFIED]", () => {
-//   test("Should ERROR because of [ALREADY ACTIVATE] and status code (400)", (done) => {
-//     request(app)
-//       .patch("/activateEmail/" + isEmailTrue)
-//       .then((res) => {
-//         console.log(
-//           "🚀 ~ file: user.test.js ~ line 411 ~ .then ~ res",
-//           res.body
-//         );
-//         expect(res.status).toBe(400);
-//         expect(res.body).toEqual(
-//           expect.objectContaining({
-//             message: "You have already activate your email",
-//           })
-//         );
-//         done();
-//       })
-//       .catch((err) => {
-//         done(err);
-//       });
-//   });
-// });
-
 let oldActivateEmail = "";
-describe("PATCH / [CASE FAILED / DONE ACTIVATE]", () => {
+describe("PATCH / [CASE FAILED / NO EMAIL FOUND]", () => {
   test("Should ERROR because of [ALREADY ACTIVATE] and status code (401)", (done) => {
     User.findOne({ email: userTestData.email })
       .then((res) => {
@@ -452,3 +445,43 @@ describe("PATCH / [CASE FAILED / DONE ACTIVATE]", () => {
       });
   });
 });
+
+// describe("PATCH / [CASE FAILED / NO EMAIL FOUND]", () => {
+//   let activeEmail = "";
+//   test("Should ERROR because of [ALREADY ACTIVATE] and status code (401)", (done) => {
+//     User.findOne({ email: testUser.email })
+//       .then((res) => {
+//         // console.log(res);
+//         activeEmail = res.activateEmailToken;
+//         const verifiedToken = jwt.verify(
+//           res.activateEmailToken,
+//           process.env.JWT_EMAIL_ACTIVATE
+//         );
+//         delete verifiedToken.NIK;
+//         delete verifiedToken.email;
+//         delete verifiedToken.password;
+//         delete verifiedToken.iat;
+//         delete verifiedToken.exp;
+//         console.log(
+//           "🚀 ~ file: user.test.js ~ line 458 ~ .then ~ verifiedToken",
+//           verifiedToken
+//         );
+//         {
+//           return request(app)
+//             .patch("/activateEmail/" + activeEmail)
+//             .then((res) => {
+//               expect(res.status).toBe(401);
+//               expect(res.body).toEqual(
+//                 expect.objectContaining({
+//                   message: "Email token is invalid",
+//                 })
+//               );
+//               done();
+//             });
+//         }
+//       })
+//       .catch((err) => {
+//         done(err);
+//       });
+//   });
+// });
