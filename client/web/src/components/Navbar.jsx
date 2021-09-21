@@ -17,7 +17,7 @@ function Navbar() {
     <>
       <div
         className="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box"
-        style={{ backgroundColor: "#1A73E9" }}
+        style={{ backgroundColor: "#f15447" }}
       >
         <div className="px-2 mx-2 navbar-start">
           <span className="text-lg font-bold">

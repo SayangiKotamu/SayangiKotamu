@@ -5,13 +5,19 @@ import { Bar } from "react-chartjs-2";
 
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
+import {fetchReports} from "../stores/reports/action"
 import { fetchCategories } from "../stores/categories/action";
 
 function Dashboard() {
   const dispatch = useDispatch();
   const [kategori, setKategori] = useState();
   const { categories, loading, error } = useSelector((state) => state.category);
+  const {reports} = useSelector((state) => state.report)
   // console.log(kategori);
+
+  useEffect(() => {
+    dispatch(fetchReports());
+  }, []);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -37,7 +43,7 @@ function Dashboard() {
       <div
         className="min-h-screen bg-cover"
         style={{
-          backgroundColor: "#C1FFD7",
+          backgroundColor: "white",
         }}
       >
         <Navbar />
@@ -107,7 +113,7 @@ function Dashboard() {
                   }}
                   width={100}
                   height={30}
-                  style={{ margin: "2%" }}
+                  style={{ margin: "2%"}}
                 />
               </div>
             </div>
@@ -123,11 +129,11 @@ function Dashboard() {
                 <div
                   className="card-body"
                   style={{
-                    backgroundColor: "white",
+                    backgroundColor: "#f15447",
                     borderWidth: 1,
                   }}
                 >
-                  <h2 className="text-center mb-5 text-2xl font-bold">
+                  <h2 className="text-center mb-5 text-2xl font-bold" style={{color: "white"}}>
                     Kategori Pengaduan
                   </h2>
                   {categories.map((category) => {
@@ -135,7 +141,7 @@ function Dashboard() {
                       <div>
                         <button
                           className="btn btn-block mb-3"
-                          style={{ backgroundColor: "#05DAA7" }}
+                          style={{ backgroundColor: "black" }}
                           onClick={(e) => {
                             e.preventDefault();
                             // setKategori(e.target.value);
@@ -151,23 +157,27 @@ function Dashboard() {
                 <div
                   className="card-body col-span-2"
                   style={{
-                    backgroundColor: "white",
+                    backgroundColor: "#f15447",
                     borderWidth: 1,
                   }}
                 >
-                  <h2 className="text-center mb-5 text-2xl font-bold">
+                  <h2 className="text-center mb-5 text-2xl font-bold" style={{color: "white"}}>
                     Masalah Lalu Lintas
                   </h2>
                   <div
                     className="card-body overflow-auto"
                     style={{
-                      backgroundColor: "white",
+                      backgroundColor: "#f15447",
+                      borderColor: "white",
                       borderWidth: 1,
                       borderRadius: 5,
                       maxHeight: "500px",
                     }}
                   >
-                    <Content kategori={kategori} />
+                  {reports.map((report) => {
+                    return <Content kategori={kategori} report={report} key={report.id} />
+
+                  })}
                   </div>
                 </div>
               </div>

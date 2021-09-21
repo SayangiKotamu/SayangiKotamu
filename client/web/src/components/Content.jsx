@@ -9,19 +9,19 @@ function Content(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
-  const { reports, loading, error } = useSelector((state) => state.report);
+  // const { reports, loading, error } = useSelector((state) => state.report);
 
   const handleToDetail = (id) => {
     history.push(`/detail/${id}`);
   };
 
-  useEffect(() => {
-    if (props?.kategori !== undefined) {
-      dispatch(fetchReportByCategory(props?.kategori));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (props?.kategori !== undefined) {
+  //     dispatch(fetchReportByCategory(props?.kategori));
+  //   }
+  // }, []);
 
-  console.log("ini di konten", reports);
+  // console.log("ini di konten", reports);
   return (
     <>
       <div
@@ -29,6 +29,7 @@ function Content(props) {
         style={{
           height: "170px",
           borderWidth: 1,
+          borderColor: "white"
         }}
       >
         <a
@@ -54,7 +55,7 @@ function Content(props) {
         <div
           className="card-body col-span-2"
           style={{
-            backgroundColor: "white",
+            backgroundColor: "#f15447",
           }}
         >
           <div
@@ -63,26 +64,26 @@ function Content(props) {
           >
             <div className="mr-3">
               <div className="mb-6">
-                <h1 className="mb-1 text-l font-bold">Laporan Pengaduan</h1>
-                <p className="truncate text-m">{props?.report?.title}</p>
+                <h1 className="mb-1 text-l font-bold" style={{color: "white"}}>Judul Pengaduan</h1>
+                <p className="truncate text-m" style={{color: "white"}}>{props?.report?.title}</p>
               </div>
               <div>
-                <h1 className="mb-1 text-l font-bold">Deskripsi</h1>
-                <p className="truncate text-m">{props?.report?.description}</p>
+                <h1 className="mb-1 text-l font-bold" style={{color: "white"}}>Deskripsi</h1>
+                <p className="truncate text-m" style={{color: "white"}}> {props?.report?.description}</p>
               </div>
             </div>
             <div className="ml-3">
               <div div className="mb-6">
-                <h1 className="mb-1 text-l font-bold text-right">
+                <h1 className="mb-1 text-l font-bold text-right" style={{color: "white"}}>
                   Tanggal Masuk
                 </h1>
-                <p className="truncate text-m text-right">
+                <p className="truncate text-m text-right" style={{color: "white"}}>
                   {props?.report?.issuedDate}
                 </p>
               </div>
               <div>
-                <h1 className="mb-1 text-l font-bold text-right">Lokasi</h1>
-                <p className="truncate text-m text-right">
+                <h1 className="mb-1 text-l font-bold text-right" style={{color: "white"}}>Lokasi</h1>
+                <p className="truncate text-m text-right" style={{color: "white"}}>
                   {props?.report?.location}
                 </p>
               </div>

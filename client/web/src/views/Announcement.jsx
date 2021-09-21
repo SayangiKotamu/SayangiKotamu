@@ -65,7 +65,7 @@ function Announcement() {
       <div
         class="min-h-screen bg-cover"
         style={{
-          backgroundColor: "#C1FFD7",
+          backgroundColor: "#FFFFFF",
         }}
       >
         <Navbar />
@@ -92,12 +92,12 @@ function Announcement() {
               </button>
             </div>
           </div>
-          <div class="card" style={{ backgroundColor: "white" }}>
+          <div class="card" style={{ backgroundColor: "#f15447", borderWidth: 1 }}>
             <div class="m-8">
               <form action="" type="submit" onSubmit={handleSubmitAnnouncement}>
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text">Judul</span>
+                    <span class="label-text" style={{color: "white"}}>Judul</span>
                   </label>
                   <input
                     placeholder=""
@@ -109,7 +109,7 @@ function Announcement() {
 
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text">Isi Pengumuman</span>
+                    <span class="label-text" style={{color: "white"}}>Isi Pengumuman</span>
                   </label>
                   <textarea
                     rows="10"
@@ -122,7 +122,7 @@ function Announcement() {
 
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text">Penanggung Jawab</span>
+                    <span class="label-text" style={{color: "white"}} >Penanggung Jawab</span>
                   </label>
                   <input
                     type="text"
@@ -136,7 +136,8 @@ function Announcement() {
                   <input
                     type="submit"
                     value="Buat Pengumuman"
-                    class="btn btn-primary"
+                    class="btn"
+                    style={{backgroundColor: "black"}}
                   />
                 </div>
               </form>

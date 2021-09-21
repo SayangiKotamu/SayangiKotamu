@@ -95,7 +95,7 @@ function Register() {
             </p>
           </div>
           <div class="card col-6 w-full max-w shadow-2xl bg-base-500">
-            <div class="card-body" style={{ backgroundColor: "#C8C6C6" }}>
+            <div class="card-body" style={{ backgroundColor: "#f15447" }}>
               <div class="text-center">
                 <h1 class="mb-3 text-4xl font-bold">Daftar</h1>
               </div>
@@ -153,12 +153,12 @@ function Register() {
                     type="submit"
                     value="Daftar"
                     class="btn"
-                    style={{ backgroundColor: "#05DAA7" }}
+                    style={{ backgroundColor: "black" }}
                   />
                 </div>
               </form>
               <label class="label-text-alt text-center">
-                <p>
+                <p className="text-xl">
                   Sudah mempunyai akun sebelumnya?{" "}
                   <a
                     href="#"
