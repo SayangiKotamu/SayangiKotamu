@@ -18,7 +18,10 @@ export default function NotificationCard(props) {
 
     function onCardClick() {
         if (props.notification.description.includes('sudah selesai ditangani')) {
-            navigation.navigate('Nilai Kinerja')
+            navigation.navigate('Nilai Kinerja', {
+                dinas: props.notification.dinas,
+                report: props.notification.report,
+            })
         }
     }
 
