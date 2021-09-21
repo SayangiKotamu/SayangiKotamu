@@ -9,6 +9,7 @@ const Announcment = require("../models/announcment");
 const dinas = {
   name: "Dinas Kepolisian",
   email: "dinasKesehatareport@test.com",
+  role: "dinas",
   password: "test1234",
 };
 

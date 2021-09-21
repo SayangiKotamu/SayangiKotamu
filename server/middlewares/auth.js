@@ -63,21 +63,22 @@ async function authEmailUser(req, res, next) {
   try {
     const foundUser = await User.findById({ _id: userId });
 
-    if (!foundUser) {
-      throw { name: "IdNotVerified" };
+    // if (!foundUser) {
+    //   throw { name: "IdNotVerified" };
+    // } else {
+    if (!foundUser.isActive) {
+      throw { name: "ActivateAccount" };
     } else {
-      if (!foundUser.isActive) {
-        throw { name: "ActivateAccount" };
-      } else {
-        next();
-      }
+      next();
     }
+    // }
   } catch (err) {
     next(err);
   }
 }
 
 // AUTHORIZATION
+// ! LATER: TANYA INSTRUKTUR SOAL INI!!
 async function authZDinas(req, res, next) {
   const { id } = req.params;
   const { id: userId, email, role } = req.user;
@@ -90,7 +91,7 @@ async function authZDinas(req, res, next) {
         throw { name: "NoAccessReport" };
       }
     } else {
-      throw { name: "ReportNotFound" };
+      next();
     }
   } catch (err) {
     next(err);
