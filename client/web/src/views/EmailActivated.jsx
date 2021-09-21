@@ -1,21 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
 
-function ActivationEmail() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-
-  const handleActivation = (e) => {
-    e.preventDefault();
-  };
-
+function EmailActivated() {
   return (
     <>
       <div
         class="min-h-screen bg-cover"
         style={{
-          backgroundColor: "#C1FFD7",
+          backgroundColor: "white",
         }}
       >
         <div class="container" style={{ marginLeft: "10%" }}>
@@ -24,10 +15,10 @@ function ActivationEmail() {
               <h2 class="mb-5 text-3xl font-bold">Terima Kasih</h2>
             </div>
           </div>
-          <div class="card" style={{ backgroundColor: "white" }}>
+          <div class="card" style={{ backgroundColor: "#f15447" }}>
             <div class="m-8">
               <div class="mt-6 mb-3">
-                <p class="text-2xl text-center">
+                <p class="text-2xl text-center" style={{ color: "white" }}>
                   Email yang anda daftarkan telah terverifikasi, anda sudah
                   dapat menggunakan email yang telah anda daftarkan pada
                   aplikasi kami. Selamat berkontribusi melalui SayangiKotamu :)
@@ -42,4 +33,4 @@ function ActivationEmail() {
   );
 }
 
-export default ActivationEmail;
+export default EmailActivated;

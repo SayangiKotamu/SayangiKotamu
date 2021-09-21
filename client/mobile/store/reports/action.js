@@ -6,6 +6,7 @@ import {
     SET_LOADING_SEND_REPORT,
     SET_LOADING_UPVOTE_REPORT,
     SET_LOADING_DOWNVOTE_REPORT,
+    SET_LOADING_RATE_REPORT,
 } from './actionType'
 
 import Toast from 'react-native-toast-message'
@@ -61,6 +62,13 @@ function setLoadingDownVoteReport(payload) {
     }
 }
 
+function setLoadingRateReport(payload) {
+    return {
+        type: SET_LOADING_RATE_REPORT,
+        payload,
+    }
+}
+
 export function fetchAllReports() {
     return async function (dispatch, getState) {
         try {
@@ -71,6 +79,36 @@ export function fetchAllReports() {
             let response = await sayangiKotamuApi({
                 method: 'GET',
                 url: '/reportUser',
+                headers: {
+                    access_token: auth.accessToken,
+                },
+            })
+
+            dispatch(setReportsList(response.data))
+        } catch (err) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: err.response.data.message,
+            })
+        } finally {
+            dispatch(setLoadingReports(false))
+        }
+    }
+}
+
+export function fetchReportByCategory(categoryId) {
+    return async function (dispatch, getState) {
+        try {
+            const { auth } = getState()
+
+            dispatch(setLoadingReports(true))
+
+            let response = await sayangiKotamuApi({
+                method: 'GET',
+                url: `/reportUser/category/${categoryId}`,
                 headers: {
                     access_token: auth.accessToken,
                 },
@@ -235,6 +273,48 @@ export function downVoteReport(id) {
             })
         } finally {
             dispatch(setLoadingDownVoteReport(false))
+        }
+    }
+}
+
+export function rateReport(payload) {
+    return async function (dispatch, getState) {
+        try {
+            const { auth } = getState()
+
+            dispatch(setLoadingRateReport(true))
+
+            await sayangiKotamuApi({
+                method: 'POST',
+                url: '/rating',
+                headers: {
+                    access_token: auth.accessToken,
+                },
+                data: {
+                    rating: payload.rating,
+                    comment: payload.comment,
+                    dinas: payload.dinas,
+                    report: payload.report,
+                },
+            })
+
+            Toast.show({
+                type: 'success',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Terimakasih telah memberikan feedback terhadap laporan ini',
+            })
+        } catch (err) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: err.response.data.message,
+            })
+        } finally {
+            dispatch(setLoadingRateReport(false))
         }
     }
 }

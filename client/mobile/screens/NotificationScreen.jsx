@@ -1,16 +1,17 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Announcement from './Announcement'
-import AnnouncementDetail from './AnnouncementDetail'
+
+import Notification from './Notification'
+import Rating from './RatingScreen'
 
 const Stack = createStackNavigator()
 
-export default function AnnouncementScreen() {
+export default function NotificationScreen() {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Halaman Pengumuman"
-                component={Announcement}
+                name="Halaman Notifikasi"
+                component={Notification}
                 options={{
                     headerStyle: {
                         backgroundColor: 'tomato',
@@ -19,8 +20,8 @@ export default function AnnouncementScreen() {
                 }}
             />
             <Stack.Screen
-                name="Detail Pengumuman"
-                component={AnnouncementDetail}
+                name="Nilai Kinerja"
+                component={Rating}
                 options={{
                     headerStyle: {
                         backgroundColor: 'tomato',

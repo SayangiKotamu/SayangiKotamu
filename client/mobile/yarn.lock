@@ -5144,6 +5144,11 @@
   dependencies:
     "object-visit" "^1.0.0"
 
+"masa@^0.3.0":
+  "integrity" "sha512-nstfVYxwEf/u/emAfNWJJmlrii/R8aEdo1wvD171ck+Ce88vTukiUH7ZYwT2R4fCjWJjIA1jSThpXPedETeDRg=="
+  "resolved" "https://registry.npmjs.org/masa/-/masa-0.3.0.tgz"
+  "version" "0.3.0"
+
 "md5-file@^3.2.3":
   "integrity" "sha512-3Tkp1piAHaworfcCgH0jKbTvj1jWWFgbvh2cXaNCgHwyTCBxxvD1Y04rmfpvdPm1P4oXMOpm6+2H7sr7v9v8Fw=="
   "resolved" "https://registry.npmjs.org/md5-file/-/md5-file-3.2.3.tgz"
@@ -6251,6 +6256,13 @@
   "version" "0.29.3"
   dependencies:
     "@types/geojson" "^7946.0.7"
+
+"react-native-ratings@^8.1.0":
+  "integrity" "sha512-+QOJ4G3NjVkI1D+tk4EGx1dCvVfbD2nQdkrj9cXrcAoEiwmbep4z4bZbCKmWMpQ5h2dqbxABU8/eBnbDmvAc3g=="
+  "resolved" "https://registry.npmjs.org/react-native-ratings/-/react-native-ratings-8.1.0.tgz"
+  "version" "8.1.0"
+  dependencies:
+    "lodash" "^4.17.15"
 
 "react-native-reanimated@>=2.0.0-rc.0", "react-native-reanimated@2.1.0":
   "integrity" "sha512-tlPvvcdf+X7HGQ7g/7npBFhwMznfdk7MHUc9gUB/kp2abSscXNe/kOVKlrNEOO4DS11rNOXc+llFxVFMuNk0zA=="

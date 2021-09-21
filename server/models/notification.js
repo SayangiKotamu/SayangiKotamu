@@ -11,8 +11,10 @@ const notificationSchema = new mongoose.Schema({
     type: String,
   },
   report: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Report",
+    type: String,
+  },
+  dinas: {
+    type: String,
   },
 });
 

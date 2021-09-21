@@ -41,7 +41,7 @@ function Announcement() {
       <div
         className="min-h-screen bg-cover"
         style={{
-          backgroundColor: "#C1FFD7",
+          backgroundColor: "white",
         }}
       >
         <Navbar />
@@ -85,17 +85,27 @@ function Announcement() {
                 </button>
               </div>
             </div>
-            <div className="card" style={{ backgroundColor: "white" }}>
+            <div
+              className="card"
+              style={{ backgroundColor: "#f15447", borderWidth: 1 }}
+            >
               <div className="m-8">
                 <div className="overflow-x-auto" style={{ height: "600px" }}>
-                  <table className="table w-full table-compact">
-                    <thead>
+                  <table
+                    className="table w-full table-compact"
+                    style={{ borderWidth: 1 }}
+                  >
+                    <thead style={{ borderWidth: 1 }}>
                       <tr>
-                        <th></th>
-                        <th>Nama</th>
-                        <th>Dinas</th>
-                        <th>Deskripsi</th>
-                        <th>Kategori</th>
+                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                          Judul
+                        </th>
+                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                          Deskripsi
+                        </th>
+                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                          Kategori
+                        </th>
                       </tr>
                     </thead>
                     {aspiration.map((aspirasi) => {

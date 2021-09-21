@@ -49,7 +49,16 @@ export default function HomeScreen() {
                     headerTintColor: '#fff',
                 }}
             />
-            <Stack.Screen name="Detail Laporan" component={ReportDetail} />
+            <Stack.Screen
+                name="Detail Laporan"
+                component={ReportDetail}
+                options={{
+                    headerStyle: {
+                        backgroundColor: 'tomato',
+                    },
+                    headerTintColor: '#fff',
+                }}
+            />
         </Stack.Navigator>
     )
 }

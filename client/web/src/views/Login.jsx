@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,6 +10,7 @@ function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { accessToken } = useSelector((state) => state.auth);
 
   const handleToRegister = () => {
     history.push("/daftar");
@@ -44,6 +45,7 @@ function Login() {
       });
     } else {
       dispatch(logining(payload));
+
       history.push("/beranda");
     }
   };
@@ -79,7 +81,7 @@ function Login() {
             </p>
           </div>
           <div className="card col-6 w-full max-w shadow-2xl bg-base-500">
-            <div className="card-body" style={{ backgroundColor: "#C8C6C6" }}>
+            <div className="card-body" style={{ backgroundColor: "#f15447" }}>
               <form action="" type="submit" onSubmit={handleLogin}>
                 <div className="text-center">
                   <h1 className="mb-3 text-4xl font-bold">Masuk</h1>
@@ -113,11 +115,11 @@ function Login() {
                     type="submit"
                     value="Masuk"
                     className="btn"
-                    style={{ backgroundColor: "#05DAA7" }}
+                    style={{ backgroundColor: "black" }}
                   />
                 </div>
-                <label className="label-text-alt text-center">
-                  <p>
+                <label className="label-text-alt text-center mt-2">
+                  <p className="text-xl">
                     Belum mempunyai akun?{" "}
                     <a
                       href="#"

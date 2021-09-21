@@ -3,12 +3,11 @@ function AspirationView(props) {
     <>
       <tbody>
         <tr>
-          <th>{props.aspirasi.id}</th>
-          <td>{props.aspirasi.user.full_name}</td>
-          <td>{props.aspirasi.dinas.name}</td>
-          <td>{props.aspirasi.description}</td>
-          <td>{props.aspirasi.type}</td>
+          <td style={{ color: "black" }}>{props.aspirasi.title}</td>
+          <td style={{ color: "black" }}>{props.aspirasi.description}</td>
+          <td style={{ color: "black" }}>{props.aspirasi.type}</td>
         </tr>
+        <hr />
       </tbody>
     </>
   );

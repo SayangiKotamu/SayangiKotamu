@@ -5,7 +5,7 @@ import {
   SET_LOADING,
   SET_ERROR,
 } from "./actionType";
-import axios from "axios";
+import sayangiKotamu from "../../apis/sayangiKotamuAPI";
 
 function setReports(payload) {
   return { type: SET_REPORTS, payload };
@@ -28,11 +28,18 @@ function editReport(payload) {
 }
 
 export function fetchReports() {
-  return function (dispatch) {
+  return function (dispatch, getState) {
+    const { auth } = getState();
+
     dispatch(setError(null));
     dispatch(setLoading(true));
-    axios
-      .get("http://localhost:3001/reports")
+    sayangiKotamu({
+      method: "GET",
+      url: "/reports",
+      headers: {
+        access_token: auth.accessToken,
+      },
+    })
       .then((response) => {
         dispatch(setReports(response.data));
       })
@@ -46,11 +53,18 @@ export function fetchReports() {
 }
 
 export function fetchReportById(id) {
-  return function (dispatch) {
+  return function (dispatch, getState) {
+    const { auth } = getState();
+
     dispatch(setError(null));
     dispatch(setLoading(true));
-    axios
-      .get(`http://localhost:3001/reports/${id}`)
+    sayangiKotamu({
+      method: "GET",
+      url: `/reports/${id}`,
+      headers: {
+        access_token: auth.accessToken,
+      },
+    })
       .then((response) => {
         dispatch(setDetailReport(response.data));
       })
@@ -63,12 +77,45 @@ export function fetchReportById(id) {
   };
 }
 
-export function patchReport(payload) {
-  return function (dispatch) {
+export function fetchReportByCategory(id) {
+  return function (dispatch, getState) {
+    const { auth } = getState();
+
     dispatch(setError(null));
     dispatch(setLoading(true));
-    axios
-      .put(`http://localhost:3001/reports/${payload.id}`, payload)
+    sayangiKotamu({
+      method: "GET",
+      url: `/reports/?categoryId=${id}`,
+      headers: {
+        access_token: auth.accessToken,
+      },
+    })
+      .then((response) => {
+        dispatch(setReports(response.data));
+      })
+      .catch((err) => {
+        dispatch(setError(err));
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
+}
+
+export function patchReport(id, payload) {
+  return function (dispatch, getState) {
+    const { auth } = getState();
+
+    dispatch(setError(null));
+    dispatch(setLoading(true));
+    sayangiKotamu({
+      method: "PATCH",
+      url: `/reports/${id}`,
+      headers: {
+        access_token: auth.accessToken,
+      },
+      data: payload,
+    })
       .then((response) => {
         dispatch(editReport(response.data));
       })

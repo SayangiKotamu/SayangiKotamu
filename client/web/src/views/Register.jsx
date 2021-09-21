@@ -12,10 +12,9 @@ function Register() {
     history.push("/");
   };
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [instance, setInstance] = useState("");
-  // const [city, setCity] = useState("");
 
   const forEmail = (e) => {
     e.preventDefault();
@@ -27,26 +26,21 @@ function Register() {
     setPassword(e.target.value);
   };
 
-  const forInstance = (e) => {
+  const forName = (e) => {
     e.preventDefault();
-    setInstance(e.target.value);
+    setName(e.target.value);
   };
-
-  // const forCity = (e) => {
-  //   e.preventDefault();
-  //   setCity(e.target.value);
-  // };
 
   const handleRegister = (e) => {
     e.preventDefault();
 
     const payload = {
+      name,
       email,
       password,
-      instance,
     };
 
-    if (email === "" || password === "" || instance === "") {
+    if (email === "" || password === "" || name === "") {
       toast.error("Mohon diisi sesuai dengan kebutuhan di bawah!", {
         position: "top-right",
         autoClose: 5000,
@@ -58,7 +52,15 @@ function Register() {
       });
     } else {
       dispatch(registering(payload));
-      history.push("/");
+      toast.success("Terima kasih sudah mendaftar, silahkan masuk.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -93,11 +95,23 @@ function Register() {
             </p>
           </div>
           <div class="card col-6 w-full max-w shadow-2xl bg-base-500">
-            <div class="card-body" style={{ backgroundColor: "#C8C6C6" }}>
+            <div class="card-body" style={{ backgroundColor: "#f15447" }}>
               <div class="text-center">
                 <h1 class="mb-3 text-4xl font-bold">Daftar</h1>
               </div>
               <form action="" onSubmit={handleRegister}>
+                <div class="form-control">
+                  <label class="label">
+                    <span class="label-text">Nama Instansi</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Nama Instansi"
+                    class="input input-bordered"
+                    onChange={forName}
+                    value={name}
+                  />
+                </div>
                 <div class="form-control">
                   <label class="label">
                     <span class="label-text">Email</span>
@@ -122,18 +136,6 @@ function Register() {
                     value={password}
                   />
                 </div>
-                <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Nama Instansi</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Nama Instansi"
-                    class="input input-bordered"
-                    onChange={forInstance}
-                    value={instance}
-                  />
-                </div>
                 {/* <div class="form-control">
                   <label class="label">
                     <span class="label-text">Kota</span>
@@ -151,12 +153,12 @@ function Register() {
                     type="submit"
                     value="Daftar"
                     class="btn"
-                    style={{ backgroundColor: "#05DAA7" }}
+                    style={{ backgroundColor: "black" }}
                   />
                 </div>
               </form>
               <label class="label-text-alt text-center">
-                <p>
+                <p className="text-xl">
                   Sudah mempunyai akun sebelumnya?{" "}
                   <a
                     href="#"

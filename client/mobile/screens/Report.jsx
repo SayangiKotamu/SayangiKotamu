@@ -8,7 +8,7 @@ import {
     TextInput,
     View,
     ScrollView,
-    Button,
+    RefreshControl,
     Image,
     Dimensions,
     ActivityIndicator,
@@ -18,7 +18,7 @@ import {
 import Toast from 'react-native-toast-message'
 import CustomButton from '../components/CustomButton'
 
-// import { Camera } from 'expo-camera'
+import { Camera } from 'expo-camera'
 import * as Location from 'expo-location'
 import * as ImagePicker from 'expo-image-picker'
 import * as Firebase from 'firebase'
@@ -32,6 +32,10 @@ import { addReport } from '../store/reports/action'
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
+
+import { useFocusEffect } from '@react-navigation/native'
+
+let camera = Camera
 
 export default function Report({ navigation }) {
     let [fontsLoaded] = useFonts({
@@ -58,19 +62,16 @@ export default function Report({ navigation }) {
 
     const [uploadingImage, setUploadingImage] = useState(false)
 
-    // const [type, setType] = useState(Camera.Constants.Type.Back)
-    // const [isCameraOpen, setIsCameraOpen] = useState(false)
-    // const [hasCameraPermission, setHasCameraPermission] = useState(null)
+    const [isCameraOpen, setIsCameraOpen] = useState(false)
+    const [hasCameraPermission, setHasCameraPermission] = useState(null)
 
-    function resetAllForm() {
-        setTitle('')
-        setDescription('')
-        setCategory('')
-        setSelectedDinas('')
-        setLocationDescription('')
-        setLocation(null)
-        setImage(null)
-    }
+    const [isRefreshing, setIsRefreshing] = useState(false)
+
+    useFocusEffect(
+        React.useCallback(() => {
+            return () => setIsCameraOpen(false)
+        }, [])
+    )
 
     useEffect(() => {
         ;(async () => {
@@ -107,6 +108,22 @@ export default function Report({ navigation }) {
         dispatch(fetchAllCategory())
         dispatch(fetchAllDinas())
     }, [])
+
+    function resetAllForm() {
+        setTitle('')
+        setDescription('')
+        setCategory('')
+        setSelectedDinas('')
+        setLocationDescription('')
+        setLocation(null)
+        setImage(null)
+    }
+
+    function onRefresh() {
+        setIsRefreshing(true)
+        resetAllForm()
+        setIsRefreshing(false)
+    }
 
     async function sendReport() {
         if (
@@ -195,43 +212,55 @@ export default function Report({ navigation }) {
         }
     }
 
-    // async function openCamera() {
-    //     ;(async () => {
-    //         const { status } = await Camera.requestPermissionsAsync()
-    //         setHasCameraPermission(status === 'granted')
-    //     })()
-    //     setIsCameraOpen(true)
-    // }
+    async function openCamera() {
+        ;(async () => {
+            const { status } = await Camera.requestPermissionsAsync()
+            setHasCameraPermission(status === 'granted')
+        })()
+        setIsCameraOpen(true)
+    }
 
-    // if (isCameraOpen && hasCameraPermission) {
-    //     return (
-    //         <View style={styles.cameraContainer}>
-    //             <Camera style={styles.camera} type={type}>
-    //                 <View style={styles.cameraButtonContainer}>
-    //                     <TouchableOpacity
-    //                         style={styles.cameraButton}
-    //                         onPress={() => {
-    //                             setType(
-    //                                 type === Camera.Constants.Type.back
-    //                                     ? Camera.Constants.Type.front
-    //                                     : Camera.Constants.Type.back
-    //                             )
-    //                         }}
-    //                     >
-    //                         <Text style={styles.cameraText}> Flip </Text>
-    //                     </TouchableOpacity>
-    //                 </View>
-    //             </Camera>
-    //         </View>
-    //     )
-    // }
+    async function takePicture() {
+        const photo = await camera.takePictureAsync()
+        setImage(photo.uri)
+        setIsCameraOpen(false)
+    }
 
     if (!fontsLoaded) {
         return <AppLoading />
     }
 
+    if (isCameraOpen && hasCameraPermission) {
+        return (
+            <View style={styles.cameraContainer}>
+                <Camera
+                    style={styles.camera}
+                    type={Camera.Constants.Type.Back}
+                    ref={(ref) => (camera = ref)}
+                >
+                    <View style={styles.cameraButtonContainer}>
+                        <TouchableOpacity
+                            onPress={takePicture}
+                            style={{
+                                width: 70,
+                                height: 70,
+                                bottom: 0,
+                                borderRadius: 50,
+                                backgroundColor: 'white',
+                                borderColor: 'tomato',
+                                borderWidth: 10,
+                            }}
+                        />
+                    </View>
+                </Camera>
+            </View>
+        )
+    }
+
     return (
-        <ScrollView>
+        <ScrollView
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+        >
             <View style={styles.container}>
                 <View style={styles.headingContainer}>
                     <Ionicons name={'arrow-down-circle-sharp'} size={30} color={'white'} />
@@ -265,10 +294,15 @@ export default function Report({ navigation }) {
                                 selectedValue={category}
                                 onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
                             >
-                                <Picker.Item label={'Pilih kategori permasalahan'} value={''} />
+                                <Picker.Item
+                                    style={styles.pickerText}
+                                    label={'Pilih kategori permasalahan'}
+                                    value={''}
+                                />
                                 {categories.map((category, idx) => {
                                     return (
                                         <Picker.Item
+                                            style={styles.pickerText}
                                             label={category.name}
                                             value={category._id}
                                             key={'category' + idx}
@@ -290,13 +324,18 @@ export default function Report({ navigation }) {
                                     setSelectedDinas(itemValue)
                                 }
                             >
-                                <Picker.Item label={'Pilih dinas'} value={''} />
+                                <Picker.Item
+                                    style={styles.pickerText}
+                                    label={'Pilih dinas'}
+                                    value={''}
+                                />
                                 {dinas.map((eachDinas, idx) => {
                                     return (
                                         <Picker.Item
                                             label={eachDinas.name}
                                             value={eachDinas._id}
                                             key={'dinas' + idx}
+                                            style={styles.pickerText}
                                         />
                                     )
                                 })}
@@ -328,10 +367,14 @@ export default function Report({ navigation }) {
                                 />
                             </TouchableOpacity>
 
-                            {/* <View style={styles.textContainer}>
-                                <Text style={styles.text}>Atau</Text>
+                            <View style={styles.buttonTwo}>
+                                <TouchableOpacity onPress={openCamera}>
+                                    <CustomButton
+                                        buttonName={'Ambil Foto'}
+                                        buttonColor={'tomato'}
+                                    />
+                                </TouchableOpacity>
                             </View>
-                            <Button title="Ambil Foto" color="#05DAA7" onPress={openCamera} /> */}
                         </View>
                     )}
                     <View style={styles.buttonContainerBottom}>
@@ -373,8 +416,15 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginTop: 20,
     },
+    buttonTwo: {
+        marginTop: 10,
+    },
+    pickerText: {
+        color: 'grey',
+        fontFamily: 'Poppins_600SemiBold',
+    },
     buttonContainerBottom: {
-        marginTop: 20,
+        marginTop: 40,
         marginBottom: 20,
     },
     headingContainer: {
@@ -442,19 +492,23 @@ const styles = StyleSheet.create({
     },
     camera: {
         flex: 1,
+        height: '30%',
     },
     cameraButtonContainer: {
         flex: 1,
         backgroundColor: 'transparent',
         flexDirection: 'row',
         margin: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        marginBottom: '30%',
     },
     cameraContainer: {
         flex: 1,
     },
     cameraButton: {
         flex: 0.1,
-        alignSelf: 'flex-end',
         alignItems: 'center',
     },
     cameraText: {

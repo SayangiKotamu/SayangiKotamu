@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   reports: [],
-  reportDetail: [],
+  reportDetail: {},
   loading: true,
   errors: null,
 };

@@ -4,39 +4,31 @@ import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
-import { postAnnouncement } from "../stores/announcements/action";
+import { postCategories } from "../stores/categories/action";
 
 function Announcement() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [announcement, setAnnouncement] = useState("");
-  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
 
-  const forAnnouncement = (e) => {
+  const forName = (e) => {
     e.preventDefault();
-    setAnnouncement(e.target.value);
-  };
-
-  const forTitle = (e) => {
-    e.preventDefault();
-    setTitle(e.target.value);
+    setName(e.target.value);
   };
 
   const handleToDashboard = () => {
     history.push("/beranda");
   };
 
-  const handleSubmitAnnouncement = (e) => {
+  const handleSubmitCategory = (e) => {
     e.preventDefault();
 
     const payload = {
-      title,
-      announcement,
-      date: new Date(),
+      name,
     };
 
-    if (payload.title === "" || payload.announcement === "") {
-      toast.error("Anda belum mengisi data sesuai kebutuhan pengumuman.", {
+    if (payload.name === "") {
+      toast.error("Anda belum mengisi data sesuai kebutuhan kategori baru.", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -46,8 +38,8 @@ function Announcement() {
         progress: undefined,
       });
     } else {
-      dispatch(postAnnouncement(payload));
-      toast.success("Pengumuman yang anda buat telah tersampaikan!", {
+      dispatch(postCategories(payload));
+      toast.success("Kategori baru sudah terbuat!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -65,14 +57,14 @@ function Announcement() {
       <div
         class="min-h-screen bg-cover"
         style={{
-          backgroundColor: "#FFFFFF",
+          backgroundColor: "white",
         }}
       >
         <Navbar />
         <div class="container" style={{ marginLeft: "10%", marginTop: "5%" }}>
           <div class="justify-between grid grid-cols-2">
             <div>
-              <h2 class="mb-5 text-3xl font-bold">Pengumuman</h2>
+              <h2 class="mb-5 text-3xl font-bold">Kategori Baru</h2>
             </div>
             <div class="text-right">
               <button
@@ -94,36 +86,26 @@ function Announcement() {
           </div>
           <div
             class="card"
-            style={{ backgroundColor: "#f15447", borderWidth: 1 }}
+            style={{
+              backgroundColor: "#f15447",
+
+              borderWidth: 1,
+            }}
           >
             <div class="m-8">
-              <form action="" type="submit" onSubmit={handleSubmitAnnouncement}>
+              <form action="" type="submit" onSubmit={handleSubmitCategory}>
                 <div class="form-control mt-2">
                   <label class="label">
                     <span class="label-text" style={{ color: "white" }}>
-                      Judul
+                      Judul Kategori
                     </span>
                   </label>
                   <input
                     placeholder=""
                     class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                    onChange={forTitle}
-                    value={title}
-                  />
-                </div>
-
-                <div class="form-control mt-2">
-                  <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
-                      Isi Pengumuman
-                    </span>
-                  </label>
-                  <textarea
-                    rows="10"
-                    placeholder=""
-                    class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                    onChange={forAnnouncement}
-                    value={announcement}
+                    onChange={forName}
+                    value={name}
+                    style={{ color: "black" }}
                   />
                 </div>
 
@@ -134,18 +116,17 @@ function Announcement() {
                     </span>
                   </label>
                   <input
-                    type="text"
-                    placeholder="password"
+                    placeholder="Dinas terkait"
                     class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                    style={{ color: "black" }}
                     value={"Yang login kesini"}
+                    style={{ color: "black" }}
                     disabled
                   />
                 </div>
                 <div class="form-control mt-6 mb-3">
                   <input
                     type="submit"
-                    value="Buat Pengumuman"
+                    value="Buat Kategori"
                     class="btn"
                     style={{ backgroundColor: "black" }}
                   />

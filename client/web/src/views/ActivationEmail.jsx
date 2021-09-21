@@ -16,7 +16,7 @@ function ActivationEmail() {
       <div
         class="min-h-screen bg-cover"
         style={{
-          backgroundColor: "#C1FFD7",
+          backgroundColor: "white",
         }}
       >
         <div class="container" style={{ marginLeft: "10%" }}>
@@ -25,10 +25,10 @@ function ActivationEmail() {
               <h2 class="mb-5 text-3xl font-bold">Aktifasi Email</h2>
             </div>
           </div>
-          <div class="card" style={{ backgroundColor: "white" }}>
+          <div class="card" style={{ backgroundColor: "#f15447" }}>
             <div class="m-8">
               <div class="mt-6 mb-3">
-                <p class="text-xl text-center">
+                <p class="text-xl text-center" style={{ color: "white" }}>
                   Terima kasih telah mendaftarkan diri anda dalam aplikasi
                   SayangiKotamu, untuk tahapan lebih lanjutnya anda diminta
                   untuk aktifasi email yang telah didaftarkan. Terkait dengan
@@ -38,8 +38,8 @@ function ActivationEmail() {
                 <input
                   type="submit"
                   value="Aktifasi Email"
-                  class="btn btn-primary mt-10"
-                  style={{ width: "100%" }}
+                  class="btn mt-10"
+                  style={{ width: "100%", backgroundColor: "black" }}
                   onClick={handleActivation}
                 />
               </div>

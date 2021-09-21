@@ -25,6 +25,8 @@ import { upVoteReport, downVoteReport } from '../store/reports/action'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 
+import { formatDateWithHour } from '../helpers/formatDate'
+
 const windowWidth = Dimensions.get('window').width
 
 export default function ReportDetail({ route }) {
@@ -148,12 +150,6 @@ export default function ReportDetail({ route }) {
                             <View style={styles.detailsContainer}>
                                 <View>
                                     <View style={styles.detailDescription}>
-                                        <Text style={styles.detailDescHeader}>Nomor Laporan</Text>
-                                        <Text style={styles.detailDescContent}>
-                                            {detailReport?._id}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.detailDescription}>
                                         <Text style={styles.detailDescHeader}>
                                             Dinas/Instansi Terkait
                                         </Text>
@@ -162,8 +158,31 @@ export default function ReportDetail({ route }) {
                                         </Text>
                                     </View>
                                     <View style={styles.detailDescription}>
+                                        <Text style={styles.detailDescHeader}>Dibuat pada</Text>
+                                        <Text style={styles.detailDescContent}>
+                                            {formatDateWithHour(detailReport?.issuedDate)}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.detailDescription}>
+                                        <Text style={styles.detailDescHeader}>
+                                            Kategori Permasalahan
+                                        </Text>
+                                        <Text style={styles.detailDescContent}>
+                                            {detailReport?.category?.name}
+                                        </Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <View style={styles.detailDescription}>
+                                        <Text style={styles.detailDescHeader}>Status</Text>
+                                        <Text style={styles.detailDescContent}>
+                                            {detailReport?.status}
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.detailDescription}>
                                         <Text style={styles.detailDescHeader}>Dukungan</Text>
-                                        <View style={styles.respondContainer}>
+                                        <View style={styles.respondDetailContainer}>
                                             <Ionicons
                                                 name={'ios-thumbs-up-outline'}
                                                 size={14}
@@ -183,28 +202,6 @@ export default function ReportDetail({ route }) {
                                                 </Text>
                                             </View>
                                         </View>
-                                    </View>
-                                </View>
-                                <View>
-                                    <View style={styles.detailDescription}>
-                                        <Text style={styles.detailDescHeader}>Status</Text>
-                                        <Text style={styles.detailDescContent}>
-                                            {detailReport?.status}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.detailDescription}>
-                                        <Text style={styles.detailDescHeader}>Laporan Dibuat</Text>
-                                        <Text style={styles.detailDescContent}>
-                                            {detailReport?.issuedDate?.split('T')[0]}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.detailDescription}>
-                                        <Text style={styles.detailDescHeader}>
-                                            Kategori Permasalahan
-                                        </Text>
-                                        <Text style={styles.detailDescContent}>
-                                            {detailReport?.category?.name}
-                                        </Text>
                                     </View>
                                 </View>
                             </View>
@@ -293,10 +290,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginLeft: 5,
-        marginRight: 30,
+        marginRight: 50,
     },
     respondContainer: {
         marginTop: 10,
+        flexDirection: 'row',
+    },
+    respondDetailContainer: {
         flexDirection: 'row',
     },
     reportImage: {

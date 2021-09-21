@@ -5,6 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
 
 import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
+import { formatDate } from '../helpers/formatDate'
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
@@ -32,7 +33,7 @@ export default function AnnouncementCard(props) {
                 <Text style={styles.textTitle}>{props.announcement.title}</Text>
                 <Text style={styles.textInstances}>{props.announcement.dinas.name}</Text>
                 <Text style={styles.textDate}>
-                    Pengumuman dibuat pada {props.announcement.date.split('T')[0]}
+                    Pengumuman dibuat pada {formatDate(props.announcement.date)}
                 </Text>
                 <Text style={styles.textDescription}>
                     {formatCharactersByLimit(props.announcement.announcment)}
@@ -46,7 +47,6 @@ const styles = StyleSheet.create({
     announcementCardContainer: {
         backgroundColor: 'white',
         borderColor: '#ececec',
-        marginTop: 8,
         borderWidth: 1,
         borderRadius: 5,
         paddingBottom: 5,
