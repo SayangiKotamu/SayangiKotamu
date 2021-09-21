@@ -12,6 +12,24 @@ let userTestData = {
   ktp: "google.com",
 };
 
+let userTestData1 = {
+  NIK: 15011117099900100,
+  fullname: "test",
+  email: "testing@gmail.com",
+  password: "123456",
+  kota: "jakarta",
+  ktp: "google.com",
+};
+
+let userTestData2 = {
+  NIK: 15011117099900100,
+  fullname: "test",
+  email: "testing2@gmail.com",
+  password: "123456",
+  kota: "jakarta",
+  ktp: "google.com",
+};
+
 beforeAll((done) => {
   const dummyUser = {
     NIK: 1501111709990001,
@@ -250,6 +268,54 @@ describe("POST /login [ERROR CASE]", () => {
           "Email / Password is wrong"
         );
         done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("POST / [CASE FAILED / DUPLICATE]", () => {
+  test("Should ERROR because of [DUPLICATE EMAIL] and status code (400)", (done) => {
+    request(app)
+      .post("/register")
+      .set("Accept", "application/json")
+      .send(userTestData1)
+      .then((res) => {
+        expect(res.status).toBe(400);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            message: "Email is already registered",
+          })
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("PATCH / [CASE SUCCESS]", () => {
+  test("Should be success  and status code (200)", (done) => {
+    request(app)
+      .post("/register")
+      .set("Accept", "application/json")
+      .send(userTestData2)
+      .then((res) => {
+        User.findOne({ email: res.body.email }).then((res) => {
+          return request(app)
+            .patch("/activateEmail/" + res.activateEmailToken)
+            .then((res) => {
+              expect(res.status).toBe(200);
+              expect(res.body).toEqual(
+                expect.objectContaining({
+                  message: "Your email has been activated",
+                })
+              );
+              done();
+            });
+        });
       })
       .catch((err) => {
         done(err);

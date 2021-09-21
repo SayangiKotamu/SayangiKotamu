@@ -402,6 +402,33 @@ describe("PATCH /report/:id [CASE SUCCESS]", () => {
   });
 });
 
+describe("PATCH /report/:id [CASE SUCCESS / status:selesai]", () => {
+  test("Should return dinas status and status code (200)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+
+      .then((res) => {
+        request(app)
+          .patch(`/dinas/reports/${reportId}`)
+          .set("access_token", res.body.accessToken)
+          .send({ status: "selesai" })
+
+          .then((res) => {
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty("status", "selesai");
+            expect(res.body).toHaveProperty("finishedDate");
+
+            done();
+          });
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 describe("PATCH /report/:id [CASE FAILED / USER ATTEMPT]", () => {
   test("Should ERROR because of [USER ATTEMPT] and status code (401)", (done) => {
     request(app)

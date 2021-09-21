@@ -51,6 +51,8 @@ function errorHandler(err, req, res, next) {
     case "NotFound":
       res.status(404).json({ message: err.message });
       break;
+    case "EmailError":
+      res.status(400).json({ message: "Error sent email" });
     default:
       res.status(500).json({ message: "Internal Server Error" });
   }

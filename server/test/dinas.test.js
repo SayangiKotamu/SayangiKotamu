@@ -186,6 +186,27 @@ describe("POST / [CASE FAILED / EMAIL INVALID]", () => {
   });
 });
 
+describe("POST / [CASE FAILED / DUPLICATE]", () => {
+  test("Should ERROR because of [DUPLICATE EMAIL] and status code (400)", (done) => {
+    request(app)
+      .post("/dinas/register")
+      .set("Accept", "application/json")
+      .send(dinasRegister1)
+      .then((res) => {
+        expect(res.status).toBe(400);
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            message: "Email is already registered",
+          })
+        );
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 /* USER LOGIN */
 describe("POST /login [CASE SUCCESS]", () => {
   test("Should return object with access_token and status code(200)", (done) => {
