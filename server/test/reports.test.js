@@ -220,6 +220,92 @@ describe("GET /reports [CASE SUCCESS]", () => {
   });
 });
 
+describe("GET /reports?status=diterima [CASE SUCCESS]", () => {
+  test("Should return array of object and status code (200)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        return request(app)
+          .get("/dinas/reports?status=diterima")
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(
+              expect.arrayContaining([
+                expect.objectContaining({
+                  _id: expect.any(String),
+                  title: expect.any(String),
+                  status: "diterima",
+                  description: expect.any(String),
+                  location: expect.any(String),
+                  long: expect.any(Number),
+                  lat: expect.any(Number),
+                  category: expect.any(Object),
+                  upVote: expect.any(Number),
+                  downVote: expect.any(Number),
+                  issuedDate: expect.any(String),
+                  user: expect.any(Object),
+                  dinas: expect.any(Object),
+                  picture: expect.any(String),
+                }),
+              ])
+            );
+
+            done();
+          });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("GET /reports?category=id [CASE SUCCESS]", () => {
+  test("Should return array of object and status code (200)", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        return request(app)
+          .get("/dinas/reports?category=" + category._id)
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(
+              expect.arrayContaining([
+                expect.objectContaining({
+                  _id: expect.any(String),
+                  title: expect.any(String),
+                  status: expect.any(String),
+                  description: expect.any(String),
+                  location: expect.any(String),
+                  long: expect.any(Number),
+                  lat: expect.any(Number),
+                  category: expect.objectContaining({ name: category.name }),
+                  upVote: expect.any(Number),
+                  downVote: expect.any(Number),
+                  issuedDate: expect.any(String),
+                  user: expect.any(Object),
+                  dinas: expect.any(Object),
+                  picture: expect.any(String),
+                }),
+              ])
+            );
+
+            done();
+          });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
 describe("GET /reports [CASE FAILED / USER ATTEMPT]", () => {
   test("Should ERROR because of [USER ATTEMPT] and status code (401)", (done) => {
     request(app)
@@ -319,7 +405,7 @@ describe("GET /reports/:id [CASE FAILED / USER ATTEMPT]", () => {
 });
 
 describe("GET /report/:id [CASE FAILED / ID NOT FOUND]", () => {
-  const falseID = "6139bfa08c2956b92b583296";
+  const falseID = "6139bfa08c2956b92b58329a";
   test("Should return ERROR because of [ID FALSE] and status code(404)", (done) => {
     request(app)
       .post("/dinas/login")
@@ -1187,7 +1273,7 @@ describe("patch /reportUser/up/:id [CASE FAILED / NOT FOUND]", () => {
 
             expect(res.body).toEqual(
               expect.objectContaining({
-                message: "report Not Found",
+                message: "Report not found",
               })
             );
 
@@ -1268,7 +1354,7 @@ describe("patch /reportUser/down/:id [CASE FAILED / NOT FOUND]", () => {
 
             expect(res.body).toEqual(
               expect.objectContaining({
-                message: "report Not Found",
+                message: "Report not found",
               })
             );
 

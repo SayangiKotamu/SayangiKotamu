@@ -50,9 +50,6 @@ function errorHandler(err, req, res, next) {
     case "userRequired":
       res.status(400).json({ message: err.message });
       break;
-    case "invalidLogin":
-      res.status(401).json({ message: err.message });
-      break;
     case "NotFound":
       res.status(404).json({ message: err.message });
       break;
