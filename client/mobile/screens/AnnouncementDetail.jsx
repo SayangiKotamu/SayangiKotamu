@@ -12,7 +12,7 @@ import { fetchAnnouncementById } from '../store/announcements/action'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 
-import formatDate from '../helpers/formatDate'
+import { formatDateWithHour } from '../helpers/formatDate'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -49,7 +49,7 @@ export default function AnnouncementDetail({ route }) {
                     layout={[
                         {
                             width: windowWidth,
-                            height: 400,
+                            height: 600,
                             marginRight: 30,
                             marginTop: 10,
                         },
@@ -72,7 +72,8 @@ export default function AnnouncementDetail({ route }) {
                                 {announcementDetail?.dinas?.name}
                             </Text>
                             <Text style={styles.textDate}>
-                                Pengumuman dibuat pada {formatDate(announcementDetail?.date)}
+                                Pengumuman dibuat pada{' '}
+                                {formatDateWithHour(announcementDetail?.date)}
                             </Text>
 
                             <View style={styles.horizontalLine} />
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     },
     textDate: {
         marginTop: 10,
-        fontSize: 12,
+        fontSize: 10,
         color: 'grey',
     },
 })

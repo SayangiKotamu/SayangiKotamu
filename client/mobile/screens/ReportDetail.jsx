@@ -25,7 +25,7 @@ import { upVoteReport, downVoteReport } from '../store/reports/action'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 
-import formatDate from '../helpers/formatDate'
+import { formatDateWithHour } from '../helpers/formatDate'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -160,7 +160,7 @@ export default function ReportDetail({ route }) {
                                     <View style={styles.detailDescription}>
                                         <Text style={styles.detailDescHeader}>Laporan Dibuat</Text>
                                         <Text style={styles.detailDescContent}>
-                                            {formatDate(detailReport?.issuedDate)}
+                                            {formatDateWithHour(detailReport?.issuedDate)}
                                         </Text>
                                     </View>
                                     <View style={styles.detailDescription}>
