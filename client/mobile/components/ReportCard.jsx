@@ -5,6 +5,7 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
 
 import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
+import formatDate from '../helpers/formatDate'
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
@@ -43,7 +44,7 @@ export default function ReportCard(props) {
                     <Text style={styles.textCategory}>{props.report.category.name}</Text>
                 </View>
                 <Text style={styles.textDate}>
-                    Laporan dibuat pada {props.report.issuedDate.split('T')[0]} oleh{' '}
+                    Laporan dibuat pada {formatDate(props.report.issuedDate)} oleh{' '}
                     {props.report.user.fullname}
                 </Text>
             </View>

@@ -265,10 +265,15 @@ export default function Report({ navigation }) {
                                 selectedValue={category}
                                 onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
                             >
-                                <Picker.Item label={'Pilih kategori permasalahan'} value={''} />
+                                <Picker.Item
+                                    style={styles.pickerText}
+                                    label={'Pilih kategori permasalahan'}
+                                    value={''}
+                                />
                                 {categories.map((category, idx) => {
                                     return (
                                         <Picker.Item
+                                            style={styles.pickerText}
                                             label={category.name}
                                             value={category._id}
                                             key={'category' + idx}
@@ -290,13 +295,18 @@ export default function Report({ navigation }) {
                                     setSelectedDinas(itemValue)
                                 }
                             >
-                                <Picker.Item label={'Pilih dinas'} value={''} />
+                                <Picker.Item
+                                    style={styles.pickerText}
+                                    label={'Pilih dinas'}
+                                    value={''}
+                                />
                                 {dinas.map((eachDinas, idx) => {
                                     return (
                                         <Picker.Item
                                             label={eachDinas.name}
                                             value={eachDinas._id}
                                             key={'dinas' + idx}
+                                            style={styles.pickerText}
                                         />
                                     )
                                 })}
@@ -372,6 +382,10 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 20,
+    },
+    pickerText: {
+        color: 'grey',
+        fontFamily: 'Poppins_600SemiBold',
     },
     buttonContainerBottom: {
         marginTop: 20,

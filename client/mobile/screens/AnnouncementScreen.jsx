@@ -8,8 +8,26 @@ const Stack = createStackNavigator()
 export default function AnnouncementScreen() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Halaman Pengumuman" component={Announcement} />
-            <Stack.Screen name="Detail Pengumuman" component={AnnouncementDetail} />
+            <Stack.Screen
+                name="Halaman Pengumuman"
+                component={Announcement}
+                options={{
+                    headerStyle: {
+                        backgroundColor: 'tomato',
+                    },
+                    headerTintColor: '#fff',
+                }}
+            />
+            <Stack.Screen
+                name="Detail Pengumuman"
+                component={AnnouncementDetail}
+                options={{
+                    headerStyle: {
+                        backgroundColor: 'tomato',
+                    },
+                    headerTintColor: '#fff',
+                }}
+            />
         </Stack.Navigator>
     )
 }

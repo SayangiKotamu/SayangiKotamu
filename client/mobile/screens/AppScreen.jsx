@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useSelector } from 'react-redux'
 
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -33,7 +33,7 @@ export default function App() {
                             let iconName
 
                             if (route.name === 'Beranda') {
-                                iconName = focused ? 'home-sharp' : 'home-outline'
+                                iconName = focused ? 'ios-home' : 'ios-home-outline'
                             } else if (route.name === 'Pengumuman') {
                                 iconName = focused
                                     ? 'information-circle-sharp'
@@ -91,10 +91,32 @@ export default function App() {
                                     <AntDesign name={'upcircle'} size={60} color={'tomato'} />
                                 </View>
                             ),
+                            headerStyle: {
+                                backgroundColor: 'tomato',
+                            },
+                            headerTintColor: '#fff',
                         }}
                     ></Tab.Screen>
-                    <Tab.Screen name="Aspirasi" component={Aspiration} />
-                    <Tab.Screen name="Notifikasi" component={Notification} />
+                    <Tab.Screen
+                        name="Aspirasi"
+                        component={Aspiration}
+                        options={{
+                            headerStyle: {
+                                backgroundColor: 'tomato',
+                            },
+                            headerTintColor: '#fff',
+                        }}
+                    />
+                    <Tab.Screen
+                        name="Notifikasi"
+                        component={Notification}
+                        options={{
+                            headerStyle: {
+                                backgroundColor: 'tomato',
+                            },
+                            headerTintColor: '#fff',
+                        }}
+                    />
                 </Tab.Navigator>
             ) : (
                 <Tab.Navigator
