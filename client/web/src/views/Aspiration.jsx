@@ -85,15 +85,18 @@ function Announcement() {
                 </button>
               </div>
             </div>
-            <div className="card" style={{ backgroundColor: "white", borderWidth: 1 }}>
+            <div
+              className="card"
+              style={{ backgroundColor: "white", borderWidth: 1 }}
+            >
               <div className="m-8">
                 <div className="overflow-x-auto" style={{ height: "600px" }}>
                   <table className="table w-full table-compact">
                     <thead style={{ borderWidth: 1 }}>
                       <tr>
-                        <th style={{color: "#f15447"}}>Judul</th>
-                        <th style={{color: "#f15447"}}>Deskripsi</th>
-                        <th style={{color: "#f15447"}}>Kategori</th>
+                        <th style={{ color: "#f15447" }}>Judul</th>
+                        <th style={{ color: "#f15447" }}>Deskripsi</th>
+                        <th style={{ color: "#f15447" }}>Kategori</th>
                       </tr>
                     </thead>
                     {aspiration.map((aspirasi) => {

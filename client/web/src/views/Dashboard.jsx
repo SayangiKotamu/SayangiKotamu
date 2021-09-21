@@ -5,14 +5,14 @@ import { Bar } from "react-chartjs-2";
 
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
-import {fetchReports} from "../stores/reports/action"
+import { fetchReports } from "../stores/reports/action";
 import { fetchCategories } from "../stores/categories/action";
 
 function Dashboard() {
   const dispatch = useDispatch();
   const [kategori, setKategori] = useState();
   const { categories, loading, error } = useSelector((state) => state.category);
-  const {reports} = useSelector((state) => state.report)
+  const { reports } = useSelector((state) => state.report);
   // console.log(kategori);
 
   useEffect(() => {
@@ -113,7 +113,7 @@ function Dashboard() {
                   }}
                   width={100}
                   height={30}
-                  style={{ margin: "2%"}}
+                  style={{ margin: "2%" }}
                 />
               </div>
             </div>
@@ -133,7 +133,10 @@ function Dashboard() {
                     borderWidth: 1,
                   }}
                 >
-                  <h2 className="text-center mb-5 text-2xl font-bold" style={{color: "white"}}>
+                  <h2
+                    className="text-center mb-5 text-2xl font-bold"
+                    style={{ color: "white" }}
+                  >
                     Kategori Pengaduan
                   </h2>
                   {categories.map((category) => {
@@ -161,7 +164,10 @@ function Dashboard() {
                     borderWidth: 1,
                   }}
                 >
-                  <h2 className="text-center mb-5 text-2xl font-bold" style={{color: "white"}}>
+                  <h2
+                    className="text-center mb-5 text-2xl font-bold"
+                    style={{ color: "white" }}
+                  >
                     Masalah Lalu Lintas
                   </h2>
                   <div
@@ -174,10 +180,15 @@ function Dashboard() {
                       maxHeight: "500px",
                     }}
                   >
-                  {reports.map((report) => {
-                    return <Content kategori={kategori} report={report} key={report.id} />
-
-                  })}
+                    {reports.map((report) => {
+                      return (
+                        <Content
+                          kategori={kategori}
+                          report={report}
+                          key={report.id}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
               </div>
