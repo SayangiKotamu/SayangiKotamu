@@ -8,7 +8,6 @@ const User = require("../models/user");
 class ReportController {
   // ! USER REPORT
   static async showAll(req, res, next) {
-    console.log(req.user);
     try {
       let data = await Report.find()
         .populate("dinas")
@@ -16,6 +15,7 @@ class ReportController {
         .populate("category");
       res.status(200).json(data);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }

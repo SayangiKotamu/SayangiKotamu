@@ -6,7 +6,6 @@ class AspirationController {
   // ! USER
   static async getAll(req, res, next) {
     const { id, role } = req.user;
-    console.log(req.user);
 
     try {
       if (role === "dinas") {
