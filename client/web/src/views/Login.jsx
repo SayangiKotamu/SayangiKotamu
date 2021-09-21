@@ -81,7 +81,7 @@ function Login() {
             </p>
           </div>
           <div className="card col-6 w-full max-w shadow-2xl bg-base-500">
-            <div className="card-body" style={{ backgroundColor: "#C8C6C6" }}>
+            <div className="card-body" style={{ backgroundColor: "#f15447" }}>
               <form action="" type="submit" onSubmit={handleLogin}>
                 <div className="text-center">
                   <h1 className="mb-3 text-4xl font-bold">Masuk</h1>
@@ -115,11 +115,11 @@ function Login() {
                     type="submit"
                     value="Masuk"
                     className="btn"
-                    style={{ backgroundColor: "#05DAA7" }}
+                    style={{ backgroundColor: "black" }}
                   />
                 </div>
-                <label className="label-text-alt text-center">
-                  <p>
+                <label className="label-text-alt text-center mt-2">
+                  <p className="text-xl">
                     Belum mempunyai akun?{" "}
                     <a
                       href="#"
