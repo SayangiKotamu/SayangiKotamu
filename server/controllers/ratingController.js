@@ -60,7 +60,9 @@ class RatingController {
       user: id,
     };
     try {
-      const allReportInRating = await Rating({ report: req.body.report });
+      const allReportInRating = await Rating.findOne({
+        report: req.body.report,
+      });
       if (allReportInRating) {
         throw { name: "duplicateRating" };
       } else {
@@ -78,6 +80,7 @@ class RatingController {
         let divider = allDinasInRating.length;
 
         const newRating = (allRating / divider).toFixed(2);
+        console.log(newRating);
         await Dinas.updateOne({ _id: dinas._id }, { rating: newRating });
         res.status(201).json(createRating);
       }
