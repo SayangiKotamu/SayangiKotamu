@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import {
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    TouchableOpacity,
+    ActivityIndicator,
+} from 'react-native'
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
@@ -9,20 +16,60 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 
 import CustomButton from '../components/CustomButton'
 
-export default function RatingScreen() {
+import { useDispatch, useSelector } from 'react-redux'
+
+import { rateReport } from '../store/reports/action'
+
+import Toast from 'react-native-toast-message'
+
+import { useNavigation } from '@react-navigation/native'
+
+export default function RatingScreen({ route }) {
     let [fontsLoaded] = useFonts({
         Poppins_600SemiBold,
     })
 
-    const [message, setMessage] = useState('')
+    const { dinas, report } = route.params
+
+    const [comment, setComment] = useState('')
     const [rating, setRating] = useState(5)
+
+    const dispatch = useDispatch()
+    const navigation = useNavigation()
+
+    const { loadingRateReport } = useSelector((state) => state.reports)
 
     function ratingCompleted(rating) {
         setRating(rating)
     }
 
+    function resetAllForm() {
+        setComment('')
+        setRating(5)
+    }
+
     function onSubmitClick() {
-        console.log(message, rating)
+        if (!rating || !comment.trim()) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                bottomOffset: 70,
+                text1: 'SayangiKotamu',
+                text2: 'Mohon input form penilaian dengan lengkap!',
+            })
+        } else {
+            const payload = {
+                comment,
+                rating,
+                dinas,
+                report,
+            }
+
+            dispatch(rateReport(payload)).then(() => {
+                resetAllForm()
+                navigation.navigate('Halaman Notifikasi')
+            })
+        }
     }
 
     if (!fontsLoaded) {
@@ -55,14 +102,18 @@ export default function RatingScreen() {
                 <TextInput
                     style={styles.inputTextArea}
                     placeholder="tulis pesanmu disini..."
-                    value={message}
-                    onChangeText={(text) => setMessage(text)}
+                    value={comment}
+                    onChangeText={(text) => setComment(text)}
                 />
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={onSubmitClick}>
-                        <CustomButton buttonName={'Nilai Kinerja'} buttonColor={'black'} />
-                    </TouchableOpacity>
+                    {loadingRateReport ? (
+                        <ActivityIndicator size="large" color="black" />
+                    ) : (
+                        <TouchableOpacity onPress={onSubmitClick}>
+                            <CustomButton buttonName={'Nilai Kinerja'} buttonColor={'black'} />
+                        </TouchableOpacity>
+                    )}
                 </View>
             </View>
         </View>

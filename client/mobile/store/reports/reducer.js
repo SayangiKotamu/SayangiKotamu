@@ -6,6 +6,7 @@ import {
     SET_LOADING_SEND_REPORT,
     SET_LOADING_UPVOTE_REPORT,
     SET_LOADING_DOWNVOTE_REPORT,
+    SET_LOADING_RATE_REPORT,
 } from './actionType'
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
     loadingSendReport: false,
     loadingUpVote: false,
     loadingDownVote: false,
+    loadingRateReport: false,
 }
 
 export default function reducer(state = initialState, action) {
@@ -54,6 +56,11 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 loadingDownVote: action.payload,
+            }
+        case SET_LOADING_RATE_REPORT:
+            return {
+                ...state,
+                loadingRateReport: action.payload,
             }
         default:
             return state

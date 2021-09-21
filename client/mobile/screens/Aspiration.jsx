@@ -152,7 +152,7 @@ export default function Aspiration({ navigation }) {
                     />
                     <View style={styles.buttonContainer}>
                         {loadingSendAspiration ? (
-                            <ActivityIndicator size="large" color="#1A73E9" />
+                            <ActivityIndicator size="large" color="black" />
                         ) : (
                             <TouchableOpacity onPress={onSubmitClick}>
                                 <CustomButton buttonName={'Kirim'} buttonColor={'black'} />
