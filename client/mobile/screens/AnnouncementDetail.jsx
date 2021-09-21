@@ -12,6 +12,8 @@ import { fetchAnnouncementById } from '../store/announcements/action'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 
+import formatDate from '../helpers/formatDate'
+
 const windowWidth = Dimensions.get('window').width
 
 export default function AnnouncementDetail({ route }) {
@@ -70,7 +72,7 @@ export default function AnnouncementDetail({ route }) {
                                 {announcementDetail?.dinas?.name}
                             </Text>
                             <Text style={styles.textDate}>
-                                Pengumuman dibuat pada {announcementDetail?.date?.split('T')[0]}
+                                Pengumuman dibuat pada {formatDate(announcementDetail?.date)}
                             </Text>
 
                             <View style={styles.horizontalLine} />

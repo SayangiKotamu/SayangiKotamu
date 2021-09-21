@@ -5,6 +5,8 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 
+import formatDate from '../helpers/formatDate'
+
 export default function NotificationCard(props) {
     let [fontsLoaded] = useFonts({
         Poppins_600SemiBold,
@@ -21,7 +23,7 @@ export default function NotificationCard(props) {
             </View>
             <View style={styles.notificationCardContent}>
                 <Text style={styles.textTitle}>{props.notification.description}</Text>
-                <Text style={styles.textDate}>{props.notification.date.split('T')[0]}</Text>
+                <Text style={styles.textDate}>{formatDate(props.notification.date)}</Text>
             </View>
         </View>
     )

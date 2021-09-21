@@ -83,7 +83,7 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Lapor')}
                         >
-                            <AntDesign name={'customerservice'} size={28} color={'white'} />
+                            <AntDesign name={'customerservice'} size={37} color={'white'} />
                             <Text style={styles.textColor}>KotaReport</Text>
                         </TouchableOpacity>
                     </View>
@@ -92,7 +92,7 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Pengumuman')}
                         >
-                            <AntDesign name={'filetext1'} size={28} color={'white'} />
+                            <AntDesign name={'filetext1'} size={37} color={'white'} />
                             <Text style={styles.textColor}>KotaNews</Text>
                         </TouchableOpacity>
                     </View>
@@ -101,7 +101,7 @@ export default function Home({ navigation }) {
                             style={styles.buttonContainer}
                             onPress={() => navigation.navigate('Aspirasi')}
                         >
-                            <AntDesign name={'carryout'} size={28} color={'white'} />
+                            <AntDesign name={'carryout'} size={37} color={'white'} />
                             <Text style={styles.textColor}>KotaAspiration</Text>
                         </TouchableOpacity>
                     </View>
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 30,
         height: 110,
-        width: 130,
+        width: '35%',
         justifyContent: 'center',
         shadowOffset: { width: 0, height: 0 },
         shadowColor: '#ececec',
