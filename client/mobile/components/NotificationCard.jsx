@@ -1,11 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
+import { useNavigation } from '@react-navigation/native'
 
+import Ionicons from '@expo/vector-icons/Ionicons'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
-
-import { useNavigation } from '@react-navigation/native'
 
 import { formatDateWithHour } from '../helpers/formatDate'
 

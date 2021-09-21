@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import MapView, { Marker } from 'react-native-maps'
 import {
     StyleSheet,
     Text,
@@ -9,21 +11,16 @@ import {
     ActivityIndicator,
     RefreshControl,
 } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
-
-import { TouchableOpacity } from 'react-native-gesture-handler'
-
-import MapView, { Marker } from 'react-native-maps'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchReportById } from '../store/reports/action'
+import { upVoteReport, downVoteReport } from '../store/reports/action'
 
 import SkeletonContent from 'react-native-skeleton-content'
 
-import { upVoteReport, downVoteReport } from '../store/reports/action'
-
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 import { formatDateWithHour } from '../helpers/formatDate'
 

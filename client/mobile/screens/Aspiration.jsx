@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { Picker } from '@react-native-picker/picker'
+import Ionicons from '@expo/vector-icons/Ionicons'
 import {
     StyleSheet,
     Text,
@@ -9,8 +11,6 @@ import {
     RefreshControl,
     ScrollView,
 } from 'react-native'
-import { Picker } from '@react-native-picker/picker'
-import Ionicons from '@expo/vector-icons/Ionicons'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllDinas } from '../store/dinas/action'
@@ -36,7 +36,6 @@ export default function Aspiration({ navigation }) {
     const [selectedDinas, setSelectedDinas] = useState('')
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-
     const [isRefreshing, setIsRefreshing] = useState(false)
 
     useEffect(() => {
