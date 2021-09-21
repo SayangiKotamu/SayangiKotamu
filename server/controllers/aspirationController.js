@@ -17,15 +17,7 @@ class AspirationController {
         res.status(200).json(getAspirations);
       }
     } catch (err) {
-      if (!err.errors) {
-        next(err);
-      } else {
-        const toArray = Object.values(err.errors);
-        const errMessage = toArray.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ message: errMessage });
-      }
+      next(err);
     }
   }
 
@@ -36,18 +28,13 @@ class AspirationController {
       if (getAspiration) {
         res.status(200).json(getAspiration);
       } else {
-        throw {name:"NotFound", message:`aspirations with id ${id} not found`}
+        throw {
+          name: "NotFound",
+          message: `aspirations with id ${id} not found`,
+        };
       }
     } catch (err) {
-      if (!err.errors) {
-        next(err);
-      } else {
-        const toArray = Object.values(err.errors);
-        const errMessage = toArray.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ message: errMessage });
-      }
+      next(err);
     }
   }
 
