@@ -6,6 +6,8 @@ import {
     View,
     TouchableOpacity,
     ActivityIndicator,
+    RefreshControl,
+    ScrollView,
 } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -35,6 +37,8 @@ export default function Aspiration({ navigation }) {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 
+    const [isRefreshing, setIsRefreshing] = useState(false)
+
     useEffect(() => {
         dispatch(fetchAllDinas())
     }, [])
@@ -44,6 +48,12 @@ export default function Aspiration({ navigation }) {
         setTitle('')
         setSelectedDinas('')
         setDescription('')
+    }
+
+    function onRefresh() {
+        setIsRefreshing(true)
+        resetAllForm()
+        setIsRefreshing(false)
     }
 
     function onSubmitClick() {
@@ -75,77 +85,83 @@ export default function Aspiration({ navigation }) {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.headingContainer}>
-                <Ionicons name={'arrow-down-circle-sharp'} size={30} color={'white'} />
-                <Text style={styles.headingText}>Punya aspirasi untuk pemerintah?</Text>
-                <Text style={styles.headingText}>Yuk sampaikan disini!</Text>
-            </View>
-
-            <View style={styles.formContainer}>
-                <Text style={styles.label}>Jenis Aspirasi:</Text>
-                <View style={styles.pickerContainer}>
-                    <Picker
-                        selectedValue={type}
-                        onValueChange={(itemValue, itemIndex) => setType(itemValue)}
-                        style={styles.picker}
-                    >
-                        <Picker.Item style={styles.pickerText} label="Kritik" value="Kritik" />
-                        <Picker.Item style={styles.pickerText} label="Saran" value="Saran" />
-                    </Picker>
+        <ScrollView
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+        >
+            <View style={styles.container}>
+                <View style={styles.headingContainer}>
+                    <Ionicons name={'arrow-down-circle-sharp'} size={30} color={'white'} />
+                    <Text style={styles.headingText}>Punya aspirasi untuk pemerintah?</Text>
+                    <Text style={styles.headingText}>Yuk sampaikan disini!</Text>
                 </View>
-                <Text style={styles.label}>Pilih instansi terkait:</Text>
-                {loadingDinas ? (
-                    <ActivityIndicator size="large" color="black" />
-                ) : (
+
+                <View style={styles.formContainer}>
+                    <Text style={styles.label}>Jenis Aspirasi:</Text>
                     <View style={styles.pickerContainer}>
                         <Picker
-                            selectedValue={selectedDinas}
-                            onValueChange={(itemValue, itemIndex) => setSelectedDinas(itemValue)}
+                            selectedValue={type}
+                            onValueChange={(itemValue, itemIndex) => setType(itemValue)}
+                            style={styles.picker}
                         >
-                            <Picker.Item
-                                style={styles.pickerText}
-                                label={'Pilih dinas'}
-                                value={''}
-                            />
-                            {dinas.map((eachDinas, idx) => {
-                                return (
-                                    <Picker.Item
-                                        label={eachDinas.name}
-                                        value={eachDinas._id}
-                                        style={styles.pickerText}
-                                        key={'dinas' + idx}
-                                    />
-                                )
-                            })}
+                            <Picker.Item style={styles.pickerText} label="Kritik" value="Kritik" />
+                            <Picker.Item style={styles.pickerText} label="Saran" value="Saran" />
                         </Picker>
                     </View>
-                )}
-                <Text style={styles.label}>Berikan judul aspirasi mu:</Text>
-                <TextInput
-                    style={styles.inputTextArea}
-                    placeholder="judul aspirasi dengan singkat..."
-                    value={title}
-                    onChangeText={(text) => setTitle(text)}
-                />
-                <Text style={styles.label}>Ceritakan aspirasi mu disini:</Text>
-                <TextInput
-                    style={styles.inputTextArea}
-                    placeholder="sampaikan aspirasimu disini..."
-                    value={description}
-                    onChangeText={(text) => setDescription(text)}
-                />
-                <View style={styles.buttonContainer}>
-                    {loadingSendAspiration ? (
-                        <ActivityIndicator size="large" color="#1A73E9" />
+                    <Text style={styles.label}>Pilih instansi terkait:</Text>
+                    {loadingDinas ? (
+                        <ActivityIndicator size="large" color="black" />
                     ) : (
-                        <TouchableOpacity onPress={onSubmitClick}>
-                            <CustomButton buttonName={'Kirim'} buttonColor={'black'} />
-                        </TouchableOpacity>
+                        <View style={styles.pickerContainer}>
+                            <Picker
+                                selectedValue={selectedDinas}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setSelectedDinas(itemValue)
+                                }
+                            >
+                                <Picker.Item
+                                    style={styles.pickerText}
+                                    label={'Pilih dinas'}
+                                    value={''}
+                                />
+                                {dinas.map((eachDinas, idx) => {
+                                    return (
+                                        <Picker.Item
+                                            label={eachDinas.name}
+                                            value={eachDinas._id}
+                                            style={styles.pickerText}
+                                            key={'dinas' + idx}
+                                        />
+                                    )
+                                })}
+                            </Picker>
+                        </View>
                     )}
+                    <Text style={styles.label}>Berikan judul aspirasi mu:</Text>
+                    <TextInput
+                        style={styles.inputTextArea}
+                        placeholder="judul aspirasi dengan singkat..."
+                        value={title}
+                        onChangeText={(text) => setTitle(text)}
+                    />
+                    <Text style={styles.label}>Ceritakan aspirasi mu disini:</Text>
+                    <TextInput
+                        style={styles.inputTextArea}
+                        placeholder="sampaikan aspirasimu disini..."
+                        value={description}
+                        onChangeText={(text) => setDescription(text)}
+                    />
+                    <View style={styles.buttonContainer}>
+                        {loadingSendAspiration ? (
+                            <ActivityIndicator size="large" color="#1A73E9" />
+                        ) : (
+                            <TouchableOpacity onPress={onSubmitClick}>
+                                <CustomButton buttonName={'Kirim'} buttonColor={'black'} />
+                            </TouchableOpacity>
+                        )}
+                    </View>
                 </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
