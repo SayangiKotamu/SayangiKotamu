@@ -263,6 +263,7 @@ class ReportController {
       finishedDate = new Date();
     }
     const payload = {
+      id,
       status: req.body.status,
       dinas: req.user.id,
       finishedDate,

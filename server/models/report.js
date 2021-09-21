@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const Notification = require("../models/notification");
 const Dinas = require("../models/dinas");
+const { ObjectId } = require("bson");
 
 const reportSchema = new mongoose.Schema({
   title: {
@@ -75,7 +76,8 @@ reportSchema.pre("updateOne", async function (next) {
       description: `Laporan kamu dengan nama ${modifiedField.title} ${process} oleh ${foundDinas.name}`,
       date: new Date(),
       user: modifiedField.user,
-      report: modifiedField.Report,
+      dinas: modifiedField.dinas,
+      report: ObjectId(modifiedField.id),
     };
     await Notification.create(payload);
   }
