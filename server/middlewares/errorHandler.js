@@ -1,5 +1,4 @@
 function errorHandler(err, req, res, next) {
-  console.log(err.name);
   switch (err.name) {
     case "EmailInCollection":
       res.status(400).json({ message: "Email is already registered" });
@@ -36,6 +35,11 @@ function errorHandler(err, req, res, next) {
         message: "Please check your email and activate your account first.",
       });
       break;
+    case "EmailTokenInvalid":
+      res.status(401).json({
+        message: "Email token is invalid",
+      });
+      break;
     case "NIKInCollection":
       res.status(400).json({ message: "NIK is already registered" });
       break;
@@ -45,11 +49,14 @@ function errorHandler(err, req, res, next) {
     case "userRequired":
       res.status(400).json({ message: err.message });
       break;
-    case "invalidLogin":
-      res.status(401).json({ message: err.message });
-      break;
     case "NotFound":
       res.status(404).json({ message: err.message });
+      break;
+    case "duplicateRating":
+      res.status(400).json({ message: "You have already rate this report" });
+      break;
+    case "EmailError":
+      res.status(400).json({ message: "Error sent email" });
       break;
     default:
       res.status(500).json({ message: "Internal Server Error" });

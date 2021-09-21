@@ -4,6 +4,7 @@ const reportDinasRouters = require("./report");
 const announcmentRouters = require("./announcment");
 const categoriesRouters = require("./categories");
 const aspirationRouters = require("./aspirations");
+const ratingRouters = require("./rating");
 const { dinasAuth } = require("../../middlewares/auth");
 
 router.post("/register", DinasController.register);
@@ -16,5 +17,6 @@ router.use("/reports", dinasAuth, reportDinasRouters);
 router.use("/announcments", dinasAuth, announcmentRouters);
 router.use("/categories", dinasAuth, categoriesRouters);
 router.use("/aspirations", dinasAuth, aspirationRouters);
+router.use("/rating", dinasAuth, ratingRouters);
 
 module.exports = router;

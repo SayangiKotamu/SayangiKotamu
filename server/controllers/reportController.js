@@ -8,7 +8,6 @@ const User = require("../models/user");
 class ReportController {
   // ! USER REPORT
   static async showAll(req, res, next) {
-    console.log(req.user);
     try {
       let data = await Report.find()
         .populate("dinas")
@@ -16,6 +15,7 @@ class ReportController {
         .populate("category");
       res.status(200).json(data);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -43,14 +43,8 @@ class ReportController {
         .populate("dinas")
         .populate("user")
         .populate("category");
-      if (data) {
-        res.status(200).json(data);
-      } else {
-        next({
-          name: "NotFound",
-          message: "not found",
-        });
-      }
+
+      res.status(200).json(data);
     } catch (error) {
       res.status(400).json(error);
     }
@@ -69,6 +63,7 @@ class ReportController {
         picture: req.body.picture,
         upVote: 0,
         downVote: 0,
+        rating: 0,
       };
       let categories = await Categories.findOne({ _id: req.body.category });
       newReport.category = categories;
@@ -105,15 +100,11 @@ class ReportController {
       );
       res.status(201).json({ _id: data._id, ...newReport });
     } catch (error) {
-      if (!error.errors) {
-        next(error);
-      } else {
-        const toArray = Object.values(error.errors);
-        const errMessage = toArray.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ message: errMessage });
-      }
+      const toArray = Object.values(error.errors);
+      const errMessage = toArray.map((el) => {
+        return el.message;
+      });
+      res.status(400).json({ message: errMessage });
     }
   }
   static async upVoteByIdReport(req, res, next) {
@@ -161,13 +152,9 @@ class ReportController {
         );
         res.status(200).json(vote);
       } else {
-        next({
-          name: "NotFound",
-          message: "report Not Found",
-        });
+        throw { name: "ReportNotFound" };
       }
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -216,13 +203,9 @@ class ReportController {
         );
         res.status(200).json(vote);
       } else {
-        next({
-          name: "NotFound",
-          message: "report Not Found",
-        });
+        throw { name: "ReportNotFound" };
       }
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -387,7 +370,6 @@ class ReportController {
       }
     } catch (err) {
       next(err);
-      console.log(err);
     }
   }
 }

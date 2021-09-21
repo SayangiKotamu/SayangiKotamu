@@ -6,6 +6,7 @@ const aspirationRouters = require("./aspiration");
 const notificationsRouters = require("./notifications");
 const announcmentRouters = require("./announcment");
 const categoryRouters = require("./categories");
+const ratingRouters = require("./rating");
 
 routers.use("/", userRouters);
 routers.use("/reportUser", reportUserRouters);
@@ -14,5 +15,6 @@ routers.use("/aspirations", aspirationRouters);
 routers.use("/notifications", notificationsRouters);
 routers.use("/announcments", announcmentRouters);
 routers.use("/categories", categoryRouters);
+routers.use("/rating", ratingRouters);
 
 module.exports = routers;

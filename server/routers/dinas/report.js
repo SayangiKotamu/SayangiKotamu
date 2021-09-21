@@ -10,8 +10,4 @@ router.patch("/:id", authZDinas, ReportController.changeStatus);
 
 router.delete("/:id", authZDinas, ReportController.dinasDeleteReport);
 
-// router.get("/:category", ReportController.dinasGetByCategoryReport);
-
-// router.get("/:status", ReportController.dinasGetByStatusReport);
-
 module.exports = router;

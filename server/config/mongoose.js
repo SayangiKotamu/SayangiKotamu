@@ -1,16 +1,18 @@
 const mongoose = require("mongoose");
 
-let url
+// bungkus jadi function
+let url;
 if (process.env.NODE_ENV === "development") {
-  url = "mongodb://localhost:27017/SayangiKotamu"
+  url = "mongodb://localhost:27017/SayangiKotamu";
 } else {
-  url = "mongodb://localhost:27017/SayangiKotamu-test"
+  url = "mongodb://localhost:27017/SayangiKotamu-test";
 }
 
-mongoose.connect(url,(err)=>{
+mongoose.connect(url, (err) => {
   if (err) {
-    console.log(err,"connect error");
+    console.log(err, "connect error");
   } else {
     console.log("connect success");
   }
-})
+});
+// 500 coba mocking terus direject
