@@ -4,7 +4,6 @@ const Report = require("../models/report");
 
 class RatingController {
   static async getAll(req, res, next) {
-    console.log("masukkk");
     const { id, role } = req.user;
     try {
       console.log(role);
@@ -54,25 +53,36 @@ class RatingController {
   static async create(req, res, next) {
     const { id } = req.user;
 
+    // ! LATER: AUTHORIZATION
     const payload = {
       rating: req.body.rating,
       comment: req.body.comment,
       user: id,
     };
     try {
-      const dinas = await Dinas.findOne({ _id: req.body.dinas });
-      payload.dinas = dinas;
-      const report = await Report.findOne({ _id: req.body.report });
-      payload.report = report;
-      if (String(report.user) === String(id)) {
-        throw { name: "duplicateRating", message: "duplicate rating" };
+      const allReportInRating = await Rating({ report: req.body.report });
+      if (allReportInRating) {
+        throw { name: "duplicateRating" };
       } else {
+        const dinas = await Dinas.findOne({ _id: req.body.dinas });
+        payload.dinas = dinas;
+        const report = await Report.findOne({ _id: req.body.report });
+        payload.report = report;
         const createRating = await Rating.create(payload);
-        const newRating = Number((dinas.rating + createRating.rating) / 2);
+        const allDinasInRating = await Rating.find({ dinas: req.body.dinas });
+        let allRating = 0;
+        for (let i = 0; i < allDinasInRating.length; i++) {
+          let rate = allDinasInRating[i].rating;
+          allRating += rate;
+        }
+        let divider = allDinasInRating.length;
+
+        const newRating = (allRating / divider).toFixed(2);
         await Dinas.updateOne({ _id: dinas._id }, { rating: newRating });
         res.status(201).json(createRating);
       }
     } catch (err) {
+      console.log(err);
       if (!err.errors) {
         next(err);
       } else {
