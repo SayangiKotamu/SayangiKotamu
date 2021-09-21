@@ -1,40 +1,42 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "NODE_ENV=development npx nodemon bin/www",
-    "dev_win": "set NODE_ENV=development&&npx nodemon bin/www",
-    "start": "node app.js",
-    "test": "set NODE_ENV=testing&&jest --detectOpenHandles --forceExit ",
-    "test_coverage": "set NODE_ENV=testing&&jest --collectCoverage --detectOpenHandles --forceExit ",
-    "tunnel": "ngrok http 3000"
-  },
-  "jest": {
-    "testEnvironment": "node"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "google-auth-library": "^7.9.2",
-    "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.1.2",
-    "mongoose": "^6.0.6",
-    "multer": "^1.4.3",
-    "ngrok": "^4.2.2",
-    "nodemailer": "^6.6.3",
-    "supertest": "^6.1.6",
-    "validator": "^13.6.0"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3",
-    "dotenv": "^10.0.0",
-    "jest": "^27.2.0",
-    "nodemon": "^2.0.12"
-  }
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "NODE_ENV=development npx nodemon bin/www",
+        "dev_win": "set NODE_ENV=development&&npx nodemon bin/www",
+        "start": "node app.js",
+        "test": "set NODE_ENV=testing&&jest --detectOpenHandles --forceExit ",
+        "test_coverage": "set NODE_ENV=testing&&jest --collectCoverage --detectOpenHandles --forceExit ",
+        "tunnel": "ngrok http 3000",
+        "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
+    },
+    "jest": {
+        "testEnvironment": "node"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "google-auth-library": "^7.9.2",
+        "jsonwebtoken": "^8.5.1",
+        "mongodb": "^4.1.2",
+        "mongoose": "^6.0.6",
+        "multer": "^1.4.3",
+        "ngrok": "^4.2.2",
+        "nodemailer": "^6.6.3",
+        "supertest": "^6.1.6",
+        "validator": "^13.6.0"
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3",
+        "dotenv": "^10.0.0",
+        "jest": "^27.2.0",
+        "nodemon": "^2.0.12",
+        "prettier": "^2.4.1"
+    }
 }

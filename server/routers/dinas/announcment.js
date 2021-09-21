@@ -1,14 +1,14 @@
-const router = require("express").Router();
-const AnnouncmentController = require("../../controllers/announcmentController");
+const router = require('express').Router()
+const AnnouncmentController = require('../../controllers/announcmentController')
 
-router.get("/", AnnouncmentController.getAll);
+router.get('/', AnnouncmentController.getAll)
 
-router.get("/:id", AnnouncmentController.getById);
+router.get('/:id', AnnouncmentController.getById)
 
-router.post("/", AnnouncmentController.create);
+router.post('/', AnnouncmentController.create)
 
-router.put("/:id", AnnouncmentController.edit);
+router.put('/:id', AnnouncmentController.edit)
 
-router.delete("/:id", AnnouncmentController.delete);
+router.delete('/:id', AnnouncmentController.delete)
 
-module.exports = router;
+module.exports = router
