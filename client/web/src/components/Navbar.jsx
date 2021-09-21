@@ -33,9 +33,6 @@ function Navbar() {
               <Link to="/kategori-baru">Kategori Baru</Link>
             </a>
             <a className="btn btn-ghost btn-sm rounded-btn">
-              <Link to="/riwayat">Riwayat</Link>
-            </a>
-            <a className="btn btn-ghost btn-sm rounded-btn">
               <Link to="/aspirasi">Aspirasi Warga</Link>
             </a>
           </div>

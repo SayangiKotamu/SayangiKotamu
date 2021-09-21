@@ -85,33 +85,20 @@ function Dashboard() {
                 <Bar
                   data={{
                     labels: [
-                      "Lalu Lintas",
-                      "Sarana/Pra Sarana",
-                      "Kriminal",
-                      "Kesehatan",
-                      "Kebersihan",
-                      "Lainnya",
+                      categories[0].name,
+                      categories[1].name,
+                      categories[2].name,
                     ],
                     datasets: [
                       {
                         label: "Laporan Masuk Per Kategori",
-                        data: [1, 1, 0, 1, 0, 0],
-                        backgroundColor: [
-                          "rgba(255, 99, 132, 0.2)",
-                          "rgba(54, 162, 235, 0.2)",
-                          "rgba(255, 206, 86, 0.2)",
-                          "rgba(75, 192, 192, 0.2)",
-                          "rgba(153, 102, 255, 0.2)",
-                          "rgba(255, 159, 64, 0.2)",
+                        data: [
+                          categories[0].reports.length,
+                          categories[1].reports.length,
+                          categories[2].reports.length,
                         ],
-                        borderColor: [
-                          "rgba(255, 99, 132, 1)",
-                          "rgba(54, 162, 235, 1)",
-                          "rgba(255, 206, 86, 1)",
-                          "rgba(75, 192, 192, 1)",
-                          "rgba(153, 102, 255, 1)",
-                          "rgba(255, 159, 64, 1)",
-                        ],
+                        backgroundColor: ["#f15447"],
+                        borderColor: ["#f15447"],
                         borderWidth: 1,
                       },
                     ],
@@ -169,9 +156,7 @@ function Dashboard() {
                   <h2
                     className="text-center mb-5 text-2xl font-bold"
                     style={{ color: "white" }}
-                  >
-                    Masalah Lalu Lintas
-                  </h2>
+                  ></h2>
                   <div
                     className="card-body overflow-auto"
                     style={{
@@ -189,7 +174,7 @@ function Dashboard() {
                       // report={report}
                       // key={report.id}
                     />
-                    );
+                    {/* ); */}
                     {/* })} */}
                   </div>
                 </div>
