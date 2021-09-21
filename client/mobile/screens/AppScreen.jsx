@@ -15,7 +15,7 @@ import HomeScreen from './HomeScreen'
 import AnnouncementScreen from './AnnouncementScreen'
 import Report from './Report'
 import Aspiration from './Aspiration'
-import Notification from './Notification'
+import NotificationScreen from './NotificationScreen'
 import Login from './Login'
 import Register from './Register'
 
@@ -109,12 +109,13 @@ export default function App() {
                     />
                     <Tab.Screen
                         name="Notifikasi"
-                        component={Notification}
+                        component={NotificationScreen}
                         options={{
                             headerStyle: {
                                 backgroundColor: 'tomato',
                             },
                             headerTintColor: '#fff',
+                            headerShown: false,
                         }}
                     />
                 </Tab.Navigator>

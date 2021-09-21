@@ -5,7 +5,7 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
 
 import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
-import formatDate from '../helpers/formatDate'
+import { formatDate } from '../helpers/formatDate'
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'

@@ -30,6 +30,7 @@
         "react-native-dotenv": "^3.2.0",
         "react-native-gesture-handler": "~1.10.2",
         "react-native-maps": "0.29.3",
+        "react-native-ratings": "^8.1.0",
         "react-native-skeleton-content": "^1.0.22",
         "react-native-snap-carousel": "^3.9.1",
         "react-native-tesseract-ocr": "^2.0.3",
