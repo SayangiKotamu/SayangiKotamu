@@ -401,3 +401,54 @@ describe("PATCH / [CASE FAILED / DONE ACTIVATE]", () => {
       });
   });
 });
+
+// describe("PATCH / [CASE FAILED / ID NOT VERIFIED]", () => {
+//   test("Should ERROR because of [ALREADY ACTIVATE] and status code (400)", (done) => {
+//     request(app)
+//       .patch("/activateEmail/" + isEmailTrue)
+//       .then((res) => {
+//         console.log(
+//           "🚀 ~ file: user.test.js ~ line 411 ~ .then ~ res",
+//           res.body
+//         );
+//         expect(res.status).toBe(400);
+//         expect(res.body).toEqual(
+//           expect.objectContaining({
+//             message: "You have already activate your email",
+//           })
+//         );
+//         done();
+//       })
+//       .catch((err) => {
+//         done(err);
+//       });
+//   });
+// });
+
+let oldActivateEmail = "";
+describe("PATCH / [CASE FAILED / DONE ACTIVATE]", () => {
+  test("Should ERROR because of [ALREADY ACTIVATE] and status code (401)", (done) => {
+    User.findOne({ email: userTestData.email })
+      .then((res) => {
+        oldActivateEmail = res.activateEmailToken;
+        return User.findOneAndDelete({ email: userTestData.email }).then(
+          (res) => {
+            return request(app)
+              .patch("/activateEmail/" + oldActivateEmail)
+              .then((res) => {
+                expect(res.status).toBe(401);
+                expect(res.body).toEqual(
+                  expect.objectContaining({
+                    message: "Email token is invalid",
+                  })
+                );
+                done();
+              });
+          }
+        );
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});

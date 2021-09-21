@@ -63,11 +63,15 @@ async function authEmailUser(req, res, next) {
   try {
     const foundUser = await User.findById({ _id: userId });
 
+    // if (!foundUser) {
+    //   throw { name: "IdNotVerified" };
+    // } else {
     if (!foundUser.isActive) {
       throw { name: "ActivateAccount" };
     } else {
       next();
     }
+    // }
   } catch (err) {
     next(err);
   }
