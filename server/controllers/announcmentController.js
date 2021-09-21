@@ -28,30 +28,24 @@ class AnnouncmentController {
       }).populate("dinas");
       res.status(201).json(foundAnnouncment);
     } catch (err) {
-      if (!err.errors) {
-        next(err);
-      } else {
-        const toArray = Object.values(err.errors);
-        const errMessage = toArray.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ message: errMessage });
-      }
+      const toArray = Object.values(err.errors);
+      const errMessage = toArray.map((el) => {
+        return el.message;
+      });
+      res.status(400).json({ message: errMessage });
     }
   }
 
   static async getAll(req, res, next) {
     const { id, role } = req.user;
     try {
-      if (!role) {
+      if (role !== "dinas") {
         const getAllAnnouncments = await Announcment.find().populate("dinas");
-        //   console.log(getAllAnnouncments);
         res.status(200).json(getAllAnnouncments);
       } else {
         const getAllAnnouncments = await Announcment.find({
           dinas: id,
         }).populate("dinas");
-        //   console.log(getAllAnnouncments);
         res.status(200).json(getAllAnnouncments);
       }
     } catch (err) {
@@ -108,15 +102,7 @@ class AnnouncmentController {
         throw { name: "AnnouncmentNotFound" };
       }
     } catch (err) {
-      if (!err.errors) {
-        next(err);
-      } else {
-        const toArray = Object.values(err.errors);
-        const errMessage = toArray.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ message: errMessage });
-      }
+      next(err);
     }
   }
 
