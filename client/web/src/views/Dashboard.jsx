@@ -81,11 +81,19 @@ function Dashboard() {
                   labels: listCategoryName,
                   datasets: [
                     {
-                      label: "Laporan Masuk Per Kategori",
+                      label: "Jumlah laporan masuk",
                       data: totalReportByCategory,
                       backgroundColor: ["#f15447"],
                       borderColor: ["#f15447"],
                       borderWidth: 1,
+                      options: {
+                        scales: {
+                          y: {
+                            display: true,
+                            beginAtZero: true,
+                          },
+                        },
+                      },
                     },
                   ],
                 }}
@@ -136,7 +144,8 @@ function Dashboard() {
                       <button
                         className="btn btn-block mb-3"
                         style={{ backgroundColor: "black" }}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
                           dispatch(fetchReports());
                           setCategoryName("Seluruh Laporan");
                         }}
@@ -148,7 +157,8 @@ function Dashboard() {
                           <button
                             className="btn btn-block mb-3"
                             style={{ backgroundColor: "black" }}
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.preventDefault();
                               setIDCategory(category._id);
                               setCategoryName(category.name);
                             }}
