@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { Bar } from "react-chartjs-2";
+import ReactStars from "react-stars";
 
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
 import { fetchReportByCategory, fetchReports } from "../stores/reports/action";
 import { fetchCategories } from "../stores/categories/action";
+import { fetchRating } from "../stores/rating/action";
 
 function Dashboard() {
   const dispatch = useDispatch();
   const [idCategory, setIDCategory] = useState();
   const [categoryName, setCategoryName] = useState();
+  const [ratingScore, setRatingScore] = useState(0);
   const [listCategoryName, setListCategoryName] = useState([]);
   const [totalReportByCategory, settotalReportPerCategory] = useState([]);
   const { categories, loading, error } = useSelector((state) => state.category);
   const { reports } = useSelector((state) => state.report);
+  const { rating } = useSelector((state) => state.rating);
 
   useEffect(() => {
     dispatch(fetchReportByCategory(idCategory));
@@ -23,6 +27,7 @@ function Dashboard() {
 
   useEffect(() => {
     dispatch(fetchReports());
+    dispatch(fetchRating());
     dispatch(fetchCategories());
   }, []);
 
@@ -37,6 +42,14 @@ function Dashboard() {
     setListCategoryName(categoriesName);
     settotalReportPerCategory(totalReportsPerCategory);
   }, [categories]);
+
+  useEffect(() => {
+    let yourRate = rating.map((rate) => {
+      return rate.rating;
+    });
+
+    setRatingScore(yourRate);
+  }, [rating]);
 
   if (error) {
     toast.error("Mohon maaf, terjadi kesalahan pada server.", {
@@ -61,6 +74,97 @@ function Dashboard() {
       >
         <Navbar />
         <>
+          <div class="container" style={{ marginLeft: "10%" }}>
+            <div class="justify-between grid grid-cols-2">
+              <h2 class="mt-5 mb-5 text-3xl font-bold">
+                Selamat datang, Pejuang Negara!
+              </h2>
+            </div>
+            {ratingScore ? (
+              <>
+                <div class="card" style={{ backgroundColor: "#f15447" }}>
+                  <div class="m-8">
+                    <div class="mt-6 mb-3">
+                      <p class="text-xl text-center" style={{ color: "white" }}>
+                        Terima kasih banyak telah menanggapi keluh kesah para
+                        masyarakat selama ini, semangat terus bapak dan ibu!
+                        Dengan ini kami menyampaikan bahwa kami mempunyai
+                        sistem, terkait dengan nilai/rating yang diberikan oleh
+                        masyarakat terkait dengan cepat tanggap bapak ibu
+                        terkait pelaporan, maupun dengan solusi yang diberikan.
+                      </p>
+                      <p class="text-xl text-center" style={{ color: "white" }}>
+                        Berikut rata-rata rating yang diberikan oleh masyarakat
+                        kepada Bapak dan Ibu:
+                      </p>
+                      <div
+                        style={{
+                          borderWidth: 1,
+                          width: "7%",
+                          marginLeft: "48%",
+                          marginTop: "1%",
+                        }}
+                      >
+                        <ReactStars
+                          count={5}
+                          edit={false}
+                          size={30}
+                          color1={"gray"}
+                          color2={"black"}
+                          value={ratingScore}
+                        />
+                        <p class="text-xl text-center font-bold underline">
+                          {ratingScore}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div class="card" style={{ backgroundColor: "#f15447" }}>
+                  <div class="m-8">
+                    <div class="mt-6 mb-3">
+                      <p class="text-xl text-center" style={{ color: "white" }}>
+                        Terima kasih banyak telah menanggapi keluh kesah para
+                        masyarakat selama ini, semangat terus bapak dan ibu!
+                        Dengan ini kami menyampaikan bahwa kami mempunyai
+                        sistem, terkait dengan nilai/rating yang diberikan oleh
+                        masyarakat terkait dengan cepat tanggap bapak ibu
+                        terkait pelaporan, maupun dengan solusi yang diberikan.
+                      </p>
+                      <p class="text-xl text-center" style={{ color: "white" }}>
+                        Namun dikarenakan belum adanya penilaian dari pengguna
+                        aplikasi kami, kami belum dapat memberikan informasi
+                        terkait kepada Bapak dan Ibu.
+                      </p>
+                      <div
+                        style={{
+                          borderWidth: 1,
+                          width: "10%",
+                          marginLeft: "48%",
+                          marginTop: "1%",
+                        }}
+                      >
+                        <ReactStars
+                          count={5}
+                          edit={false}
+                          size={28}
+                          color1={"white"}
+                          color2={"black"}
+                          value={ratingScore}
+                        />
+                        <p class="text-xl text-center font-bold underline">
+                          {ratingScore}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
           <div
             className="container"
             style={{
