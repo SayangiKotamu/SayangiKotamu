@@ -16,10 +16,8 @@ function Content(props) {
   };
 
   // useEffect(() => {
-  //   if (props?.kategori !== undefined) {
-  //     dispatch(fetchReportByCategory(props?.kategori));
-  //   }
-  // }, []);
+  //   dispatch(fetchReportByCategory(props.kategori));
+  // }, [props.kategori]);
 
   // console.log("ini di konten", reports);
   return (
@@ -35,7 +33,7 @@ function Content(props) {
         <a
           href="#"
           onClick={() => {
-            handleToDetail(props?.report?._id);
+            // handleToDetail(props?.report?._id);
           }}
           key={id}
         >
@@ -46,7 +44,7 @@ function Content(props) {
             }}
           >
             <img
-              src={props?.report?.picture}
+              // src={props?.report?.picture}
               alt="No Image"
               style={{ height: "168px", width: "100%" }}
             />
@@ -71,7 +69,7 @@ function Content(props) {
                   Judul Pengaduan
                 </h1>
                 <p className="truncate text-m" style={{ color: "white" }}>
-                  {props?.report?.title}
+                  {/* {props?.report?.title} */}
                 </p>
               </div>
               <div>
@@ -83,7 +81,7 @@ function Content(props) {
                 </h1>
                 <p className="truncate text-m" style={{ color: "white" }}>
                   {" "}
-                  {props?.report?.description}
+                  {/* {props?.report?.description} */}
                 </p>
               </div>
             </div>
@@ -99,7 +97,7 @@ function Content(props) {
                   className="truncate text-m text-right"
                   style={{ color: "white" }}
                 >
-                  {getFormatedDate(props?.report?.issuedDate)}
+                  {/* {getFormatedDate(props?.report?.issuedDate)} */}
                 </p>
               </div>
               <div>
@@ -113,7 +111,7 @@ function Content(props) {
                   className="truncate text-m text-right"
                   style={{ color: "white" }}
                 >
-                  {props?.report?.location}
+                  {/* {props?.report?.location} */}
                 </p>
               </div>
             </div>

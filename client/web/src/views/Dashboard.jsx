@@ -12,18 +12,23 @@ function Dashboard() {
   const dispatch = useDispatch();
   const [kategori, setKategori] = useState();
   const { categories, loading, error } = useSelector((state) => state.category);
-  const { reports } = useSelector((state) => state.report);
-  // console.log(kategori);
+  // const { reports } = useSelector((state) => state.report);
 
-  useEffect(() => {
-    dispatch(fetchReports());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchReports());
+  // }, []);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
 
+  const forKategori = (e) => {
+    e.preventDefault();
+    setKategori(e.target.value);
+  };
+
   console.log(categories);
+  console.log(kategori);
 
   if (error) {
     toast.error("Mohon maaf, terjadi kesalahan pada server.", {
@@ -145,10 +150,7 @@ function Dashboard() {
                         <button
                           className="btn btn-block mb-3"
                           style={{ backgroundColor: "black" }}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            // setKategori(e.target.value);
-                          }}
+                          onClick={forKategori}
                           value={category._id}
                         >
                           {category.name}
@@ -180,15 +182,15 @@ function Dashboard() {
                       maxHeight: "500px",
                     }}
                   >
-                    {reports.map((report) => {
-                      return (
-                        <Content
-                          kategori={kategori}
-                          report={report}
-                          key={report.id}
-                        />
-                      );
-                    })}
+                    {/* {reports.map((report) => { */}
+                    {/* return ( */}
+                    <Content
+                      kategori={kategori}
+                      // report={report}
+                      // key={report.id}
+                    />
+                    );
+                    {/* })} */}
                   </div>
                 </div>
               </div>
