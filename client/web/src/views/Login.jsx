@@ -43,13 +43,7 @@ function Login() {
         progress: undefined,
       });
     } else {
-      dispatch(logining(payload, history));
-      // .then(() => {
-      //   history.push("/beranda");
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // });
+      dispatch(logining(payload, history, toast));
     }
   };
 

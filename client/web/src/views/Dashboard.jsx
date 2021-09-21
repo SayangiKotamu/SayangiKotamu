@@ -169,12 +169,26 @@ function Dashboard() {
                   borderWidth: 1,
                 }}
               >
-                <h2
-                  className="text-center mb-5 text-2xl font-bold"
-                  style={{ color: "white" }}
-                >
-                  {categoryName}
-                </h2>
+                {!categoryName ? (
+                  <>
+                    <h2
+                      className="text-center mb-5 text-2xl font-bold"
+                      style={{ color: "white" }}
+                    >
+                      Seluruh Laporan
+                    </h2>
+                  </>
+                ) : (
+                  <>
+                    <h2
+                      className="text-center mb-5 text-2xl font-bold"
+                      style={{ color: "white" }}
+                    >
+                      {categoryName}
+                    </h2>
+                  </>
+                )}
+
                 <div
                   className="card-body overflow-auto"
                   style={{
@@ -194,7 +208,7 @@ function Dashboard() {
                       className="text-center text-3xl"
                       style={{ color: "white" }}
                     >
-                      No data found!
+                      Data tidak ditemukan!
                     </h1>
                   )}
                 </div>
