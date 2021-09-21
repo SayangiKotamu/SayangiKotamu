@@ -401,23 +401,3 @@ describe("PATCH / [CASE FAILED / DONE ACTIVATE]", () => {
       });
   });
 });
-
-// describe("PATCH / [CASE FAILED / DONE ACTIVATE]", () => {
-//   User.findOne;
-//   test("Should ERROR because of [ALREADY ACTIVATE] and status code (401)", (done) => {
-//     request(app)
-//       .patch("/activateEmail/" + isEmailTrue)
-//       .then((res) => {
-//         expect(res.status).toBe(400);
-//         expect(res.body).toEqual(
-//           expect.objectContaining({
-//             message: "You have already activate your email",
-//           })
-//         );
-//         done();
-//       })
-//       .catch((err) => {
-//         done(err);
-//       });
-//   });
-// });

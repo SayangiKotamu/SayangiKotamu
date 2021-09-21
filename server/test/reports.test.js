@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
+const jwt = require("jsonwebtoken");
+const { ObjectId } = require("bson");
 const app = require("../app");
 const Dinas = require("../models/dinas");
 const User = require("../models/user");
@@ -33,6 +35,24 @@ const users = [
     NIK: "6145b84486270d831670f493",
     fullname: "testing2",
     email: "testing2@test.com",
+    password: "test1234",
+    isActive: true,
+    kota: "depok",
+    ktp: "test",
+  },
+  {
+    NIK: "6145b84486270d831670f4a3",
+    fullname: "testing3",
+    email: "testing3@test.com",
+    password: "test1234",
+    isActive: true,
+    kota: "depok",
+    ktp: "test",
+  },
+  {
+    NIK: "6145b84486270d831670f4aa",
+    fullname: "testing4",
+    email: "testing4@test.com",
     password: "test1234",
     isActive: true,
     kota: "depok",
@@ -108,6 +128,9 @@ let dinas = {};
 let dinas1 = {};
 let user = {};
 let user1 = {};
+let user2 = {};
+let user3 = {};
+
 let category = {};
 let category1 = {};
 let reportId = "";
@@ -132,6 +155,7 @@ beforeAll((done) => {
       user = res[0];
       user1 = res[1];
       user2 = res[2];
+      user3 = res[3];
       reports[0].user = user;
       reports[0].dinas = dinas;
       reports[0].category = category;
@@ -756,6 +780,86 @@ describe("GET /reportUser [CASE SUCCESS]", () => {
       });
   });
 });
+
+let accessTokenUser2 = "";
+describe("GET /reportUser [CASE FAILED / NO ACTIVATE EMAIL]", () => {
+  test("Should ERROR because of [NO ACTIVATE EMAIL] and status code (401)", (done) => {
+    request(app)
+      .post("/login")
+      .set("Accept", "application/json")
+      .send({ email: users[2].email, password: users[2].password })
+      .then((res) => {
+        accessTokenUser2 = res.body.access_token;
+        return User.findByIdAndUpdate(
+          { _id: user2._id },
+          { isActive: false },
+          { new: true }
+        ).then(() => {
+          return request(app)
+            .get("/reportUser")
+            .set("access_token", accessTokenUser2)
+            .then((res) => {
+              expect(res.status).toBe(401);
+              expect(res.body).toEqual(
+                expect.objectContaining({
+                  message:
+                    "Please check your email and activate your account first.",
+                })
+              );
+
+              done();
+            });
+        });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+// let accessTokenUser3 = "";
+// describe("GET /reportUser [CASE FAILED / NO ACTIVATE EMAIL]", () => {
+//   test("Should ERROR because of [NO ACTIVATE EMAIL] and status code (401)", (done) => {
+//     request(app)
+//       .post("/login")
+//       .set("Accept", "application/json")
+//       .send({ email: users[3].email, password: users[3].password })
+//       .then((res) => {
+//         accessTokenUser3 = res.body.access_token;
+//         const newId = ObjectId("6149eb0297dbe959baed1234");
+//         return User.findByIdAndUpdate(
+//           { _id: user3._id },
+//           { _id: newId }
+//           // { new: true }
+//         ).then((res) => {
+//           console.log(
+//             "🚀 ~ file: reports.test.js ~ line 836 ~ ).then ~ res",
+//             res
+//           );
+
+//           return request(app)
+//             .get("/reportUser")
+//             .set("access_token", accessTokenUser3)
+//             .then((res) => {
+//               expect(res.status).toBe(401);
+//               expect(res.body).toEqual(
+//                 expect.objectContaining({
+//                   message:
+//                     "Please check your email and activate your account first.",
+//                 })
+//               );
+
+//               done();
+//             });
+//         });
+//       })
+
+//       .catch((err) => {
+//         done(err);
+//       });
+//   });
+// });
 
 describe("GET /reports [CASE FAILED / DINAS ATTEMPT]", () => {
   test("Should ERROR because of [DINAS ATTEMPT] and status code (401)", (done) => {

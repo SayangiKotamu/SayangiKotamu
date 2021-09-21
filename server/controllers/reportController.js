@@ -15,7 +15,6 @@ class ReportController {
         .populate("category");
       res.status(200).json(data);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -46,7 +45,7 @@ class ReportController {
 
       res.status(200).json(data);
     } catch (error) {
-      res.status(400).json(error);
+      next(err);
     }
   }
   static async addReport(req, res, next) {
@@ -241,6 +240,8 @@ class ReportController {
 
   static async dinasGetByIdReport(req, res, next) {
     const { id } = req.params;
+
+    console.log(req.params);
     try {
       const foundReport = await Report.findOne({ _id: id })
         .populate("dinas")

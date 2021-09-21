@@ -35,10 +35,7 @@ class categoriesController {
       if (foundCategory) {
         res.status(200).json(foundCategory);
       } else {
-        next({
-          name: "NotFound",
-          message: "Categories Not Found",
-        });
+        throw { name: "NotFound", message: "Categories Not Found" };
       }
     } catch (err) {
       next(err);
