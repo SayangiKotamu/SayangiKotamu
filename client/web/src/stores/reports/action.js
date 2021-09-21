@@ -28,16 +28,14 @@ function editReport(payload) {
 }
 
 export function fetchReports() {
-  return function (dispatch, getState) {
-    const { auth } = getState();
-
+  return function (dispatch) {
     dispatch(setError(null));
     dispatch(setLoading(true));
     sayangiKotamu({
       method: "GET",
       url: "/reports",
       headers: {
-        access_token: auth.accessToken,
+        access_token: localStorage.getItem("access_token"),
       },
     })
       .then((response) => {
@@ -53,16 +51,14 @@ export function fetchReports() {
 }
 
 export function fetchReportById(id) {
-  return function (dispatch, getState) {
-    const { auth } = getState();
-
+  return function (dispatch) {
     dispatch(setError(null));
     dispatch(setLoading(true));
     sayangiKotamu({
       method: "GET",
       url: `/reports/${id}`,
       headers: {
-        access_token: auth.accessToken,
+        access_token: localStorage.getItem("access_token"),
       },
     })
       .then((response) => {
@@ -78,16 +74,14 @@ export function fetchReportById(id) {
 }
 
 export function fetchReportByCategory(id) {
-  return function (dispatch, getState) {
-    const { auth } = getState();
-
+  return function (dispatch) {
     dispatch(setError(null));
     dispatch(setLoading(true));
     sayangiKotamu({
       method: "GET",
-      url: `/reports/?categoryId=${id}`,
+      url: `/reports/?category=${id}`,
       headers: {
-        access_token: auth.accessToken,
+        access_token: localStorage.getItem("access_token"),
       },
     })
       .then((response) => {

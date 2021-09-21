@@ -10,6 +10,7 @@ function Navbar() {
   const handleLogout = () => {
     dispatch(setLogStatus(false));
     dispatch(setToken(""));
+    localStorage.clear();
     history.push("/");
   };
 

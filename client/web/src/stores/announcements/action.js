@@ -6,14 +6,12 @@ function addAnnouncement(payload) {
 }
 
 export function postAnnouncement(payload) {
-  return function (dispatch, getState) {
-    const { auth } = getState();
-
+  return function (dispatch) {
     sayangiKotamu({
       method: "POST",
       url: "/announcements",
       headers: {
-        access_token: auth.accessToken,
+        access_token: localStorage.getItem("access_token"),
       },
     })
       .then((response) => {
