@@ -10,6 +10,10 @@ const notificationSchema = new mongoose.Schema({
   user: {
     type: String,
   },
+  report: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Report",
+  },
 });
 
 const Notification = mongoose.model("Notification", notificationSchema);

@@ -60,6 +60,7 @@ const reportSchema = new mongoose.Schema({
 reportSchema.pre("updateOne", async function (next) {
   if (this.options.change === "ChangeStatus") {
     const modifiedField = this.getUpdate();
+    console.log(modifiedField);
 
     const foundDinas = await Dinas.findOne({ _id: modifiedField.dinas })
       .select("-reports")
@@ -74,6 +75,7 @@ reportSchema.pre("updateOne", async function (next) {
       description: `Laporan kamu dengan nama ${modifiedField.title} ${process} oleh ${foundDinas.name}`,
       date: new Date(),
       user: modifiedField.user,
+      report: modifiedField.Report,
     };
     await Notification.create(payload);
   }
