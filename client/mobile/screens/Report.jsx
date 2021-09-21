@@ -33,6 +33,8 @@ import { addReport } from '../store/reports/action'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 
+import { useFocusEffect } from '@react-navigation/native'
+
 let camera = Camera
 
 export default function Report({ navigation }) {
@@ -65,21 +67,11 @@ export default function Report({ navigation }) {
 
     const [isRefreshing, setIsRefreshing] = useState(false)
 
-    function resetAllForm() {
-        setTitle('')
-        setDescription('')
-        setCategory('')
-        setSelectedDinas('')
-        setLocationDescription('')
-        setLocation(null)
-        setImage(null)
-    }
-
-    function onRefresh() {
-        setIsRefreshing(true)
-        resetAllForm()
-        setIsRefreshing(false)
-    }
+    useFocusEffect(
+        React.useCallback(() => {
+            return () => setIsCameraOpen(false)
+        }, [])
+    )
 
     useEffect(() => {
         ;(async () => {
@@ -116,6 +108,22 @@ export default function Report({ navigation }) {
         dispatch(fetchAllCategory())
         dispatch(fetchAllDinas())
     }, [])
+
+    function resetAllForm() {
+        setTitle('')
+        setDescription('')
+        setCategory('')
+        setSelectedDinas('')
+        setLocationDescription('')
+        setLocation(null)
+        setImage(null)
+    }
+
+    function onRefresh() {
+        setIsRefreshing(true)
+        resetAllForm()
+        setIsRefreshing(false)
+    }
 
     async function sendReport() {
         if (
