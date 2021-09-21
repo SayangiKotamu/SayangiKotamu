@@ -150,8 +150,8 @@ function Dashboard() {
                         <ReactStars
                           count={5}
                           edit={false}
-                          size={28}
-                          color1={"white"}
+                          size={24}
+                          color1={"gray"}
                           color2={"black"}
                           value={ratingScore}
                         />
