@@ -217,13 +217,15 @@ function Dashboard() {
             <h2 className="mb-5 text-3xl font-bold">Kumpulan Pengaduan</h2>
             <div
               className="grid grid-cols-3"
-              style={{ height: "650px", borderWidth: 1, borderRadius: 5 }}
+              style={{ height: "650px", borderWidth: 1, borderRadius: 10 }}
             >
               <div
                 className="card-body"
                 style={{
                   backgroundColor: "#f15447",
                   borderWidth: 1,
+                  borderTopLeftRadius: 10,
+                  borderBottomLeftRadius: 10,
                 }}
               >
                 <h2
@@ -284,6 +286,8 @@ function Dashboard() {
                 style={{
                   backgroundColor: "#f15447",
                   borderWidth: 1,
+                  borderTopRightRadius: 10,
+                  borderBottomRightRadius: 10
                 }}
               >
                 {!categoryName ? (

@@ -93,17 +93,16 @@ function Announcement() {
                 <div className="overflow-x-auto" style={{ height: "600px" }}>
                   <table
                     className="table w-full table-compact"
-                    style={{ borderWidth: 1 }}
                   >
-                    <thead style={{ borderWidth: 1 }}>
+                    <thead>
                       <tr>
-                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                        <th style={{ color: "white", backgroundColor: "black", fontSize: 20 }}>
                           Judul
                         </th>
-                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                        <th style={{ color: "white", backgroundColor: "black", fontSize: 20 }}>
                           Deskripsi
                         </th>
-                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                        <th style={{ color: "white", backgroundColor: "black", fontSize: 20 }}>
                           Kategori
                         </th>
                       </tr>
