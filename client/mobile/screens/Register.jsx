@@ -4,15 +4,12 @@ import {
     ScrollView,
     View,
     TextInput,
-    Button,
     Image,
     ActivityIndicator,
     Dimensions,
     Text,
     TouchableOpacity,
 } from 'react-native'
-
-import Toast from 'react-native-toast-message'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { doRegister } from '../store/auth/action'
@@ -21,13 +18,13 @@ import * as ImagePicker from 'expo-image-picker'
 import * as Firebase from 'firebase'
 
 import { firebaseConfig } from '../firebase'
-
 import { GOOGLE_CLOUD_VISION_API_KEY } from 'react-native-dotenv'
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 
 import CustomButton from '../components/CustomButton'
+import Toast from 'react-native-toast-message'
 
 export default function Register({ navigation }) {
     let [fontsLoaded] = useFonts({

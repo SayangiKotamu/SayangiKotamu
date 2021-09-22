@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
-
-import { useDispatch, useSelector } from 'react-redux'
+import SkeletonContent from 'react-native-skeleton-content'
 import { useIsFocused } from '@react-navigation/native'
 
-import SkeletonContent from 'react-native-skeleton-content'
-
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchAnnouncementById } from '../store/announcements/action'
 
+import Ionicons from '@expo/vector-icons/Ionicons'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 

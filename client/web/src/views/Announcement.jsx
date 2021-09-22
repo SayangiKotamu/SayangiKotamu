@@ -126,22 +126,6 @@ function Announcement() {
                     value={announcement}
                   />
                 </div>
-
-                <div class="form-control mt-2">
-                  <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
-                      Penanggung Jawab
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="password"
-                    class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                    style={{ color: "black" }}
-                    value={"Yang login kesini"}
-                    disabled
-                  />
-                </div>
                 <div class="form-control mt-6 mb-3">
                   <input
                     type="submit"

@@ -23,16 +23,14 @@ function setError(payload) {
 }
 
 export function fetchCategories() {
-  return function (dispatch, getState) {
-    const { auth } = getState();
-
+  return function (dispatch) {
     dispatch(setError(null));
     dispatch(setLoading(true));
     sayangiKotamu({
       method: "GET",
       url: "/categories",
       headers: {
-        access_token: auth.accessToken,
+        access_token: localStorage.getItem("access_token"),
       },
     })
       .then((response) => {
@@ -48,14 +46,12 @@ export function fetchCategories() {
 }
 
 export function postCategories(payload) {
-  return function (dispatch, getState) {
-    const { auth } = getState();
-
+  return function (dispatch) {
     sayangiKotamu({
       method: "POST",
       url: "/categories",
       headers: {
-        access_token: auth.accessToken,
+        access_token: localStorage.getItem("access_token"),
       },
       data: payload,
     })
