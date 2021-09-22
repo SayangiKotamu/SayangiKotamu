@@ -41,6 +41,9 @@ export default function ReportDetail({ route }) {
 
     const [isRefreshing, setIsRefreshing] = useState(false)
 
+    const [upVote, setUpVote] = useState('')
+    const [downVote, setDownVote] = useState('')
+
     function onRefresh() {
         setIsRefreshing(true)
         dispatch(fetchReportById(id))
@@ -48,16 +51,27 @@ export default function ReportDetail({ route }) {
     }
 
     function onUpVoteClick() {
-        dispatch(upVoteReport(id))
+        dispatch(upVoteReport(id)).then(() => {
+            const newUpVote = upVote + 1
+            setUpVote(newUpVote)
+        })
     }
 
     function onDownVoteClick() {
-        dispatch(downVoteReport(id))
+        dispatch(downVoteReport(id)).then(() => {
+            const newDownVote = downVote + 1
+            setDownVote(newDownVote)
+        })
     }
 
     useEffect(() => {
         dispatch(fetchReportById(id))
     }, [])
+
+    useEffect(() => {
+        setUpVote(detailReport.upVote)
+        setDownVote(detailReport.downVote)
+    }, [detailReport])
 
     if (!fontsLoaded) {
         return <AppLoading />
@@ -186,7 +200,7 @@ export default function ReportDetail({ route }) {
                                                 color={'tomato'}
                                             />
                                             <Text style={styles.detailDescContentVote}>
-                                                {detailReport?.upVote}
+                                                {upVote}
                                             </Text>
                                             <View style={styles.separator}>
                                                 <Ionicons
@@ -195,7 +209,7 @@ export default function ReportDetail({ route }) {
                                                     color={'tomato'}
                                                 />
                                                 <Text style={styles.detailDescContentVote}>
-                                                    {detailReport?.downVote}
+                                                    {downVote}
                                                 </Text>
                                             </View>
                                         </View>
