@@ -191,6 +191,9 @@ afterAll((done) => {
     .then(() => {
       return Report.deleteMany({});
     })
+    .then((_) => {
+      return Categories.deleteMany();
+    })
     .then(() => {
       mongoose.connection.close();
       done();
