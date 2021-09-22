@@ -111,7 +111,7 @@ function Announcement() {
             >
               <div className="m-8">
                 <div className="overflow-x-auto" style={{ height: "600px" }}>
-                  <table className="table w-full table-compact">
+                  <table className="table-auto m-2">
                     <thead>
                       <tr>
                         <th
@@ -137,6 +137,7 @@ function Announcement() {
                             color: "white",
                             backgroundColor: "#f15447",
                             fontSize: 20,
+                            padding: 10,
                           }}
                         >
                           Kategori

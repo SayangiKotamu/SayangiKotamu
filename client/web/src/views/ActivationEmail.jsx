@@ -29,7 +29,7 @@ function ActivationEmail() {
             </div>
           </div>
           <div
-            class="card"
+            class="card shadow-2xl"
             style={{
               backgroundColor: "#f7f7f7",
               borderWidth: 2,
