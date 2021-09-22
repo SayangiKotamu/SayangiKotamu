@@ -70,6 +70,7 @@ function Dashboard() {
         className="min-h-screen bg-cover"
         style={{
           backgroundColor: "white",
+          marginBottom: "2%",
         }}
       >
         <Navbar />
@@ -80,7 +81,7 @@ function Dashboard() {
                 Selamat datang, Pejuang Negara!
               </h2>
             </div>
-            {ratingScore ? (
+            {ratingScore > 0 ? (
               <>
                 <div class="card" style={{ backgroundColor: "#f15447" }}>
                   <div class="m-8">
@@ -100,15 +101,16 @@ function Dashboard() {
                       <div
                         style={{
                           borderWidth: 1,
-                          width: "7%",
-                          marginLeft: "48%",
+                          borderRadius: 10,
+                          width: "11.5%",
+                          marginLeft: "44%",
                           marginTop: "1%",
                         }}
                       >
                         <ReactStars
                           count={5}
                           edit={false}
-                          size={30}
+                          size={40}
                           color1={"gray"}
                           color2={"black"}
                           value={ratingScore}
@@ -142,21 +144,22 @@ function Dashboard() {
                       <div
                         style={{
                           borderWidth: 1,
-                          width: "10%",
-                          marginLeft: "48%",
+                          borderRadius: 10,
+                          width: "11.5%",
+                          marginLeft: "44%",
                           marginTop: "1%",
                         }}
                       >
                         <ReactStars
                           count={5}
                           edit={false}
-                          size={24}
+                          size={40}
                           color1={"gray"}
                           color2={"black"}
                           value={ratingScore}
                         />
                         <p class="text-xl text-center font-bold underline">
-                          {ratingScore}
+                          0.0
                         </p>
                       </div>
                     </div>
