@@ -1,8 +1,8 @@
-import { SET_ASPIRATION, SET_LOADING, SET_ERROR } from "./actionType";
+import { SET_RATING, SET_LOADING, SET_ERROR } from "./actionType";
 import sayangiKotamu from "../../apis/sayangiKotamuAPI";
 
-function setAspiration(payload) {
-  return { type: SET_ASPIRATION, payload };
+function setRating(payload) {
+  return { type: SET_RATING, payload };
 }
 
 function setLoading(payload) {
@@ -13,20 +13,20 @@ function setError(payload) {
   return { type: SET_ERROR, payload };
 }
 
-export function fetchAspiration() {
+export function fetchRating() {
   return function (dispatch) {
     dispatch(setError(null));
     dispatch(setLoading(true));
     sayangiKotamu({
       method: "GET",
-      url: "/aspirations",
+      url: "/rating",
       headers: {
         access_token: localStorage.getItem("access_token"),
       },
     })
       .then((response) => {
         console.log(response.data);
-        dispatch(setAspiration(response.data));
+        dispatch(setRating(response.data));
       })
       .catch((err) => {
         dispatch(setError(err));

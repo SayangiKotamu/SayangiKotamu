@@ -8,11 +8,10 @@ import {
     ActivityIndicator,
 } from 'react-native'
 
-import Toast from 'react-native-toast-message'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { doLogin } from '../store/auth/action'
 
+import Toast from 'react-native-toast-message'
 import CustomButton from '../components/CustomButton'
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'

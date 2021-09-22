@@ -108,21 +108,6 @@ function Announcement() {
                     style={{ color: "black" }}
                   />
                 </div>
-
-                <div class="form-control mt-2">
-                  <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
-                      Penanggung Jawab
-                    </span>
-                  </label>
-                  <input
-                    placeholder="Dinas terkait"
-                    class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                    value={"Yang login kesini"}
-                    style={{ color: "black" }}
-                    disabled
-                  />
-                </div>
                 <div class="form-control mt-6 mb-3">
                   <input
                     type="submit"

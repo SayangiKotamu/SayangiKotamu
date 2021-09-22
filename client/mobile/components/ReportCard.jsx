@@ -1,12 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import AntDesign from '@expo/vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
 
 import formatCharactersByLimit from '../helpers/formatCharactersByLimit'
 import { formatDate } from '../helpers/formatDate'
 
+import AntDesign from '@expo/vector-icons/AntDesign'
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 import {
     StyleSheet,
     Text,
@@ -10,19 +11,14 @@ import {
 
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
-
-import { AirbnbRating } from 'react-native-ratings'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
-import CustomButton from '../components/CustomButton'
-
 import { useDispatch, useSelector } from 'react-redux'
-
 import { rateReport } from '../store/reports/action'
 
+import { AirbnbRating } from 'react-native-ratings'
+import CustomButton from '../components/CustomButton'
 import Toast from 'react-native-toast-message'
-
-import { useNavigation } from '@react-navigation/native'
 
 export default function RatingScreen({ route }) {
     let [fontsLoaded] = useFonts({

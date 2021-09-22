@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import MapView, { Marker } from 'react-native-maps'
 import {
     StyleSheet,
     Text,
@@ -9,21 +11,16 @@ import {
     ActivityIndicator,
     RefreshControl,
 } from 'react-native'
-import Ionicons from '@expo/vector-icons/Ionicons'
-
-import { TouchableOpacity } from 'react-native-gesture-handler'
-
-import MapView, { Marker } from 'react-native-maps'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchReportById } from '../store/reports/action'
+import { upVoteReport, downVoteReport } from '../store/reports/action'
 
 import SkeletonContent from 'react-native-skeleton-content'
 
-import { upVoteReport, downVoteReport } from '../store/reports/action'
-
 import { useFonts, Poppins_600SemiBold } from '@expo-google-fonts/poppins'
 import AppLoading from 'expo-app-loading'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 import { formatDateWithHour } from '../helpers/formatDate'
 
@@ -44,6 +41,9 @@ export default function ReportDetail({ route }) {
 
     const [isRefreshing, setIsRefreshing] = useState(false)
 
+    const [upVote, setUpVote] = useState('')
+    const [downVote, setDownVote] = useState('')
+
     function onRefresh() {
         setIsRefreshing(true)
         dispatch(fetchReportById(id))
@@ -51,16 +51,27 @@ export default function ReportDetail({ route }) {
     }
 
     function onUpVoteClick() {
-        dispatch(upVoteReport(id))
+        dispatch(upVoteReport(id)).then(() => {
+            const newUpVote = upVote + 1
+            setUpVote(newUpVote)
+        })
     }
 
     function onDownVoteClick() {
-        dispatch(downVoteReport(id))
+        dispatch(downVoteReport(id)).then(() => {
+            const newDownVote = downVote + 1
+            setDownVote(newDownVote)
+        })
     }
 
     useEffect(() => {
         dispatch(fetchReportById(id))
     }, [])
+
+    useEffect(() => {
+        setUpVote(detailReport.upVote)
+        setDownVote(detailReport.downVote)
+    }, [detailReport])
 
     if (!fontsLoaded) {
         return <AppLoading />
@@ -189,7 +200,7 @@ export default function ReportDetail({ route }) {
                                                 color={'tomato'}
                                             />
                                             <Text style={styles.detailDescContentVote}>
-                                                {detailReport?.upVote}
+                                                {upVote}
                                             </Text>
                                             <View style={styles.separator}>
                                                 <Ionicons
@@ -198,7 +209,7 @@ export default function ReportDetail({ route }) {
                                                     color={'tomato'}
                                                 />
                                                 <Text style={styles.detailDescContentVote}>
-                                                    {detailReport?.downVote}
+                                                    {downVote}
                                                 </Text>
                                             </View>
                                         </View>
