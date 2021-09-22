@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postCategories } from "../stores/categories/action";
 
 function Announcement() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isLoggedIn && !localStorage.getItem("access_token")) {
+      history.push("/");
+      toast.error("Tolong login terlebih dahulu.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, []);
 
   const forName = (e) => {
     e.preventDefault();
