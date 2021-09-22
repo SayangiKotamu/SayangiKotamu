@@ -2,14 +2,16 @@ import {
   SET_ID,
   SET_IS_LOGGED_IN,
   SET_ACCESS_TOKEN,
-  SET_LOADING,
+  SET_LOADING_LOGIN,
+  SET_LOADING_REGISTER,
 } from "./actionType";
 
 const initialState = {
   id: "",
   isLoggedIn: false,
   accessToken: "",
-  loading: false,
+  loadingLogin: false,
+  loadingRegister: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,8 +23,10 @@ const reducer = (state = initialState, action) => {
       return { ...state, isLoggedIn: payload };
     case SET_ACCESS_TOKEN:
       return { ...state, accessToken: payload };
-    case SET_LOADING:
-      return { ...state, loading: payload };
+    case SET_LOADING_LOGIN:
+      return { ...state, loadingLogin: payload };
+    case SET_LOADING_REGISTER:
+      return { ...state, loadingRegister: payload };
     default:
       return state;
   }

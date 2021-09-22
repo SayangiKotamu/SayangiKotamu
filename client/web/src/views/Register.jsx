@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { registering } from "../stores/authentication/action";
 
 function Register() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { loadingRegister } = useSelector((state) => state.auth);
 
   const handleToLogin = () => {
     history.push("/");
@@ -40,7 +41,11 @@ function Register() {
       password,
     };
 
-    if (email === "" || password === "" || name === "") {
+    if (
+      payload.email === "" ||
+      payload.password === "" ||
+      payload.name === ""
+    ) {
       toast.error("Mohon diisi sesuai dengan kebutuhan di bawah!", {
         position: "top-right",
         autoClose: 5000,
@@ -98,7 +103,9 @@ function Register() {
               <form action="" onSubmit={handleRegister}>
                 <div class="form-control">
                   <label class="label">
-                    <span class="label-text" style={{ color: '#f15447' }}>Nama Instansi</span>
+                    <span class="label-text" style={{ color: "#f15447" }}>
+                      Nama Instansi
+                    </span>
                   </label>
                   <input
                     type="text"
@@ -110,7 +117,9 @@ function Register() {
                 </div>
                 <div class="form-control">
                   <label class="label">
-                    <span class="label-text" style={{ color: '#f15447' }}>Email</span>
+                    <span class="label-text" style={{ color: "#f15447" }}>
+                      Email
+                    </span>
                   </label>
                   <input
                     type="text"
@@ -122,7 +131,9 @@ function Register() {
                 </div>
                 <div class="form-control">
                   <label class="label">
-                    <span class="label-text" style={{ color: '#f15447' }}>Password</span>
+                    <span class="label-text" style={{ color: "#f15447" }}>
+                      Password
+                    </span>
                   </label>
                   <input
                     type="password"
@@ -133,14 +144,29 @@ function Register() {
                   />
                 </div>
 
-                <div class="form-control mt-6 mb-3">
-                  <input
-                    type="submit"
-                    value="Daftar"
-                    class="btn"
-                    style={{ backgroundColor: "#f15447" }}
-                  />
-                </div>
+                {loadingRegister ? (
+                  <lottie-player
+                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                    background="transparent"
+                    speed="1"
+                    style={{
+                      width: "200px",
+                      height: "70px",
+                      marginLeft: "28%",
+                    }}
+                    loop
+                    autoplay
+                  ></lottie-player>
+                ) : (
+                  <div className="form-control mt-6 mb-3">
+                    <input
+                      type="submit"
+                      value="Daftar"
+                      className="btn"
+                      style={{ backgroundColor: "#f15447" }}
+                    />
+                  </div>
+                )}
               </form>
               <label class="label-text-alt text-center">
                 <p className="text-md">

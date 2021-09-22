@@ -11,7 +11,7 @@ import { fetchAspiration } from "../stores/aspiration/action";
 function Announcement() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { aspiration, loading, error } = useSelector(
+  const { aspiration, loadingAspiration, error } = useSelector(
     (state) => state.aspiration
   );
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -61,7 +61,7 @@ function Announcement() {
         }}
       >
         <Navbar />
-        {loading ? (
+        {loadingAspiration ? (
           <lottie-player
             src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
             background="transparent"
@@ -103,7 +103,11 @@ function Announcement() {
             </div>
             <div
               className="card"
-              style={{ backgroundColor: "#f7f7f7", borderWidth: 1, borderColor: '#f15447' }}
+              style={{
+                backgroundColor: "#f7f7f7",
+                borderWidth: 1,
+                borderColor: "#f15447",
+              }}
             >
               <div className="m-8">
                 <div className="overflow-x-auto" style={{ height: "600px" }}>

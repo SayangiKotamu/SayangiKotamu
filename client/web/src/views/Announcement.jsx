@@ -12,6 +12,7 @@ function Announcement() {
   const [announcment, setAnnouncement] = useState("");
   const [title, setTitle] = useState("");
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { loadingAnnouncement } = useSelector((state) => state.announcement);
 
   useEffect(() => {
     if (!isLoggedIn && !localStorage.getItem("access_token")) {
@@ -110,7 +111,11 @@ function Announcement() {
           </div>
           <div
             class="card shadow-xl"
-            style={{ backgroundColor: "#f7f7f7", borderWidth: 1, borderColor: '#f15447' }}
+            style={{
+              backgroundColor: "#f7f7f7",
+              borderWidth: 1,
+              borderColor: "#f15447",
+            }}
           >
             <div class="m-8">
               <form action="" type="submit" onSubmit={handleSubmitAnnouncement}>
@@ -142,14 +147,30 @@ function Announcement() {
                     value={announcment}
                   />
                 </div>
-                <div class="form-control mt-6 mb-3">
-                  <input
-                    type="submit"
-                    value="Buat Pengumuman"
-                    class="btn"
-                    style={{ backgroundColor: "#f15447" }}
-                  />
-                </div>
+                {loadingAnnouncement ? (
+                  <lottie-player
+                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                    background="transparent"
+                    speed="1"
+                    style={{
+                      width: "200px",
+                      height: "70px",
+                      marginLeft: "44%",
+                      marginTop: "1%",
+                    }}
+                    loop
+                    autoplay
+                  ></lottie-player>
+                ) : (
+                  <div class="form-control mt-6 mb-3">
+                    <input
+                      type="submit"
+                      value="Buat Pengumuman"
+                      class="btn"
+                      style={{ backgroundColor: "#f15447" }}
+                    />
+                  </div>
+                )}
               </form>
             </div>
           </div>

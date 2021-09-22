@@ -2,7 +2,8 @@ import {
   SET_REPORTS,
   SET_DETAIL_REPORT,
   EDIT_REPORT,
-  SET_LOADING,
+  SET_LOADING_REPORTS,
+  SET_LOADING_DETAIL,
   SET_ERROR,
 } from "./actionType";
 import sayangiKotamu from "../../apis/sayangiKotamuAPI";
@@ -15,8 +16,12 @@ function setDetailReport(payload) {
   return { type: SET_DETAIL_REPORT, payload };
 }
 
-function setLoading(payload) {
-  return { type: SET_LOADING, payload };
+function setLoadingReports(payload) {
+  return { type: SET_LOADING_REPORTS, payload };
+}
+
+function setLoadingDetail(payload) {
+  return { type: SET_LOADING_DETAIL, payload };
 }
 
 function setError(payload) {
@@ -30,7 +35,7 @@ function editReport(payload) {
 export function fetchReports() {
   return function (dispatch) {
     dispatch(setError(null));
-    dispatch(setLoading(true));
+    dispatch(setLoadingReports(true));
     sayangiKotamu({
       method: "GET",
       url: "/reports",
@@ -45,7 +50,7 @@ export function fetchReports() {
         dispatch(setError(err));
       })
       .finally(() => {
-        dispatch(setLoading(false));
+        dispatch(setLoadingReports(false));
       });
   };
 }
@@ -53,7 +58,7 @@ export function fetchReports() {
 export function fetchReportById(id) {
   return function (dispatch) {
     dispatch(setError(null));
-    dispatch(setLoading(true));
+    dispatch(setLoadingDetail(true));
     sayangiKotamu({
       method: "GET",
       url: `/reports/${id}`,
@@ -68,7 +73,7 @@ export function fetchReportById(id) {
         dispatch(setError(err));
       })
       .finally(() => {
-        dispatch(setLoading(false));
+        dispatch(setLoadingDetail(false));
       });
   };
 }
@@ -76,7 +81,7 @@ export function fetchReportById(id) {
 export function fetchReportByCategory(id) {
   return function (dispatch) {
     dispatch(setError(null));
-    dispatch(setLoading(true));
+    dispatch(setLoadingReports(true));
     sayangiKotamu({
       method: "GET",
       url: `/reports/?category=${id}`,
@@ -91,7 +96,7 @@ export function fetchReportByCategory(id) {
         dispatch(setError(err));
       })
       .finally(() => {
-        dispatch(setLoading(false));
+        dispatch(setLoadingReports(false));
       });
   };
 }
@@ -101,7 +106,6 @@ export function patchReport(id, payload) {
     const { auth } = getState();
 
     dispatch(setError(null));
-    dispatch(setLoading(true));
     sayangiKotamu({
       method: "PATCH",
       url: `/reports/${id}`,
@@ -115,9 +119,6 @@ export function patchReport(id, payload) {
       })
       .catch((err) => {
         dispatch(setError(err));
-      })
-      .finally(() => {
-        dispatch(setLoading(false));
       });
   };
 }
