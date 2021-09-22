@@ -1,7 +1,8 @@
 const request = require("supertest");
-const app = require("../app");
-jest.mock("nodemailer");
 const nodemailer = require("nodemailer");
+const app = require("../app");
+const User = require("../models/user");
+jest.mock("nodemailer");
 
 const sendMailMock = jest.fn().mockReturnValue("success");
 nodemailer.createTransport.mockReturnValue({ sendMail: sendMailMock });
@@ -9,7 +10,7 @@ nodemailer.createTransport.mockReturnValue({ sendMail: sendMailMock });
 let userTestData = {
   NIK: 1501111709990002,
   fullname: "test",
-  email: "testing@gmail.com",
+  email: "testing@test.com",
   password: "123456",
   kota: "jakarta",
   ktp: "google.com",
@@ -20,9 +21,18 @@ beforeAll((done) => {
   nodemailer.createTransport.mockClear();
   done();
 });
+afterAll((done) => {
+  User.deleteMany({})
+    .then(() => {
+      mongoose.connection.close();
+      done();
+    })
+    .catch((err) => done(err));
+});
 
 // ERROR NODMAILER
 describe("POST /register [SUCCESS FAILED]", () => {
+  console.log(sendMailMock);
   jest.setTimeout(10000);
   test("should return an object with key: NIK,fullname, email, kota, ktp", (done) => {
     request(app)
@@ -30,6 +40,8 @@ describe("POST /register [SUCCESS FAILED]", () => {
       .send(userTestData)
       .then((response) => {
         expect(response.status).toBe(201);
+        expect(sendMailMock).toHaveBeenCalled();
+
         done();
       })
       .catch((err) => {
