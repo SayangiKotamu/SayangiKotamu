@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postAnnouncement } from "../stores/announcements/action";
 
 function Announcement() {
@@ -11,6 +11,22 @@ function Announcement() {
   const dispatch = useDispatch();
   const [announcement, setAnnouncement] = useState("");
   const [title, setTitle] = useState("");
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isLoggedIn && !localStorage.getItem("access_token")) {
+      history.push("/");
+      toast.error("Tolong login terlebih dahulu.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, []);
 
   const forAnnouncement = (e) => {
     e.preventDefault();
@@ -124,22 +140,6 @@ function Announcement() {
                     class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                     onChange={forAnnouncement}
                     value={announcement}
-                  />
-                </div>
-
-                <div class="form-control mt-2">
-                  <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
-                      Penanggung Jawab
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="password"
-                    class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
-                    style={{ color: "black" }}
-                    value={"Yang login kesini"}
-                    disabled
                   />
                 </div>
                 <div class="form-control mt-6 mb-3">

@@ -15,11 +15,31 @@ function Detail() {
   const { reportDetail, loading, error } = useSelector((state) => state.report);
   const [status, setStatus] = useState(reportDetail.status);
 
-  console.log(id);
+  const [position, setPosition] = useState([0, 0]);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isLoggedIn && !localStorage.getItem("access_token")) {
+      history.push("/");
+      toast.error("Tolong login terlebih dahulu.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(fetchReportById(id));
   }, []);
+
+  useEffect(() => {
+    setPosition([reportDetail.lat, reportDetail.long]);
+  }, [reportDetail]);
 
   console.log(reportDetail);
 
@@ -69,12 +89,6 @@ function Detail() {
   const handleToDashboard = () => {
     history.push("/beranda");
   };
-
-  const position = [
-    100, 21,
-    // +reportDetail?.long?.$numberDecimal,
-    // +reportDetail?.lat?.$numberDecimal,
-  ];
 
   return (
     <>
@@ -358,7 +372,10 @@ function Detail() {
                           ) : (
                             <p
                               class="text-xl text-justify mt-2 italic"
-                              style={{ width: "100%", color: "white" }}
+                              style={{
+                                width: "100%",
+                                color: "white",
+                              }}
                             >
                               {formatDateWithHour(
                                 reportDetail?.category?.reports[0].finishedDate

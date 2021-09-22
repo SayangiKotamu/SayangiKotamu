@@ -1,3 +1,4 @@
 export const SET_IS_LOGGED_IN = "BOOL/SET_IS_LOGGED_IN";
 export const SET_ACCESS_TOKEN = "TOKEN/SET_ACCESS_TOKEN";
 export const SET_LOADING = "LOADING/SET_LOADING";
+export const SET_ID = "ID/SET_ID";

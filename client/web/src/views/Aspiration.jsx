@@ -14,6 +14,22 @@ function Announcement() {
   const { aspiration, loading, error } = useSelector(
     (state) => state.aspiration
   );
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isLoggedIn && !localStorage.getItem("access_token")) {
+      history.push("/");
+      toast.error("Tolong login terlebih dahulu.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(fetchAspiration());
@@ -91,19 +107,34 @@ function Announcement() {
             >
               <div className="m-8">
                 <div className="overflow-x-auto" style={{ height: "600px" }}>
-                  <table
-                    className="table w-full table-compact"
-                    style={{ borderWidth: 1 }}
-                  >
-                    <thead style={{ borderWidth: 1 }}>
+                  <table className="table w-full table-compact">
+                    <thead>
                       <tr>
-                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                        <th
+                          style={{
+                            color: "white",
+                            backgroundColor: "black",
+                            fontSize: 20,
+                          }}
+                        >
                           Judul
                         </th>
-                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                        <th
+                          style={{
+                            color: "white",
+                            backgroundColor: "black",
+                            fontSize: 20,
+                          }}
+                        >
                           Deskripsi
                         </th>
-                        <th style={{ color: "black", backgroundColor: "gray" }}>
+                        <th
+                          style={{
+                            color: "white",
+                            backgroundColor: "black",
+                            fontSize: 20,
+                          }}
+                        >
                           Kategori
                         </th>
                       </tr>

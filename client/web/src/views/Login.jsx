@@ -43,13 +43,7 @@ function Login() {
         progress: undefined,
       });
     } else {
-      dispatch(logining(payload, history));
-      // .then(() => {
-      //   history.push("/beranda");
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // });
+      dispatch(logining(payload, history, toast));
     }
   };
 
@@ -57,15 +51,19 @@ function Login() {
     <>
       <ToastContainer />
 
-      <img
-        src="https://i.imgur.com/GKQ7zUt_d.webp?maxwidth=760&fidelity=grand"
-        alt="Logo"
-        style={{ width: "10%", height: "10%" }}
-      />
-
+      <nav>
+        <img
+          src="https://i.imgur.com/GKQ7zUt_d.webp?maxwidth=760&fidelity=grand"
+          alt="Logo"
+          style={{ width: "15%", height: "15%", marginLeft: "42%" }}
+        />
+      </nav>
       <div
         className="hero min-h-screen bg-base-200"
-        style={{ backgroundColor: "white", marginTop: "-10%" }}
+        style={{
+          backgroundColor: "white",
+          marginTop: "-10%",
+        }}
       >
         <div className="col-6 hero-content lg:flex-row">
           <div
