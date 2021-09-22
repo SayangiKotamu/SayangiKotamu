@@ -4,7 +4,6 @@ import {
     ScrollView,
     View,
     TextInput,
-    Button,
     Image,
     ActivityIndicator,
     Dimensions,
