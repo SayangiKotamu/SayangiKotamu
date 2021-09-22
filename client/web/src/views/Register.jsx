@@ -71,7 +71,7 @@ function Register() {
         <img
           src="https://i.imgur.com/GKQ7zUt_d.webp?maxwidth=760&fidelity=grand"
           alt="Logo"
-          style={{ width: "10%", height: "10%" }}
+          style={{ width: "15%", height: "15%", marginLeft: "42%" }}
         />
       </nav>
       <div

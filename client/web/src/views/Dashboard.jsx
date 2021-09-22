@@ -43,8 +43,6 @@ function Dashboard() {
     settotalReportPerCategory(totalReportsPerCategory);
   }, [categories]);
 
-  console.log(categories);
-
   useEffect(() => {
     let yourRate = rating.map((rate) => {
       return rate.rating;
@@ -103,15 +101,16 @@ function Dashboard() {
                       <div
                         style={{
                           borderWidth: 1,
-                          width: "7%",
-                          marginLeft: "46.5%",
+                          borderRadius: 10,
+                          width: "11.5%",
+                          marginLeft: "44%",
                           marginTop: "1%",
                         }}
                       >
                         <ReactStars
                           count={5}
                           edit={false}
-                          size={30}
+                          size={40}
                           color1={"gray"}
                           color2={"black"}
                           value={ratingScore}
@@ -145,15 +144,16 @@ function Dashboard() {
                       <div
                         style={{
                           borderWidth: 1,
-                          width: "7%",
-                          marginLeft: "46.5%",
+                          borderRadius: 10,
+                          width: "11.5%",
+                          marginLeft: "44%",
                           marginTop: "1%",
                         }}
                       >
                         <ReactStars
                           count={5}
                           edit={false}
-                          size={24}
+                          size={40}
                           color1={"gray"}
                           color2={"black"}
                           value={ratingScore}

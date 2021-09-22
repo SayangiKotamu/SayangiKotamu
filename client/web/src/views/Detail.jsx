@@ -70,11 +70,7 @@ function Detail() {
     history.push("/beranda");
   };
 
-  const position = [
-    100, 21,
-    // +reportDetail?.long?.$numberDecimal,
-    // +reportDetail?.lat?.$numberDecimal,
-  ];
+  const position = [reportDetail.long, reportDetail.lat];
 
   return (
     <>
