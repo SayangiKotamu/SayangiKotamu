@@ -15,15 +15,7 @@ class RatingController {
         res.status(200).json(getRating);
       }
     } catch (err) {
-      if (!err.errors) {
-        next(err);
-      } else {
-        const toArray = Object.values(err.errors);
-        const errMessage = toArray.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ message: errMessage });
-      }
+      next(err);
     }
   }
   static async getById(req, res, next) {
@@ -39,15 +31,7 @@ class RatingController {
         };
       }
     } catch (err) {
-      if (!err.errors) {
-        next(err);
-      } else {
-        const toArray = Object.values(err.errors);
-        const errMessage = toArray.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ message: errMessage });
-      }
+      next(err);
     }
   }
   static async create(req, res, next) {

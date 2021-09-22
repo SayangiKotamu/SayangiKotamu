@@ -77,6 +77,7 @@ class UserController {
     const { token } = req.params;
     try {
       const verifiedToken = await jwtVerifyEmailActivate(token);
+
       if (verifiedToken) {
         const verifiedEmail = await User.findOne({
           email: verifiedToken.email,
@@ -99,7 +100,6 @@ class UserController {
       }
     } catch (err) {
       next(err);
-      console.log(err);
     }
   }
 }

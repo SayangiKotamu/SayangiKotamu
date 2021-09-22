@@ -8,7 +8,6 @@ import Detail from "./views/Detail";
 import Register from "./views/Register";
 import Category from "./views/Category";
 import Dashboard from "./views/Dashboard";
-import History from "./views/History";
 import Aspiration from "./views/Aspiration";
 import Announcement from "./views/Announcement";
 import EmailActivated from "./views/EmailActivated";
@@ -28,9 +27,6 @@ function App() {
             </Route>
             <Route path="/aspirasi">
               <Aspiration />
-            </Route>
-            <Route path="/riwayat">
-              <History />
             </Route>
             <Route path="/kategori-baru">
               <Category />

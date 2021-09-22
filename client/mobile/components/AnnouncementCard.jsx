@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     announcementCardContainer: {
         backgroundColor: 'white',
         borderColor: '#ececec',
-        marginTop: 8,
         borderWidth: 1,
         borderRadius: 5,
         paddingBottom: 5,

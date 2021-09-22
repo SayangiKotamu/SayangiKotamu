@@ -62,30 +62,34 @@ userSchema.pre("save", function (next) {
 
   user.activateEmailToken = emailToken;
 
-  let transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_NODEMAILER,
-      pass: process.env.PASSWORD_EMAIL_NODEMAILER,
-    },
-  });
+  let transporter;
+  if (process.env.NODE_ENV === "development") {
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_NODEMAILER,
+        pass: process.env.PASSWORD_EMAIL_NODEMAILER,
+      },
+    });
+    let mailOptions = {
+      from: "noreply@gmail.com",
+      to: `${user.email}`,
+      subject: "Verification Email",
+      html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}/${emailToken}'>click here</a> to activate your email</p>`,
+    };
 
-  let mailOptions = {
-    from: "noreply@gmail.com",
-    to: `${user.email}`,
-    subject: "Verification Email",
-    html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}/${emailToken}'>click here</a> to activate your email</p>`,
-  };
-
-  transporter.sendMail(mailOptions, function (err, data, cb) {
-    // ! LATER: DI ERROR HANDLER
-    if (err) {
-      next({ name: "EmailError" });
-    } else {
-      console.log("email sent");
-      next();
-    }
-  });
+    transporter.sendMail(mailOptions, function (err, data) {
+      // ! LATER: DI ERROR HANDLER
+      if (err) {
+        next({ name: "EmailError" });
+      } else {
+        console.log("email sent");
+        next();
+      }
+    });
+  } else {
+    next();
+  }
 });
 
 const User = mongoose.model("User", userSchema);

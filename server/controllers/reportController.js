@@ -10,12 +10,14 @@ class ReportController {
   static async showAll(req, res, next) {
     try {
       let data = await Report.find()
+        .sort({
+          issuedDate: "desc",
+        })
         .populate("dinas")
         .populate("user")
         .populate("category");
       res.status(200).json(data);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -46,7 +48,7 @@ class ReportController {
 
       res.status(200).json(data);
     } catch (error) {
-      res.status(400).json(error);
+      next(err);
     }
   }
   static async addReport(req, res, next) {
@@ -217,21 +219,31 @@ class ReportController {
     try {
       if (status) {
         const allReports = await Report.find({ dinas: id, status })
+          .sort({
+            issuedDate: "desc",
+          })
           .populate("dinas")
           .populate("user")
           .populate("category");
         res.status(200).json(allReports);
       } else if (category) {
         const allReports = await Report.find({ dinas: id, category })
+          .sort({
+            issuedDate: "desc",
+          })
           .populate("dinas")
           .populate("user")
           .populate("category");
         res.status(200).json(allReports);
       } else {
         const allReports = await Report.find({ dinas: id })
+          .sort({
+            issuedDate: "desc",
+          })
           .populate("dinas")
           .populate("user")
           .populate("category");
+
         res.status(200).json(allReports);
       }
     } catch (err) {
@@ -241,6 +253,8 @@ class ReportController {
 
   static async dinasGetByIdReport(req, res, next) {
     const { id } = req.params;
+
+    console.log(req.params);
     try {
       const foundReport = await Report.findOne({ _id: id })
         .populate("dinas")
