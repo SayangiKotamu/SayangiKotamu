@@ -5,5 +5,5 @@ export function formatDate(date) {
 }
 
 export function formatDateWithHour(date) {
-    return masa(date).format('dddd, D MMMM YYYY [pukul] HH[:]MM')
+    return masa(date).format('dddd, D MMMM YYYY [pukul] HH[:]mm')
 }
