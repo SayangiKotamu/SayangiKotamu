@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {
     StyleSheet,
     View,
+    ScrollView,
     TextInput,
     TouchableOpacity,
     Image,
@@ -48,42 +49,44 @@ export default function Login() {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.headingContainer}>
-                <Image
-                    style={styles.logoImage}
-                    source={{
-                        uri: 'https://i.imgur.com/GKQ7zUt.jpeg',
-                    }}
-                />
-            </View>
+        <ScrollView>
+            <View style={styles.container}>
+                <View style={styles.headingContainer}>
+                    <Image
+                        style={styles.logoImage}
+                        source={{
+                            uri: 'https://i.imgur.com/GKQ7zUt.jpeg',
+                        }}
+                    />
+                </View>
 
-            <View style={styles.formContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="E-mail"
-                    value={email}
-                    onChangeText={(text) => setEmail(text)}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Kata sandi"
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={(text) => setPassword(text)}
-                />
-            </View>
+                <View style={styles.formContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="E-mail"
+                        value={email}
+                        onChangeText={(text) => setEmail(text)}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Kata sandi"
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                    />
+                </View>
 
-            <View style={styles.buttonContainer}>
-                {loadingLogin ? (
-                    <ActivityIndicator size="large" color="black" />
-                ) : (
-                    <TouchableOpacity onPress={onLoginClick}>
-                        <CustomButton buttonName={'Masuk'} buttonColor={'black'} />
-                    </TouchableOpacity>
-                )}
+                <View style={styles.buttonContainer}>
+                    {loadingLogin ? (
+                        <ActivityIndicator size="large" color="black" />
+                    ) : (
+                        <TouchableOpacity onPress={onLoginClick}>
+                            <CustomButton buttonName={'Masuk'} buttonColor={'black'} />
+                        </TouchableOpacity>
+                    )}
+                </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
