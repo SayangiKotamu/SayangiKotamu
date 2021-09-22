@@ -1,4 +1,9 @@
-import { SET_IS_LOGGED_IN, SET_ACCESS_TOKEN, SET_LOADING } from "./actionType";
+import {
+  SET_IS_LOGGED_IN,
+  SET_ACCESS_TOKEN,
+  SET_LOADING,
+  SET_ID,
+} from "./actionType";
 import sayangiKotamu from "../../apis/sayangiKotamuAPI";
 
 export function setLogStatus(payload) {
@@ -13,9 +18,12 @@ export function setLoading(payload) {
   return { type: SET_LOADING, payload };
 }
 
+export function setID(payload) {
+  return { type: SET_ID, payload };
+}
+
 export function logining(payload, history, toast) {
   return function (dispatch) {
-    console.log(payload);
     return sayangiKotamu({
       method: `POST`,
       url: `/login`,
@@ -24,6 +32,7 @@ export function logining(payload, history, toast) {
       .then((response) => {
         dispatch(setLogStatus(true));
         dispatch(setToken(response.data.accessToken));
+        dispatch(setID(response.data.id));
         localStorage.setItem("access_token", response.data.accessToken);
         history.push("/beranda");
       })
@@ -48,6 +57,21 @@ export function registering(payload) {
       method: `POST`,
       url: `/register`,
       data: payload,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+export function aktifasiEmail(payload) {
+  return function () {
+    sayangiKotamu({
+      method: `PATCH`,
+      url: `/activateEmail/${payload}`,
     })
       .then((response) => {
         console.log(response);

@@ -9,8 +9,10 @@ import Content from "../components/Content";
 import { fetchReportByCategory, fetchReports } from "../stores/reports/action";
 import { fetchCategories } from "../stores/categories/action";
 import { fetchRating } from "../stores/rating/action";
+import { useHistory } from "react-router";
 
 function Dashboard() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [idCategory, setIDCategory] = useState();
   const [categoryName, setCategoryName] = useState();
@@ -20,6 +22,21 @@ function Dashboard() {
   const { categories, loading, error } = useSelector((state) => state.category);
   const { reports } = useSelector((state) => state.report);
   const { rating } = useSelector((state) => state.rating);
+  // const { id } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  if (!isLoggedIn && !localStorage.getItem("access_token")) {
+    toast.error("Tolong login terlebih dahulu.", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    history.push("/");
+  }
 
   useEffect(() => {
     dispatch(fetchReportByCategory(idCategory));
@@ -31,13 +48,40 @@ function Dashboard() {
     dispatch(fetchCategories());
   }, []);
 
+  console.log(reports);
+
   useEffect(() => {
+    // dispatch(fetchRating());
+
+    // let filledCategoryName = [];
+    // let categoriesName = [];
+
+    // reports.forEach((report) => {
+    //   if (filledCategoryName.indexOf(report.category.name) === -1) {
+    //     categoriesName.push(report.category.name);
+    //   }
+    // });
+
     let categoriesName = categories.map((category) => {
       return category.name;
     });
+
     let totalReportsPerCategory = categories.map((category) => {
       return category.reports.length;
     });
+
+    // let filledCategory = [];
+    // let totalReportsPerCategory = [];
+    // reports.forEach((report) => {
+    //   if (filledCategory.indexOf(report.category.name) === -1) {
+    //     const filteredReport = report.category.reports.filter(
+    //       (filtered) => filtered.dinas === id
+    //     );
+    //     totalReportsPerCategory.push(filteredReport.length);
+    //   }
+    // });
+
+    // console.log(totalReportsPerCategory, "testing ini coba");
 
     setListCategoryName(categoriesName);
     settotalReportPerCategory(totalReportsPerCategory);
@@ -78,7 +122,7 @@ function Dashboard() {
           <div class="container" style={{ marginLeft: "10%" }}>
             <div class="justify-between grid grid-cols-2">
               <h2 class="mt-5 mb-5 text-3xl font-bold">
-                Selamat datang, Pejuang Negara!
+                Selamat datang, Pejuang Kota!
               </h2>
             </div>
             {ratingScore > 0 ? (
@@ -176,6 +220,10 @@ function Dashboard() {
             }}
           >
             <h2 className="mb-5 text-3xl font-bold">Progress Pengaduan</h2>
+            <p class="text-xl text-center" style={{ color: "black" }}>
+              Berikut kami tampilkan progress pengaduan yang masuk secara
+              keseluruhan, seluruh dinas yang menggunakan jasa kami:
+            </p>
             <div
               className="card"
               style={{
@@ -215,6 +263,10 @@ function Dashboard() {
             style={{ marginLeft: "10%", marginTop: "5%" }}
           >
             <h2 className="mb-5 text-3xl font-bold">Kumpulan Pengaduan</h2>
+            <p class="text-xl text-center" style={{ color: "black" }}>
+              Berikut kami tampilkan kumpulan pengaduan berdasarkan kategori
+              yang masuk sesuai dengan dinas terkait yang menggunakan jasa kami:
+            </p>
             <div
               className="grid grid-cols-3"
               style={{ height: "650px", borderWidth: 1, borderRadius: 10 }}
@@ -240,9 +292,9 @@ function Dashboard() {
                     background="transparent"
                     speed="1"
                     style={{
-                      width: "100px",
-                      height: "100px",
-                      marginLeft: "10%",
+                      width: "200px",
+                      height: "200px",
+                      marginLeft: "28%",
                     }}
                     loop
                     autoplay
@@ -287,7 +339,7 @@ function Dashboard() {
                   backgroundColor: "#f15447",
                   borderWidth: 1,
                   borderTopRightRadius: 10,
-                  borderBottomRightRadius: 10
+                  borderBottomRightRadius: 10,
                 }}
               >
                 {!categoryName ? (
