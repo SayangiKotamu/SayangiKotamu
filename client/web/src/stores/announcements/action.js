@@ -9,12 +9,14 @@ export function postAnnouncement(payload) {
   return function (dispatch) {
     sayangiKotamu({
       method: "POST",
-      url: "/announcements",
+      url: "/announcments",
+      data: payload,
       headers: {
         access_token: localStorage.getItem("access_token"),
       },
     })
       .then((response) => {
+        console.log(response);
         dispatch(addAnnouncement(response.data));
       })
       .catch((err) => {

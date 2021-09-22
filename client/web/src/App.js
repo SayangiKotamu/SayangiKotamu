@@ -23,7 +23,7 @@ function App() {
             <Route path="/email-terverifikasi">
               <EmailActivated />
             </Route>
-            <Route path="/aktifasi-email">
+            <Route path="/aktifasi-email/:token">
               <ActivationEmail />
             </Route>
             <Route path="/aspirasi">

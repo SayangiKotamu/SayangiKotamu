@@ -1,14 +1,18 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { useDispatch } from "react-redux";
+import { aktifasiEmail } from "../stores/authentication/action";
 
 function ActivationEmail() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { token } = useParams();
 
   const handleActivation = (e) => {
     e.preventDefault();
-    history.push("/email-terverifikasi");
+    dispatch(aktifasiEmail(token)).then(() =>
+      history.push("/email-terverifikasi")
+    );
   };
 
   return (

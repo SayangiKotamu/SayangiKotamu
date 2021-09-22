@@ -136,18 +136,7 @@ function Register() {
                     value={password}
                   />
                 </div>
-                {/* <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Kota</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Kota"
-                    class="input input-bordered"
-                    onChange={forCity}
-                    value={city}
-                  />
-                </div> */}
+
                 <div class="form-control mt-6 mb-3">
                   <input
                     type="submit"
