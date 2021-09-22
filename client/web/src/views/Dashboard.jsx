@@ -8,7 +8,6 @@ import Navbar from "../components/Navbar";
 import Content from "../components/Content";
 import { fetchReportByCategory, fetchReports } from "../stores/reports/action";
 import { fetchCategories } from "../stores/categories/action";
-import { fetchRating } from "../stores/rating/action";
 import { useHistory } from "react-router";
 
 function Dashboard() {
@@ -21,8 +20,6 @@ function Dashboard() {
   const [totalReportByCategory, settotalReportPerCategory] = useState([]);
   const { categories, loading, error } = useSelector((state) => state.category);
   const { reports } = useSelector((state) => state.report);
-  const { rating } = useSelector((state) => state.rating);
-  // const { id } = useSelector((state) => state.auth);
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   if (!isLoggedIn && !localStorage.getItem("access_token")) {
@@ -44,24 +41,12 @@ function Dashboard() {
 
   useEffect(() => {
     dispatch(fetchReports());
-    dispatch(fetchRating());
     dispatch(fetchCategories());
   }, []);
 
   console.log(reports);
 
   useEffect(() => {
-    // dispatch(fetchRating());
-
-    // let filledCategoryName = [];
-    // let categoriesName = [];
-
-    // reports.forEach((report) => {
-    //   if (filledCategoryName.indexOf(report.category.name) === -1) {
-    //     categoriesName.push(report.category.name);
-    //   }
-    // });
-
     let categoriesName = categories.map((category) => {
       return category.name;
     });
@@ -70,27 +55,17 @@ function Dashboard() {
       return category.reports.length;
     });
 
-    // let filledCategory = [];
-    // let totalReportsPerCategory = [];
-    // reports.forEach((report) => {
-    //   if (filledCategory.indexOf(report.category.name) === -1) {
-    //     const filteredReport = report.category.reports.filter(
-    //       (filtered) => filtered.dinas === id
-    //     );
-    //     totalReportsPerCategory.push(filteredReport.length);
-    //   }
-    // });
-
-    // console.log(totalReportsPerCategory, "testing ini coba");
-
     setListCategoryName(categoriesName);
     settotalReportPerCategory(totalReportsPerCategory);
   }, [categories]);
 
   useEffect(() => {
-    console.log(rating);
-    setRatingScore(rating.rating);
-  }, [rating]);
+    if (!reports) {
+      setRatingScore(0);
+    } else {
+      setRatingScore(reports[0].dinas.rating);
+    }
+  }, [reports]);
 
   if (error) {
     toast.error("Mohon maaf, terjadi kesalahan pada server.", {
@@ -217,7 +192,7 @@ function Dashboard() {
             }}
           >
             <h2 className="mb-5 text-3xl font-bold">Progress Pengaduan</h2>
-            <p class="text-xl text-center" style={{ color: "black" }}>
+            <p class="text-xl text-center mb-2" style={{ color: "black" }}>
               Berikut kami tampilkan progress pengaduan yang masuk secara
               keseluruhan, seluruh dinas yang menggunakan jasa kami:
             </p>
@@ -260,7 +235,7 @@ function Dashboard() {
             style={{ marginLeft: "10%", marginTop: "5%" }}
           >
             <h2 className="mb-5 text-3xl font-bold">Kumpulan Pengaduan</h2>
-            <p class="text-xl text-center" style={{ color: "black" }}>
+            <p class="text-xl text-center mb-2" style={{ color: "black" }}>
               Berikut kami tampilkan kumpulan pengaduan berdasarkan kategori
               yang masuk sesuai dengan dinas terkait yang menggunakan jasa kami:
             </p>
