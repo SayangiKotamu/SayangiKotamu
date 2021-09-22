@@ -3,11 +3,10 @@ function AspirationView(props) {
     <>
       <tbody>
         <tr>
-          <td style={{ color: "black", borderColor: 'black' }}>{props.aspirasi.title}</td>
-          <td style={{ color: "black", borderBottomColor: 'black' }}>{props.aspirasi.description}</td>
-          <td style={{ color: "black", borderColor: 'black' }}>{props.aspirasi.type}</td>
+          <td style={{ color: "black", borderBottomColor: 'black', borderWidth: 1, borderColor: '#b4b4b4' }}>{props.aspirasi.title}</td>
+          <td style={{ color: "black", borderBottomColor: 'black', borderWidth: 1, borderColor: '#b4b4b4' }}>{props.aspirasi.description}</td>
+          <td style={{ color: "black", borderBottomColor: 'black', borderWidth: 1, borderColor: '#b4b4b4' }}>{props.aspirasi.type}</td>
         </tr>
-        <hr />
       </tbody>
     </>
   );

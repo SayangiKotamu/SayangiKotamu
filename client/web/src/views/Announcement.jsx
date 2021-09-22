@@ -109,14 +109,14 @@ function Announcement() {
             </div>
           </div>
           <div
-            class="card"
-            style={{ backgroundColor: "#f15447", borderWidth: 1 }}
+            class="card shadow-xl"
+            style={{ backgroundColor: "#f7f7f7", borderWidth: 1, borderColor: '#f15447' }}
           >
             <div class="m-8">
               <form action="" type="submit" onSubmit={handleSubmitAnnouncement}>
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
+                    <span class="label-text" style={{ color: "#f15447" }}>
                       Judul
                     </span>
                   </label>
@@ -130,7 +130,7 @@ function Announcement() {
 
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
+                    <span class="label-text" style={{ color: "#f15447" }}>
                       Isi Pengumuman
                     </span>
                   </label>
@@ -147,7 +147,7 @@ function Announcement() {
                     type="submit"
                     value="Buat Pengumuman"
                     class="btn"
-                    style={{ backgroundColor: "black" }}
+                    style={{ backgroundColor: "#f15447" }}
                   />
                 </div>
               </form>

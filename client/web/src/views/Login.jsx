@@ -70,26 +70,22 @@ function Login() {
             className="text-center lg:text-left"
             style={{ width: "100%", marginRight: "10%" }}
           >
-            <h1 className="mb-5 text-5xl font-bold">Selamat datang, warga!</h1>
-            <p className="mb-5 text-xl italic">
-              "SayangiKotamu merupakan platform super-app city yang didesain
+            <h1 className="mb-5 text-5xl font-bold">Selamat datang!</h1>
+            <p className="mb-5 text-lg italic text-gray-500">
+              SayangiKotamu merupakan platform super-app city yang didesain
               sebagai one-stop service untuk membantu warga Indonesia mengatasi
-              masalah sehari-hari. Dengan SmartApp, warga dan pemerintah dapat
-              bersinergi secara efektif dan efisien untuk menuntaskan
-              permasalahan kota secara digital, demi menunjang industri 4.0
-              serta menciptakan sumber daya manusia yang siap untuk
-              berkontribusi dalam kemajuan kota dari berbagai aspek."
+              permasalahan kota sehari-hari.
             </p>
           </div>
           <div className="card col-6 w-full max-w shadow-2xl bg-base-500">
-            <div className="card-body" style={{ backgroundColor: "#f15447" }}>
+            <div className="card-body" style={{ backgroundColor: "#f7f7f7" }}>
               <form action="" type="submit" onSubmit={handleLogin}>
                 <div className="text-center">
                   <h1 className="mb-3 text-4xl font-bold">Masuk</h1>
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Email</span>
+                    <span className="label-text" style={{ color: '#f15447 '}}>Email</span>
                   </label>
                   <input
                     type="text"
@@ -101,7 +97,7 @@ function Login() {
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Password</span>
+                    <span className="label-text" style={{ color: '#f15447 '}}>Password</span>
                   </label>
                   <input
                     type="password"
@@ -116,15 +112,15 @@ function Login() {
                     type="submit"
                     value="Masuk"
                     className="btn"
-                    style={{ backgroundColor: "black" }}
+                    style={{ backgroundColor: "#f15447" }}
                   />
                 </div>
                 <label className="label-text-alt text-center mt-2">
-                  <p className="text-xl">
+                  <p className="text-md">
                     Belum mempunyai akun?{" "}
                     <a
                       href="#"
-                      style={{ color: "blue" }}
+                      style={{ color: "#6382ff" }}
                       onClick={() => {
                         handleToRegister();
                       }}

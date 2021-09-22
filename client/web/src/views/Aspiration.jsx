@@ -63,7 +63,7 @@ function Announcement() {
         <Navbar />
         {loading ? (
           <lottie-player
-            src="https://assets9.lottiefiles.com/packages/lf20_dXaGKl.json"
+            src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
             background="transparent"
             speed="1"
             style={{
@@ -76,7 +76,7 @@ function Announcement() {
           ></lottie-player>
         ) : (
           <div
-            className="container"
+            className="container shadow-xl"
             style={{ marginLeft: "10%", marginTop: "5%" }}
           >
             <div className="justify-between grid grid-cols-2">
@@ -103,7 +103,7 @@ function Announcement() {
             </div>
             <div
               className="card"
-              style={{ backgroundColor: "#f15447", borderWidth: 1 }}
+              style={{ backgroundColor: "#f7f7f7", borderWidth: 1, borderColor: '#f15447' }}
             >
               <div className="m-8">
                 <div className="overflow-x-auto" style={{ height: "600px" }}>
@@ -113,7 +113,7 @@ function Announcement() {
                         <th
                           style={{
                             color: "white",
-                            backgroundColor: "black",
+                            backgroundColor: "#f15447",
                             fontSize: 20,
                           }}
                         >
@@ -122,7 +122,7 @@ function Announcement() {
                         <th
                           style={{
                             color: "white",
-                            backgroundColor: "black",
+                            backgroundColor: "#f15447",
                             fontSize: 20,
                           }}
                         >
@@ -131,7 +131,7 @@ function Announcement() {
                         <th
                           style={{
                             color: "white",
-                            backgroundColor: "black",
+                            backgroundColor: "#f15447",
                             fontSize: 20,
                           }}
                         >

@@ -102,7 +102,7 @@ function Detail() {
         <Navbar />
         {loading ? (
           <lottie-player
-            src="https://assets9.lottiefiles.com/packages/lf20_dXaGKl.json"
+            src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
             background="transparent"
             speed="1"
             style={{
@@ -143,18 +143,21 @@ function Detail() {
               </div>
               <div
                 class="grid grid-cols-5"
-                style={{ height: "650px", borderWidth: 1, borderRadius: 5 }}
+                style={{ height: "650px" }}
               >
                 <div
-                  class="card-body col-span-2"
+                  class="card-body col-span-2 overflow-auto"
                   style={{
-                    backgroundColor: "#f15447",
-                    borderWidth: 1,
+                    backgroundColor: "#f7f7f7",
+                    borderColor: 'black',
+                    borderWidth: 2,
+                    borderTopLeftRadius: 5,
+                    borderBottomLeftRadius: 5
                   }}
                 >
                   <h2
                     class="mb-5 text-2xl font-bold"
-                    style={{ color: "white" }}
+                    style={{ color: "black" }}
                   >
                     {reportDetail?.category?.reports[0].title}
                   </h2>
@@ -168,10 +171,11 @@ function Detail() {
                       <img
                         src={reportDetail?.category?.reports[0].picture}
                         alt="No Image"
+                        class="shadow-lg"
                         style={{
-                          height: "200px",
                           width: "100%",
                           borderWidth: 1,
+                          borderRadius: 5,
                         }}
                       />
                     </div>
@@ -179,7 +183,7 @@ function Detail() {
                       <div class="mr-3">
                         <button
                           class="btn btn-square btn-ghost mt-2"
-                          style={{ color: "white" }}
+                          style={{ color: "black" }}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +203,7 @@ function Detail() {
                       <div style={{ marginLeft: "80%" }}>
                         <button
                           class="btn btn-square btn-ghost mt-2"
-                          style={{ color: "white" }}
+                          style={{ color: "black" }}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -220,8 +224,8 @@ function Detail() {
                     <div
                       class="mt-2"
                       style={{
-                        height: "220px",
-                        width: "100%",
+                        height: "23vh",
+                        width: "100wh",
                         borderWidth: 1,
                       }}
                     >
@@ -240,14 +244,14 @@ function Detail() {
                           <Popup>Lokasi pelaporan</Popup>
                         </Marker>
                       </MapContainer>
-                      ,
+                      
                     </div>
                     <div class="justify-between grid grid-cols-2 mt-3">
                       <div class="mr-3">
                         <div class="mb-1">
                           <h1
                             class="mb-1 text-l font-bold"
-                            style={{ color: "white" }}
+                            style={{ color: "black" }}
                           >
                             Lokasi
                           </h1>
@@ -256,7 +260,7 @@ function Detail() {
                       <div class="ml-3">
                         <h1
                           class="mb-2 text-l text-right underline"
-                          style={{ color: "white" }}
+                          style={{ color: "black" }}
                         >
                           {reportDetail?.category?.reports[0].location}
                         </h1>
@@ -267,8 +271,8 @@ function Detail() {
                 <div
                   className="card-body col-span-3"
                   style={{
-                    backgroundColor: "#f15447",
-                    borderWidth: 1,
+                    backgroundColor: "#f7f7f7",
+                    borderWidth: 2,
                   }}
                 >
                   <div
@@ -280,7 +284,7 @@ function Detail() {
                     <div
                       class="card-body col-span-3"
                       style={{
-                        backgroundColor: "#f15447",
+                        backgroundColor: "#f7f7f7",
                       }}
                     >
                       <div
@@ -312,7 +316,7 @@ function Detail() {
                         <div class="ml-3">
                           <h1
                             class="mb-2 text-xl font-bold text-right"
-                            style={{ color: "white" }}
+                            style={{ color: "black" }}
                           >
                             {reportDetail?.category?.name}
                           </h1>
@@ -327,13 +331,13 @@ function Detail() {
                         <div class="mt-8">
                           <h1
                             class="mb-1 text-xl font-bold underline"
-                            style={{ color: "white" }}
+                            style={{ color: "#f15447" }}
                           >
                             Deskripsi
                           </h1>
                           <p
                             class="text-xl text-justify italic"
-                            style={{ width: "100%", color: "white" }}
+                            style={{ width: "100%", color: "black" }}
                           >
                             {reportDetail?.category?.reports[0].description}
                           </p>
@@ -341,13 +345,13 @@ function Detail() {
                         <div class="mt-8">
                           <h1
                             class="mb-3 text-xl font-bold underline"
-                            style={{ color: "white" }}
+                            style={{ color: "#f15447" }}
                           >
                             Tanggal Pemasukan
                           </h1>
                           <p
                             class="text-xl text-justify italic"
-                            style={{ color: "white" }}
+                            style={{ color: "black" }}
                           >
                             {formatDateWithHour(
                               reportDetail?.category?.reports[0].issuedDate
@@ -357,7 +361,7 @@ function Detail() {
                         <div class="mt-8">
                           <h1
                             class="mb-1 text-xl font-bold underline"
-                            style={{ color: "white" }}
+                            style={{ color: "#f15447"}}
                           >
                             Tanggal Penyelesaian
                           </h1>
@@ -365,7 +369,7 @@ function Detail() {
                           "selesai" ? (
                             <p
                               class="text-xl text-justify mt-2 italic"
-                              style={{ color: "white" }}
+                              style={{ color: "black" }}
                             >
                               Sedang dalam proses
                             </p>
@@ -374,7 +378,7 @@ function Detail() {
                               class="text-xl text-justify mt-2 italic"
                               style={{
                                 width: "100%",
-                                color: "white",
+                                color: "black",
                               }}
                             >
                               {formatDateWithHour(
@@ -386,7 +390,7 @@ function Detail() {
                       </div>
                       <button
                         class="btn btn-block mt-10"
-                        style={{ backgroundColor: "black" }}
+                        style={{ backgroundColor: "#f15447" }}
                         onClick={handleEditReport}
                       >
                         Proses
