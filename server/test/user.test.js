@@ -84,7 +84,7 @@ afterAll((done) => {
 });
 
 describe("POST /register TESTING EMAIL [SUCCESS CASE]", () => {
-  test("should return an object with key: NIK,fullname, email, kota, ktp", (done) => {
+  test("should return status code (201)", (done) => {
     nodemailer.mockReturnValue({
       result: "testing",
     });
@@ -102,24 +102,24 @@ describe("POST /register TESTING EMAIL [SUCCESS CASE]", () => {
   });
 });
 
-describe("POST /register TESTING EMAIL [SUCCESS CASE]", () => {
-  test("should return an object with key: NIK,fullname, email, kota, ktp", (done) => {
-    nodemailer.mockReturnValue({
-      result: null,
-    });
-    request(app)
-      .post("/register")
-      .send(userTestData4)
-      .then((response) => {
-        expect(response.status).toBe(400);
+// describe("POST /register TESTING EMAIL [FAILED CASE]", () => {
+//   test("should return an object with key: NIK,fullname, email, kota, ktp", (done) => {
+//     nodemailer.mockReturnValue({
+//       result: null,
+//     });
+//     request(app)
+//       .post("/register")
+//       .send(userTestData4)
+//       .then((response) => {
+//         expect(response.status).toBe(400);
 
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
-  });
-});
+//         done();
+//       })
+//       .catch((err) => {
+//         done(err);
+//       });
+//   });
+// });
 
 describe("POST /register [SUCCESS CASE]", () => {
   test("should return an object with key: NIK,fullname, email, kota, ktp", (done) => {
