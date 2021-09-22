@@ -43,6 +43,8 @@ function Dashboard() {
     settotalReportPerCategory(totalReportsPerCategory);
   }, [categories]);
 
+  console.log(categories);
+
   useEffect(() => {
     let yourRate = rating.map((rate) => {
       return rate.rating;
@@ -70,6 +72,7 @@ function Dashboard() {
         className="min-h-screen bg-cover"
         style={{
           backgroundColor: "white",
+          marginBottom: "2%",
         }}
       >
         <Navbar />
@@ -80,7 +83,7 @@ function Dashboard() {
                 Selamat datang, Pejuang Negara!
               </h2>
             </div>
-            {ratingScore ? (
+            {ratingScore > 0 ? (
               <>
                 <div class="card" style={{ backgroundColor: "#f15447" }}>
                   <div class="m-8">
@@ -101,7 +104,7 @@ function Dashboard() {
                         style={{
                           borderWidth: 1,
                           width: "7%",
-                          marginLeft: "48%",
+                          marginLeft: "46.5%",
                           marginTop: "1%",
                         }}
                       >
@@ -142,8 +145,8 @@ function Dashboard() {
                       <div
                         style={{
                           borderWidth: 1,
-                          width: "10%",
-                          marginLeft: "48%",
+                          width: "7%",
+                          marginLeft: "46.5%",
                           marginTop: "1%",
                         }}
                       >
@@ -156,7 +159,7 @@ function Dashboard() {
                           value={ratingScore}
                         />
                         <p class="text-xl text-center font-bold underline">
-                          {ratingScore}
+                          0.0
                         </p>
                       </div>
                     </div>
