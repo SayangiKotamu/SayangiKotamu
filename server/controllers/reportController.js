@@ -10,6 +10,9 @@ class ReportController {
   static async showAll(req, res, next) {
     try {
       let data = await Report.find()
+        .sort({
+          issuedDate: "desc",
+        })
         .populate("dinas")
         .populate("user")
         .populate("category");
@@ -216,21 +219,31 @@ class ReportController {
     try {
       if (status) {
         const allReports = await Report.find({ dinas: id, status })
+          .sort({
+            issuedDate: "desc",
+          })
           .populate("dinas")
           .populate("user")
           .populate("category");
         res.status(200).json(allReports);
       } else if (category) {
         const allReports = await Report.find({ dinas: id, category })
+          .sort({
+            issuedDate: "desc",
+          })
           .populate("dinas")
           .populate("user")
           .populate("category");
         res.status(200).json(allReports);
       } else {
         const allReports = await Report.find({ dinas: id })
+          .sort({
+            issuedDate: "desc",
+          })
           .populate("dinas")
           .populate("user")
           .populate("category");
+
         res.status(200).json(allReports);
       }
     } catch (err) {
