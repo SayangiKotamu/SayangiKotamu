@@ -18,8 +18,12 @@ function Dashboard() {
   const [ratingScore, setRatingScore] = useState(0);
   const [listCategoryName, setListCategoryName] = useState([]);
   const [totalReportByCategory, settotalReportPerCategory] = useState([]);
-  const { categories, loading, error } = useSelector((state) => state.category);
-  const { reports } = useSelector((state) => state.report);
+  const { categories, loadingCategory, error } = useSelector(
+    (state) => state.category
+  );
+  const { reports, loadingReport, loadingReportCategory } = useSelector(
+    (state) => state.report
+  );
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   if (!isLoggedIn && !localStorage.getItem("access_token")) {
@@ -36,15 +40,17 @@ function Dashboard() {
   }
 
   useEffect(() => {
-    dispatch(fetchReportByCategory(idCategory));
+    if (idCategory) {
+      dispatch(fetchReportByCategory(idCategory));
+    } else {
+      dispatch(fetchReports());
+    }
   }, [idCategory]);
 
   useEffect(() => {
     dispatch(fetchReports());
     dispatch(fetchCategories());
   }, []);
-
-  console.log(reports);
 
   useEffect(() => {
     let categoriesName = categories.map((category) => {
@@ -99,7 +105,14 @@ function Dashboard() {
             </div>
             {ratingScore > 0 ? (
               <>
-                <div class="card shadow-xl" style={{ backgroundColor: "#f7f7f7", borderWidth: 2, borderColor: '#f15447' }}>
+                <div
+                  class="card shadow-xl"
+                  style={{
+                    backgroundColor: "#f7f7f7",
+                    borderWidth: 2,
+                    borderColor: "#f15447",
+                  }}
+                >
                   <div class="m-8">
                     <div class="mt-6 mb-3 p-5">
                       <p class="text-xl text-center" style={{ color: "black" }}>
@@ -117,7 +130,7 @@ function Dashboard() {
                       <div
                         style={{
                           borderWidth: 1,
-                          borderColor: '#f15447',
+                          borderColor: "#f15447",
                           borderRadius: 10,
                           width: "13%",
                           marginLeft: "44%",
@@ -142,10 +155,17 @@ function Dashboard() {
               </>
             ) : (
               <>
-                <div class="card" style={{ backgroundColor: "#f15447" }}>
+                <div
+                  class="card"
+                  style={{
+                    backgroundColor: "#f7f7f7",
+                    borderWidth: 2,
+                    borderColor: "#f15447",
+                  }}
+                >
                   <div class="m-8">
                     <div class="mt-6 mb-3">
-                      <p class="text-xl text-center" style={{ color: "white" }}>
+                      <p class="text-xl text-center" style={{ color: "black" }}>
                         Terima kasih banyak telah menanggapi keluh kesah para
                         masyarakat selama ini, semangat terus bapak dan ibu!
                         Dengan ini kami menyampaikan bahwa kami mempunyai
@@ -153,7 +173,7 @@ function Dashboard() {
                         masyarakat terkait dengan cepat tanggap bapak ibu
                         terkait pelaporan, maupun dengan solusi yang diberikan.
                       </p>
-                      <p class="text-xl text-center" style={{ color: "white" }}>
+                      <p class="text-xl text-center" style={{ color: "black" }}>
                         Namun dikarenakan belum adanya penilaian dari pengguna
                         aplikasi kami, kami belum dapat memberikan informasi
                         terkait kepada Bapak dan Ibu.
@@ -161,7 +181,7 @@ function Dashboard() {
                       <div
                         style={{
                           borderWidth: 1,
-                          borderColor: '#f15447',
+                          borderColor: "#f15447",
                           borderRadius: 10,
                           width: "13%",
                           marginLeft: "44%",
@@ -194,7 +214,10 @@ function Dashboard() {
             }}
           >
             <h2 className="mb-5 text-3xl font-bold">Progress Pengaduan</h2>
-            <p class="text-xl text-center mb-6 mt-10" style={{ color: "black" }}>
+            <p
+              class="text-xl text-center mb-6 mt-10"
+              style={{ color: "black" }}
+            >
               Berikut kami tampilkan progress pengaduan yang masuk secara
               keseluruhan, seluruh dinas yang menggunakan jasa kami:
             </p>
@@ -203,7 +226,7 @@ function Dashboard() {
               style={{
                 backgroundColor: "white",
                 borderWidth: 2,
-                borderColor: '#f15447'
+                borderColor: "#f15447",
               }}
             >
               <Bar
@@ -238,20 +261,20 @@ function Dashboard() {
             style={{ marginLeft: "10%", marginTop: "5%" }}
           >
             <h2 className="mb-5 text-3xl font-bold">Kumpulan Pengaduan</h2>
-            <p class="text-xl text-center mb-6 mt-10" style={{ color: "black" }}>
+            <p
+              class="text-xl text-center mb-6 mt-10"
+              style={{ color: "black" }}
+            >
               Berikut kami tampilkan kumpulan pengaduan berdasarkan kategori
               yang masuk sesuai dengan dinas terkait yang menggunakan jasa kami:
             </p>
-            <div
-              className="grid grid-cols-3"
-              style={{ height: "650px" }}
-            >
+            <div className="grid grid-cols-3" style={{ height: "650px" }}>
               <div
                 className="card-body shadow-xl"
                 style={{
                   backgroundColor: "#f7f7f7",
                   borderWidth: 2,
-                  borderColor: '#f15447',
+                  borderColor: "#f15447",
                   borderTopLeftRadius: 10,
                   borderBottomLeftRadius: 10,
                 }}
@@ -262,58 +285,42 @@ function Dashboard() {
                 >
                   Kategori Pengaduan
                 </h2>
-                {loading ? (
-                  <lottie-player
-                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
-                    background="transparent"
-                    speed="1"
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      marginLeft: "28%",
+
+                <div>
+                  <button
+                    className="btn btn-block mb-3"
+                    style={{ backgroundColor: "#f15447" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(fetchReports());
+                      setCategoryName("Seluruh Laporan");
                     }}
-                    loop
-                    autoplay
-                  ></lottie-player>
-                ) : (
-                  <>
-                    <div>
+                  >
+                    Seluruh Laporan
+                  </button>
+                  {categories.map((category) => {
+                    return (
                       <button
                         className="btn btn-block mb-3"
                         style={{ backgroundColor: "#f15447" }}
                         onClick={(e) => {
                           e.preventDefault();
-                          dispatch(fetchReports());
-                          setCategoryName("Seluruh Laporan");
+                          setIDCategory(category._id);
+                          setCategoryName(category.name);
                         }}
+                        value={category._id}
                       >
-                        Seluruh Laporan
+                        {category.name}
                       </button>
-                      {categories.map((category) => {
-                        return (
-                          <button
-                            className="btn btn-block mb-3"
-                            style={{ backgroundColor: "#f15447" }}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setIDCategory(category._id);
-                              setCategoryName(category.name);
-                            }}
-                            value={category._id}
-                          >
-                            {category.name}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </>
-                )}
+                    );
+                  })}
+                </div>
               </div>
               <div
                 className="card-body col-span-2 shadow-xl"
                 style={{
                   backgroundColor: "#f7f7f7",
-                  borderColor: '#f15447',
+                  borderColor: "#f15447",
                   borderWidth: 2,
                   borderTopRightRadius: 10,
                   borderBottomRightRadius: 10,
@@ -349,17 +356,34 @@ function Dashboard() {
                     maxHeight: "500px",
                   }}
                 >
-                  {reports.length > 0 ? (
-                    reports.map((report) => {
-                      return <Content report={report} />;
-                    })
+                  {loadingReport || loadingCategory ? (
+                    <lottie-player
+                      src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                      background="transparent"
+                      speed="1"
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        marginLeft: "39%",
+                      }}
+                      loop
+                      autoplay
+                    ></lottie-player>
                   ) : (
-                    <h1
-                      className="text-center text-3xl"
-                      style={{ color: "black" }}
-                    >
-                      Data tidak ditemukan!
-                    </h1>
+                    <>
+                      {reports.length > 0 ? (
+                        reports.map((report) => {
+                          return <Content report={report} />;
+                        })
+                      ) : (
+                        <h1
+                          className="text-center text-3xl"
+                          style={{ color: "black" }}
+                        >
+                          Data tidak ditemukan!
+                        </h1>
+                      )}
+                    </>
                   )}
                 </div>
               </div>

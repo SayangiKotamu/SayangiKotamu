@@ -12,7 +12,9 @@ function Detail() {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { reportDetail, loading, error } = useSelector((state) => state.report);
+  const { reportDetail, loadingReport, loadingPatch, error } = useSelector(
+    (state) => state.report
+  );
   const [status, setStatus] = useState(reportDetail.status);
 
   const [position, setPosition] = useState([0, 0]);
@@ -58,8 +60,8 @@ function Detail() {
       finishedDate: new Date(),
     };
 
-    if (payload.status === "Diterima") {
-      toast.error("Anda belum mengubah report yang perlu diproses.", {
+    if (payload.status === "diterima") {
+      toast.error("Anda belum mengubah pengaduan yang perlu diproses.", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -70,7 +72,15 @@ function Detail() {
       });
     } else {
       dispatch(patchReport(id, payload));
-      history.push("/beranda");
+      toast.success("Terima kasih telah memproses pengaduan ini", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -100,7 +110,7 @@ function Detail() {
         }}
       >
         <Navbar />
-        {loading ? (
+        {loadingReport ? (
           <lottie-player
             src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
             background="transparent"
@@ -141,18 +151,15 @@ function Detail() {
                   </button>
                 </div>
               </div>
-              <div
-                class="grid grid-cols-5"
-                style={{ height: "650px" }}
-              >
+              <div class="grid grid-cols-5" style={{ height: "650px" }}>
                 <div
                   class="card-body col-span-2 overflow-auto"
                   style={{
                     backgroundColor: "#f7f7f7",
-                    borderColor: 'black',
+                    borderColor: "black",
                     borderWidth: 2,
                     borderTopLeftRadius: 5,
-                    borderBottomLeftRadius: 5
+                    borderBottomLeftRadius: 5,
                   }}
                 >
                   <h2
@@ -244,7 +251,6 @@ function Detail() {
                           <Popup>Lokasi pelaporan</Popup>
                         </Marker>
                       </MapContainer>
-                      
                     </div>
                     <div class="justify-between grid grid-cols-2 mt-3">
                       <div class="mr-3">
@@ -361,7 +367,7 @@ function Detail() {
                         <div class="mt-8">
                           <h1
                             class="mb-1 text-xl font-bold underline"
-                            style={{ color: "#f15447"}}
+                            style={{ color: "#f15447" }}
                           >
                             Tanggal Penyelesaian
                           </h1>
@@ -388,13 +394,28 @@ function Detail() {
                           )}
                         </div>
                       </div>
-                      <button
-                        class="btn btn-block mt-10"
-                        style={{ backgroundColor: "#f15447" }}
-                        onClick={handleEditReport}
-                      >
-                        Proses
-                      </button>
+                      {loadingPatch ? (
+                        <lottie-player
+                          src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                          background="transparent"
+                          speed="1"
+                          style={{
+                            width: "200px",
+                            height: "50px",
+                            marginLeft: "39%",
+                          }}
+                          loop
+                          autoplay
+                        ></lottie-player>
+                      ) : (
+                        <button
+                          class="btn btn-block mt-10"
+                          style={{ backgroundColor: "#f15447" }}
+                          onClick={handleEditReport}
+                        >
+                          Proses
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

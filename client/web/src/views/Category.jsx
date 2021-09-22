@@ -11,6 +11,7 @@ function Announcement() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { loadingCategory } = useSelector((state) => state.category);
 
   useEffect(() => {
     if (!isLoggedIn && !localStorage.getItem("access_token")) {
@@ -104,7 +105,7 @@ function Announcement() {
             class="card"
             style={{
               backgroundColor: "#f7f7f7",
-              borderColor: '#f15447',
+              borderColor: "#f15447",
               borderWidth: 1,
             }}
           >
@@ -124,14 +125,30 @@ function Announcement() {
                     style={{ color: "black" }}
                   />
                 </div>
-                <div class="form-control mt-6 mb-3">
-                  <input
-                    type="submit"
-                    value="Buat Kategori"
-                    class="btn"
-                    style={{ backgroundColor: "#f15447" }}
-                  />
-                </div>
+                {loadingCategory ? (
+                  <lottie-player
+                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                    background="transparent"
+                    speed="1"
+                    style={{
+                      width: "200px",
+                      height: "70px",
+                      marginLeft: "44%",
+                      marginTop: "1%",
+                    }}
+                    loop
+                    autoplay
+                  ></lottie-player>
+                ) : (
+                  <div class="form-control mt-6 mb-3">
+                    <input
+                      type="submit"
+                      value="Buat Kategori"
+                      class="btn"
+                      style={{ backgroundColor: "#f15447" }}
+                    />
+                  </div>
+                )}
               </form>
             </div>
           </div>

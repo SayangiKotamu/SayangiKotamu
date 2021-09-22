@@ -1,9 +1,8 @@
-import { ADD_ANNOUNCEMENT, SET_LOADING, SET_ERROR } from "./actionType";
+import { ADD_ANNOUNCEMENT, SET_LOADING } from "./actionType";
 
 const initialState = {
   announcements: [],
-  loading: true,
-  errors: null,
+  loadingAnnouncement: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,9 +11,7 @@ const reducer = (state = initialState, action) => {
     case ADD_ANNOUNCEMENT:
       return { ...state, announcements: [...state, payload] };
     case SET_LOADING:
-      return { ...state, loading: payload };
-    case SET_ERROR:
-      return { ...state, errors: payload };
+      return { ...state, loadingAnnouncement: payload };
     default:
       return state;
   }

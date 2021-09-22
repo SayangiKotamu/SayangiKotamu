@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,6 +10,7 @@ function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { loadingLogin } = useSelector((state) => state.auth);
 
   const handleToRegister = () => {
     history.push("/daftar");
@@ -85,7 +86,9 @@ function Login() {
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text" style={{ color: '#f15447 '}}>Email</span>
+                    <span className="label-text" style={{ color: "#f15447 " }}>
+                      Email
+                    </span>
                   </label>
                   <input
                     type="text"
@@ -97,7 +100,9 @@ function Login() {
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text" style={{ color: '#f15447 '}}>Password</span>
+                    <span className="label-text" style={{ color: "#f15447 " }}>
+                      Password
+                    </span>
                   </label>
                   <input
                     type="password"
@@ -107,14 +112,30 @@ function Login() {
                     value={password}
                   />
                 </div>
-                <div className="form-control mt-6 mb-3">
-                  <input
-                    type="submit"
-                    value="Masuk"
-                    className="btn"
-                    style={{ backgroundColor: "#f15447" }}
-                  />
-                </div>
+                {loadingLogin ? (
+                  <lottie-player
+                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                    background="transparent"
+                    speed="1"
+                    style={{
+                      width: "200px",
+                      height: "70px",
+                      marginLeft: "28%",
+                    }}
+                    loop
+                    autoplay
+                  ></lottie-player>
+                ) : (
+                  <div className="form-control mt-6 mb-3">
+                    <input
+                      type="submit"
+                      value="Masuk"
+                      className="btn"
+                      style={{ backgroundColor: "#f15447" }}
+                    />
+                  </div>
+                )}
+
                 <label className="label-text-alt text-center mt-2">
                   <p className="text-md">
                     Belum mempunyai akun?{" "}
