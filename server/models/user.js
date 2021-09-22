@@ -63,7 +63,10 @@ userSchema.pre("save", function (next) {
   user.activateEmailToken = emailToken;
 
   let transporter;
-  if (process.env.NODE_ENV === "development") {
+  if (
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "production"
+  ) {
     transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
