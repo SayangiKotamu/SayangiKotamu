@@ -16,7 +16,7 @@ function EmailActivated() {
             </div>
           </div>
           <div
-            class="card"
+            class="card shadow-2xl"
             style={{
               backgroundColor: "#f7f7f7",
               borderColor: "#f15447",
