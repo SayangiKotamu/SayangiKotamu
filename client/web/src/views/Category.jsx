@@ -103,8 +103,8 @@ function Announcement() {
           <div
             class="card"
             style={{
-              backgroundColor: "#f15447",
-
+              backgroundColor: "#f7f7f7",
+              borderColor: '#f15447',
               borderWidth: 1,
             }}
           >
@@ -112,7 +112,7 @@ function Announcement() {
               <form action="" type="submit" onSubmit={handleSubmitCategory}>
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
+                    <span class="label-text" style={{ color: "#f15447" }}>
                       Judul Kategori
                     </span>
                   </label>
@@ -129,7 +129,7 @@ function Announcement() {
                     type="submit"
                     value="Buat Kategori"
                     class="btn"
-                    style={{ backgroundColor: "black" }}
+                    style={{ backgroundColor: "#f15447" }}
                   />
                 </div>
               </form>
