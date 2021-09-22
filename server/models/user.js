@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const { hashPassword } = require("../helpers/bcrypt");
 const { jwtSignEmailActivate } = require("../helpers/jwt");
+const mailer = require("../helpers/nodemailer");
 
 const userSchema = new mongoose.Schema({
   fullname: {
@@ -48,7 +49,7 @@ const userSchema = new mongoose.Schema({
   aspirations: [],
 });
 
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
   const user = this;
   if (!user.isModified("password")) return next();
   user.password = hashPassword(user.password);
@@ -61,38 +62,45 @@ userSchema.pre("save", function (next) {
   });
 
   user.activateEmailToken = emailToken;
-
-  let transporter;
-  if (
-    process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "production"
-  ) {
-    transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_NODEMAILER,
-        pass: process.env.PASSWORD_EMAIL_NODEMAILER,
-      },
-    });
-    let mailOptions = {
-      from: "noreply@gmail.com",
-      to: `${user.email}`,
-      subject: "Verification Email",
-      html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}/${emailToken}'>click here</a> to activate your email</p>`,
-    };
-
-    transporter.sendMail(mailOptions, function (err, data) {
-      // ! LATER: DI ERROR HANDLER
-      if (err) {
-        next({ name: "EmailError" });
-      } else {
-        console.log("email sent");
-        next();
-      }
-    });
-  } else {
+  try {
+    let node = await mailer(user.email, emailToken);
+    console.log(node, "--------");
     next();
+  } catch (error) {
+    console.log(error, "erooorrrrrrr");
+    next(error);
   }
+  // let transporter;
+  // if (
+  //   process.env.NODE_ENV === "development" ||
+  //   process.env.NODE_ENV === "production"
+  // ) {
+  //   transporter = nodemailer.createTransport({
+  //     service: "gmail",
+  //     auth: {
+  //       user: process.env.EMAIL_NODEMAILER,
+  //       pass: process.env.PASSWORD_EMAIL_NODEMAILER,
+  //     },
+  //   });
+  //   let mailOptions = {
+  //     from: "noreply@gmail.com",
+  //     to: `${user.email}`,
+  //     subject: "Verification Email",
+  //     html: `<h1>Verification Email </h1> \n <p>Please <a href='${process.env.URL}/${emailToken}'>click here</a> to activate your email</p>`,
+  //   };
+
+  //   transporter.sendMail(mailOptions, function (err, data) {
+  //     // ! LATER: DI ERROR HANDLER
+  //     if (err) {
+  //       next({ name: "EmailError" });
+  //     } else {
+  //       console.log("email sent");
+  //       next();
+  //     }
+  //   });
+  // } else {
+  //   next();
+  // }
 });
 
 const User = mongoose.model("User", userSchema);

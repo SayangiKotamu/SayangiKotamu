@@ -5,12 +5,16 @@ const Categories = require("../models/categories");
 const User = require("../models/user");
 const Dinas = require("../models/dinas");
 const { jwtSign } = require("../helpers/jwt");
+const categoriesController = require("../controllers/categoriesController");
+
+// jest.mock("../controllers/categoriesController.js");
 
 let user;
 let dinas;
 let categories;
 
 beforeAll((done) => {
+  // categoriesController.mockClear();
   const dummyUser = {
     NIK: 1501111709990010,
     fullname: "test",
@@ -453,3 +457,8 @@ describe("POST /dinas/categories [ERROR CASE]", () => {
       });
   });
 });
+
+// test("Error category fall", () => {
+//   const categories = categoriesController.showAll();
+//   expect("test");
+// });

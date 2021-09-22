@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 
 // bungkus jadi function
 let url;
-if (
-  process.env.NODE_ENV === "development" ||
-  process.env.NODE_ENV === "production"
-) {
-  url = process.env.MONGODB_URL || "mongodb://localhost:27017/SayangiKotamu";
+if (process.env.NODE_ENV === "production") {
+  url = process.env.MONGODB_URL;
+} else if (process.env.NODE_ENV === "development") {
+  url = "mongodb://localhost:27017/SayangiKotamu";
 } else {
   url = "mongodb://localhost:27017/SayangiKotamu-test";
 }

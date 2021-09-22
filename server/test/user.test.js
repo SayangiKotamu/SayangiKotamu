@@ -2,7 +2,9 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const app = require("../app");
 const User = require("../models/user");
-const jwt = require("jsonwebtoken");
+const nodemailer = require("../helpers/nodemailer");
+
+jest.mock("../helpers/nodemailer");
 
 let userTestData = {
   NIK: 1501111709990002,
@@ -40,6 +42,15 @@ let userTestData3 = {
   ktp: "google.com",
 };
 
+let userTestData4 = {
+  NIK: 15011117099901100,
+  fullname: "test",
+  email: "testing4@gmail.com",
+  password: "123456",
+  kota: "jakarta",
+  ktp: "google.com",
+};
+
 // let testUser = {};
 beforeAll((done) => {
   const dummyUser = {
@@ -52,21 +63,8 @@ beforeAll((done) => {
     ktp: "google.com",
   };
 
-  // const dummyUser1 = {
-  //   NIK: 1501111719990001,
-  //   fullname: "test",
-  //   email: "emaialtests@test.com",
-  //   password: "123456",
-  //   kota: "jakarta",
-  //   isActive: false,
-  //   ktp: "google.com",
-  // };
   User.create(dummyUser)
     .then(() => {
-      //   return User.create(dummyUser1);
-      // })
-      // .then((res) => {
-      //   testUser = res;
       done();
     })
     .catch((err) => {
@@ -84,6 +82,44 @@ afterAll((done) => {
       done(err);
     });
 });
+
+describe("POST /register TESTING EMAIL [SUCCESS CASE]", () => {
+  test("should return status code (201)", (done) => {
+    nodemailer.mockReturnValue({
+      result: "testing",
+    });
+    request(app)
+      .post("/register")
+      .send(userTestData4)
+      .then((response) => {
+        expect(response.status).toBe(201);
+
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+// describe("POST /register TESTING EMAIL [FAILED CASE]", () => {
+//   test("should return an object with key: NIK,fullname, email, kota, ktp", (done) => {
+//     nodemailer.mockReturnValue({
+//       result: null,
+//     });
+//     request(app)
+//       .post("/register")
+//       .send(userTestData4)
+//       .then((response) => {
+//         expect(response.status).toBe(400);
+
+//         done();
+//       })
+//       .catch((err) => {
+//         done(err);
+//       });
+//   });
+// });
 
 describe("POST /register [SUCCESS CASE]", () => {
   test("should return an object with key: NIK,fullname, email, kota, ktp", (done) => {
@@ -445,43 +481,3 @@ describe("PATCH / [CASE FAILED / NO EMAIL FOUND]", () => {
       });
   });
 });
-
-// describe("PATCH / [CASE FAILED / NO EMAIL FOUND]", () => {
-//   let activeEmail = "";
-//   test("Should ERROR because of [ALREADY ACTIVATE] and status code (401)", (done) => {
-//     User.findOne({ email: testUser.email })
-//       .then((res) => {
-//         // console.log(res);
-//         activeEmail = res.activateEmailToken;
-//         const verifiedToken = jwt.verify(
-//           res.activateEmailToken,
-//           process.env.JWT_EMAIL_ACTIVATE
-//         );
-//         delete verifiedToken.NIK;
-//         delete verifiedToken.email;
-//         delete verifiedToken.password;
-//         delete verifiedToken.iat;
-//         delete verifiedToken.exp;
-//         console.log(
-//           "🚀 ~ file: user.test.js ~ line 458 ~ .then ~ verifiedToken",
-//           verifiedToken
-//         );
-//         {
-//           return request(app)
-//             .patch("/activateEmail/" + activeEmail)
-//             .then((res) => {
-//               expect(res.status).toBe(401);
-//               expect(res.body).toEqual(
-//                 expect.objectContaining({
-//                   message: "Email token is invalid",
-//                 })
-//               );
-//               done();
-//             });
-//         }
-//       })
-//       .catch((err) => {
-//         done(err);
-//       });
-//   });
-// });
