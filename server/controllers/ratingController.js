@@ -6,7 +6,6 @@ class RatingController {
   static async getAll(req, res, next) {
     const { id, role } = req.user;
     try {
-      console.log(role);
       if (role === "dinas") {
         const getRating = await Rating.find({ dinas: id });
         res.status(200).json(getRating);
@@ -64,12 +63,10 @@ class RatingController {
         let divider = allDinasInRating.length;
 
         const newRating = (allRating / divider).toFixed(2);
-        console.log(newRating);
         await Dinas.updateOne({ _id: dinas._id }, { rating: newRating });
         res.status(201).json(createRating);
       }
     } catch (err) {
-      console.log(err);
       if (!err.errors) {
         next(err);
       } else {

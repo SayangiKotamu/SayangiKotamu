@@ -52,7 +52,6 @@ afterAll((done) => {
     });
 });
 
-console.log(user);
 describe("GET /notifications [SUCCESS CASE]", () => {
   test("should return an object with key: id,description, user", (done) => {
     let access_token = jwtSign({

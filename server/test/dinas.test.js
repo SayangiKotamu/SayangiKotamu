@@ -107,7 +107,6 @@ describe("POST / [CASE FAILED / NO NAME]", () => {
       .set("Accept", "application/json")
       .send(dinasRegister2)
       .then((res) => {
-        console.log(res.body, "<<<<<");
         expect(res.status).toBe(400);
         expect(res.body).toEqual(
           expect.objectContaining({
