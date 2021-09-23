@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "SayangiKotamu",
+    "slug": "SayangiKotamu",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

@@ -102,8 +102,12 @@ describe("POST /register TESTING EMAIL [SUCCESS CASE]", () => {
   });
 });
 
-// describe("POST /register TESTING EMAIL [FAILED CASE]", () => {
+// describe("POST /register TESTING EMAIL [FAILED CASE]", async () => {
 //   test("should return an object with key: NIK,fullname, email, kota, ktp", (done) => {
+//     // const addMock = jest.spyOn(nodemailer, "mailer");
+
+//     // addMock.mockImplementation(() => Promise.reject(new Error("test")));
+
 //     nodemailer.mockReturnValue({
 //       result: null,
 //     });

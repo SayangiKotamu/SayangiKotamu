@@ -67,7 +67,6 @@ class DinasController {
       if (err.name === "WrongEmailPassword") {
         next(err);
       }
-      console.log(err);
     }
   }
 
@@ -76,7 +75,7 @@ class DinasController {
       let data = await Dinas.find();
       res.status(200).json(data);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }

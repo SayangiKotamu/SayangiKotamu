@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postCategories } from "../stores/categories/action";
 
 function Announcement() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { loadingCategory } = useSelector((state) => state.category);
+
+  useEffect(() => {
+    if (!isLoggedIn && !localStorage.getItem("access_token")) {
+      history.push("/");
+      toast.error("Tolong login terlebih dahulu.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, []);
 
   const forName = (e) => {
     e.preventDefault();
@@ -87,8 +104,8 @@ function Announcement() {
           <div
             class="card"
             style={{
-              backgroundColor: "#f15447",
-
+              backgroundColor: "#f7f7f7",
+              borderColor: "#f15447",
               borderWidth: 1,
             }}
           >
@@ -96,7 +113,7 @@ function Announcement() {
               <form action="" type="submit" onSubmit={handleSubmitCategory}>
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
+                    <span class="label-text" style={{ color: "#f15447" }}>
                       Judul Kategori
                     </span>
                   </label>
@@ -108,14 +125,30 @@ function Announcement() {
                     style={{ color: "black" }}
                   />
                 </div>
-                <div class="form-control mt-6 mb-3">
-                  <input
-                    type="submit"
-                    value="Buat Kategori"
-                    class="btn"
-                    style={{ backgroundColor: "black" }}
-                  />
-                </div>
+                {loadingCategory ? (
+                  <lottie-player
+                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                    background="transparent"
+                    speed="1"
+                    style={{
+                      width: "200px",
+                      height: "70px",
+                      marginLeft: "44%",
+                      marginTop: "1%",
+                    }}
+                    loop
+                    autoplay
+                  ></lottie-player>
+                ) : (
+                  <div class="form-control mt-6 mb-3">
+                    <input
+                      type="submit"
+                      value="Buat Kategori"
+                      class="btn"
+                      style={{ backgroundColor: "#f15447" }}
+                    />
+                  </div>
+                )}
               </form>
             </div>
           </div>

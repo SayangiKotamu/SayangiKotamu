@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,6 +10,7 @@ function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { loadingLogin } = useSelector((state) => state.auth);
 
   const handleToRegister = () => {
     history.push("/daftar");
@@ -70,26 +71,24 @@ function Login() {
             className="text-center lg:text-left"
             style={{ width: "100%", marginRight: "10%" }}
           >
-            <h1 className="mb-5 text-5xl font-bold">Selamat datang, warga!</h1>
-            <p className="mb-5 text-xl italic">
-              "SayangiKotamu merupakan platform super-app city yang didesain
+            <h1 className="mb-5 text-5xl font-bold">Selamat datang!</h1>
+            <p className="mb-5 text-lg italic text-gray-500">
+              SayangiKotamu merupakan platform super-app city yang didesain
               sebagai one-stop service untuk membantu warga Indonesia mengatasi
-              masalah sehari-hari. Dengan SmartApp, warga dan pemerintah dapat
-              bersinergi secara efektif dan efisien untuk menuntaskan
-              permasalahan kota secara digital, demi menunjang industri 4.0
-              serta menciptakan sumber daya manusia yang siap untuk
-              berkontribusi dalam kemajuan kota dari berbagai aspek."
+              permasalahan kota sehari-hari.
             </p>
           </div>
           <div className="card col-6 w-full max-w shadow-2xl bg-base-500">
-            <div className="card-body" style={{ backgroundColor: "#f15447" }}>
+            <div className="card-body" style={{ backgroundColor: "#f7f7f7" }}>
               <form action="" type="submit" onSubmit={handleLogin}>
                 <div className="text-center">
                   <h1 className="mb-3 text-4xl font-bold">Masuk</h1>
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Email</span>
+                    <span className="label-text" style={{ color: "#f15447 " }}>
+                      Email
+                    </span>
                   </label>
                   <input
                     type="text"
@@ -101,7 +100,9 @@ function Login() {
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Password</span>
+                    <span className="label-text" style={{ color: "#f15447 " }}>
+                      Password
+                    </span>
                   </label>
                   <input
                     type="password"
@@ -111,20 +112,36 @@ function Login() {
                     value={password}
                   />
                 </div>
-                <div className="form-control mt-6 mb-3">
-                  <input
-                    type="submit"
-                    value="Masuk"
-                    className="btn"
-                    style={{ backgroundColor: "black" }}
-                  />
-                </div>
+                {loadingLogin ? (
+                  <lottie-player
+                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                    background="transparent"
+                    speed="1"
+                    style={{
+                      width: "200px",
+                      height: "70px",
+                      marginLeft: "28%",
+                    }}
+                    loop
+                    autoplay
+                  ></lottie-player>
+                ) : (
+                  <div className="form-control mt-6 mb-3">
+                    <input
+                      type="submit"
+                      value="Masuk"
+                      className="btn"
+                      style={{ backgroundColor: "#f15447" }}
+                    />
+                  </div>
+                )}
+
                 <label className="label-text-alt text-center mt-2">
-                  <p className="text-xl">
+                  <p className="text-md">
                     Belum mempunyai akun?{" "}
                     <a
                       href="#"
-                      style={{ color: "blue" }}
+                      style={{ color: "#6382ff" }}
                       onClick={() => {
                         handleToRegister();
                       }}

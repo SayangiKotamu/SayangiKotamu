@@ -14,11 +14,12 @@ function Content(props) {
   return (
     <>
       <div
-        className="grid grid-cols-3 mt-2"
+        className="grid grid-cols-3 mt-6 shadow-lg"
         style={{
           height: "170px",
           borderWidth: 1,
           borderColor: "white",
+          borderRadius: 8,
         }}
       >
         <a
@@ -44,7 +45,7 @@ function Content(props) {
         <div
           className="card-body col-span-2"
           style={{
-            backgroundColor: "#f15447",
+            backgroundColor: "white",
           }}
         >
           <div
@@ -55,22 +56,22 @@ function Content(props) {
               <div className="mb-6">
                 <h1
                   className="mb-1 text-l font-bold"
-                  style={{ color: "white" }}
+                  style={{ color: "#f15447" }}
                 >
                   Judul Pengaduan
                 </h1>
-                <p className="truncate text-m" style={{ color: "white" }}>
+                <p className="truncate text-m" style={{ color: "black" }}>
                   {props.report.title}
                 </p>
               </div>
               <div>
                 <h1
                   className="mb-1 text-l font-bold"
-                  style={{ color: "white" }}
+                  style={{ color: "#f15447" }}
                 >
                   Deskripsi
                 </h1>
-                <p className="truncate text-m" style={{ color: "white" }}>
+                <p className="truncate text-m" style={{ color: "black" }}>
                   {props.report.description}
                 </p>
               </div>
@@ -79,13 +80,13 @@ function Content(props) {
               <div div className="mb-6">
                 <h1
                   className="mb-1 text-l font-bold text-right"
-                  style={{ color: "white" }}
+                  style={{ color: "#f15447" }}
                 >
                   Tanggal Masuk
                 </h1>
                 <p
                   className="truncate text-m text-right"
-                  style={{ color: "white" }}
+                  style={{ color: "black" }}
                 >
                   {getFormatedDate(props.report.issuedDate)}
                 </p>
@@ -93,13 +94,13 @@ function Content(props) {
               <div>
                 <h1
                   className="mb-1 text-l font-bold text-right"
-                  style={{ color: "white" }}
+                  style={{ color: "#f15447" }}
                 >
                   Lokasi
                 </h1>
                 <p
                   className="truncate text-m text-right"
-                  style={{ color: "white" }}
+                  style={{ color: "black" }}
                 >
                   {props.report.location}
                 </p>

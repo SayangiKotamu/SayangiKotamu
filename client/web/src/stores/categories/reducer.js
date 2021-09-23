@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   categories: [],
-  loading: true,
+  loadingCategory: true,
   errors: null,
 };
 
@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
     case ADD_CATEGORIES:
       return { ...state, categories: [...state, payload] };
     case SET_LOADING:
-      return { ...state, loading: payload };
+      return { ...state, loadingCategory: payload };
     case SET_ERROR:
       return { ...state, errors: payload };
     default:

@@ -11,9 +11,25 @@ import { fetchAspiration } from "../stores/aspiration/action";
 function Announcement() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { aspiration, loading, error } = useSelector(
+  const { aspiration, loadingAspiration, error } = useSelector(
     (state) => state.aspiration
   );
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isLoggedIn && !localStorage.getItem("access_token")) {
+      history.push("/");
+      toast.error("Tolong login terlebih dahulu.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(fetchAspiration());
@@ -45,9 +61,9 @@ function Announcement() {
         }}
       >
         <Navbar />
-        {loading ? (
+        {loadingAspiration ? (
           <lottie-player
-            src="https://assets9.lottiefiles.com/packages/lf20_dXaGKl.json"
+            src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
             background="transparent"
             speed="1"
             style={{
@@ -60,7 +76,7 @@ function Announcement() {
           ></lottie-player>
         ) : (
           <div
-            className="container"
+            className="container shadow-xl"
             style={{ marginLeft: "10%", marginTop: "5%" }}
           >
             <div className="justify-between grid grid-cols-2">
@@ -87,22 +103,43 @@ function Announcement() {
             </div>
             <div
               className="card"
-              style={{ backgroundColor: "#f15447", borderWidth: 1 }}
+              style={{
+                backgroundColor: "#f7f7f7",
+                borderWidth: 1,
+                borderColor: "#f15447",
+              }}
             >
               <div className="m-8">
                 <div className="overflow-x-auto" style={{ height: "600px" }}>
-                  <table
-                    className="table w-full table-compact"
-                  >
+                  <table className="table-auto m-2">
                     <thead>
                       <tr>
-                        <th style={{ color: "white", backgroundColor: "black", fontSize: 20 }}>
+                        <th
+                          style={{
+                            color: "white",
+                            backgroundColor: "#f15447",
+                            fontSize: 20,
+                          }}
+                        >
                           Judul
                         </th>
-                        <th style={{ color: "white", backgroundColor: "black", fontSize: 20 }}>
+                        <th
+                          style={{
+                            color: "white",
+                            backgroundColor: "#f15447",
+                            fontSize: 20,
+                          }}
+                        >
                           Deskripsi
                         </th>
-                        <th style={{ color: "white", backgroundColor: "black", fontSize: 20 }}>
+                        <th
+                          style={{
+                            color: "white",
+                            backgroundColor: "#f15447",
+                            fontSize: 20,
+                            padding: 10,
+                          }}
+                        >
                           Kategori
                         </th>
                       </tr>

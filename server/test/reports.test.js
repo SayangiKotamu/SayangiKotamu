@@ -7,6 +7,8 @@ const Dinas = require("../models/dinas");
 const User = require("../models/user");
 const Report = require("../models/report");
 const Categories = require("../models/categories");
+const ReportController = require("../controllers/reportController");
+const { jwtSign } = require("../helpers/jwt");
 
 const dinasDinas = [
   {
@@ -139,6 +141,9 @@ let reportId2 = "";
 const statusChanged = {
   status: "diproses",
 };
+let userId = "";
+let userEmail = "";
+
 beforeAll((done) => {
   Dinas.create(dinasDinas)
     .then((res) => {
@@ -152,6 +157,8 @@ beforeAll((done) => {
       return User.create(users);
     })
     .then((res) => {
+      userId = res[0]._id;
+      userEmail = res[0].email;
       user = res[0];
       user1 = res[1];
       user2 = res[2];
@@ -821,49 +828,6 @@ describe("GET /reportUser [CASE FAILED / NO ACTIVATE EMAIL]", () => {
   });
 });
 
-// let accessTokenUser3 = "";
-// describe("GET /reportUser [CASE FAILED / NO ACTIVATE EMAIL]", () => {
-//   test("Should ERROR because of [NO ACTIVATE EMAIL] and status code (401)", (done) => {
-//     request(app)
-//       .post("/login")
-//       .set("Accept", "application/json")
-//       .send({ email: users[3].email, password: users[3].password })
-//       .then((res) => {
-//         accessTokenUser3 = res.body.access_token;
-//         const newId = ObjectId("6149eb0297dbe959baed1234");
-//         return User.findByIdAndUpdate(
-//           { _id: user3._id },
-//           { _id: newId }
-//           // { new: true }
-//         ).then((res) => {
-//           console.log(
-//             "🚀 ~ file: reports.test.js ~ line 836 ~ ).then ~ res",
-//             res
-//           );
-
-//           return request(app)
-//             .get("/reportUser")
-//             .set("access_token", accessTokenUser3)
-//             .then((res) => {
-//               expect(res.status).toBe(401);
-//               expect(res.body).toEqual(
-//                 expect.objectContaining({
-//                   message:
-//                     "Please check your email and activate your account first.",
-//                 })
-//               );
-
-//               done();
-//             });
-//         });
-//       })
-
-//       .catch((err) => {
-//         done(err);
-//       });
-//   });
-// });
-
 describe("GET /reports [CASE FAILED / DINAS ATTEMPT]", () => {
   test("Should ERROR because of [DINAS ATTEMPT] and status code (401)", (done) => {
     request(app)
@@ -1468,6 +1432,102 @@ describe("patch /reportUser/down/:id [CASE FAILED / NOT FOUND]", () => {
             done();
           });
       })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("GET /reportUser [CASE FAILED]", () => {
+  function defuse(promise) {
+    promise.catch(() => {});
+    return promise;
+  }
+  test("SERVER REJECTED", (done) => {
+    request(app)
+      .post("/login")
+      .set("Accept", "application/json")
+      .send({ email: users[0].email, password: users[0].password })
+      .then((res) => {
+        const addMock = jest.spyOn(Report, "find");
+        addMock.mockImplementation(() =>
+          defuse(Promise.reject(new Error("test1")))
+        );
+        return request(app)
+          .get("/reportUser")
+          .set("access_token", res.body.access_token)
+          .then((res) => {
+            expect(res.status).toBe(500);
+            addMock.mockReset();
+
+            done();
+          });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("GET /reportUser/category:id [CASE FAILED]", () => {
+  function defuse(promise) {
+    promise.catch(() => {});
+    return promise;
+  }
+  test("SERVER REJECTED", (done) => {
+    request(app)
+      .post("/login")
+      .set("Accept", "application/json")
+      .send({ email: users[0].email, password: users[0].password })
+      .then((res) => {
+        const addMock = jest.spyOn(Report, "find");
+        addMock.mockImplementation(() =>
+          defuse(Promise.reject(new Error("test1")))
+        );
+        return request(app)
+          .get(`/reportUser/category/${category._id}`)
+          .set("access_token", res.body.access_token)
+          .then((res) => {
+            expect(res.status).toBe(500);
+            addMock.mockReset();
+
+            done();
+          });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+describe("GET /reports [CASE FAILED]", () => {
+  function defuse(promise) {
+    promise.catch(() => {});
+    return promise;
+  }
+  test("SERVER REJECTED", (done) => {
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinasDinas[0].email, password: dinasDinas[0].password })
+      .then((res) => {
+        const addMock = jest.spyOn(Report, "find");
+        addMock.mockImplementation(() =>
+          defuse(Promise.reject(new Error("test1")))
+        );
+        return request(app)
+          .get("/dinas/reports")
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(500);
+            addMock.mockReset();
+
+            done();
+          });
+      })
+
       .catch((err) => {
         done(err);
       });

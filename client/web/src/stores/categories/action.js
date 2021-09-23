@@ -47,6 +47,7 @@ export function fetchCategories() {
 
 export function postCategories(payload) {
   return function (dispatch) {
+    dispatch(setLoading(true));
     sayangiKotamu({
       method: "POST",
       url: "/categories",

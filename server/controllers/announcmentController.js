@@ -132,7 +132,6 @@ class AnnouncmentController {
         throw { name: "AnnouncmentNotFound" };
       }
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }

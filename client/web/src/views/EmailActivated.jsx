@@ -15,10 +15,17 @@ function EmailActivated() {
               <h2 class="mb-5 text-3xl font-bold">Terima Kasih</h2>
             </div>
           </div>
-          <div class="card" style={{ backgroundColor: "#f15447" }}>
+          <div
+            class="card shadow-2xl"
+            style={{
+              backgroundColor: "#f7f7f7",
+              borderColor: "#f15447",
+              borderWidth: 2,
+            }}
+          >
             <div class="m-8">
               <div class="mt-6 mb-3">
-                <p class="text-2xl text-center" style={{ color: "white" }}>
+                <p class="text-2xl text-center" style={{ color: "black" }}>
                   Email yang anda daftarkan telah terverifikasi, anda sudah
                   dapat menggunakan email yang telah anda daftarkan pada
                   aplikasi kami. Selamat berkontribusi melalui SayangiKotamu :)

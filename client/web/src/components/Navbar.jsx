@@ -17,7 +17,7 @@ function Navbar() {
   return (
     <>
       <div
-        className="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box"
+        className="navbar mb-2 shadow-lg bg-neutral text-neutral-content"
         style={{ backgroundColor: "#f15447" }}
       >
         <div className="px-2 mx-2 navbar-start">
@@ -39,7 +39,14 @@ function Navbar() {
           </div>
         </div>
         <div className="navbar-end">
-          <h1 className="text-lg font-bold">Keluar</h1>
+          <a
+            href=""
+            onClick={() => {
+              handleLogout();
+            }}
+          >
+            <h1 className="text-lg font-bold">Keluar</h1>
+          </a>
           <button
             className="btn btn-square btn-ghost"
             onClick={() => {

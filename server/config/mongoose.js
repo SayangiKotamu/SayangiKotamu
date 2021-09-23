@@ -12,9 +12,9 @@ if (process.env.NODE_ENV === "production") {
 
 mongoose.connect(url, (err) => {
   if (err) {
-    console.log(err, "connect error");
+    // console.log(err, "connect error");
   } else {
-    console.log("connect success");
+    // console.log("connect success");
   }
 });
 // 500 coba mocking terus direject

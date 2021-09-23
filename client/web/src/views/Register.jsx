@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { registering } from "../stores/authentication/action";
 
 function Register() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { loadingRegister } = useSelector((state) => state.auth);
 
   const handleToLogin = () => {
     history.push("/");
@@ -40,7 +41,11 @@ function Register() {
       password,
     };
 
-    if (email === "" || password === "" || name === "") {
+    if (
+      payload.email === "" ||
+      payload.password === "" ||
+      payload.name === ""
+    ) {
       toast.error("Mohon diisi sesuai dengan kebutuhan di bawah!", {
         position: "top-right",
         autoClose: 5000,
@@ -83,26 +88,24 @@ function Register() {
             class="text-center lg:text-left"
             style={{ width: "100%", marginRight: "10%" }}
           >
-            <h1 class="mb-5 text-5xl font-bold">Selamat datang, warga!</h1>
-            <p class="mb-5 text-xl italic">
-              "SayangiKotamu merupakan platform super-app city yang didesain
+            <h1 class="mb-5 text-5xl font-bold">Selamat datang!</h1>
+            <p class="mb-5 text-lg italic text-gray-500">
+              SayangiKotamu merupakan platform super-app city yang didesain
               sebagai one-stop service untuk membantu warga Indonesia mengatasi
-              masalah sehari-hari. Dengan SmartApp, warga dan pemerintah dapat
-              bersinergi secara efektif dan efisien untuk menuntaskan
-              permasalahan kota secara digital, demi menunjang industri 4.0
-              serta menciptakan sumber daya manusia yang siap untuk
-              berkontribusi dalam kemajuan kota dari berbagai aspek."
+              permasalahan kota sehari-hari.
             </p>
           </div>
           <div class="card col-6 w-full max-w shadow-2xl bg-base-500">
-            <div class="card-body" style={{ backgroundColor: "#f15447" }}>
+            <div class="card-body" style={{ backgroundColor: "#f7f7f7" }}>
               <div class="text-center">
                 <h1 class="mb-3 text-4xl font-bold">Daftar</h1>
               </div>
               <form action="" onSubmit={handleRegister}>
                 <div class="form-control">
                   <label class="label">
-                    <span class="label-text">Nama Instansi</span>
+                    <span class="label-text" style={{ color: "#f15447" }}>
+                      Nama Instansi
+                    </span>
                   </label>
                   <input
                     type="text"
@@ -114,7 +117,9 @@ function Register() {
                 </div>
                 <div class="form-control">
                   <label class="label">
-                    <span class="label-text">Email</span>
+                    <span class="label-text" style={{ color: "#f15447" }}>
+                      Email
+                    </span>
                   </label>
                   <input
                     type="text"
@@ -126,7 +131,9 @@ function Register() {
                 </div>
                 <div class="form-control">
                   <label class="label">
-                    <span class="label-text">Password</span>
+                    <span class="label-text" style={{ color: "#f15447" }}>
+                      Password
+                    </span>
                   </label>
                   <input
                     type="password"
@@ -136,33 +143,37 @@ function Register() {
                     value={password}
                   />
                 </div>
-                {/* <div class="form-control">
-                  <label class="label">
-                    <span class="label-text">Kota</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Kota"
-                    class="input input-bordered"
-                    onChange={forCity}
-                    value={city}
-                  />
-                </div> */}
-                <div class="form-control mt-6 mb-3">
-                  <input
-                    type="submit"
-                    value="Daftar"
-                    class="btn"
-                    style={{ backgroundColor: "black" }}
-                  />
-                </div>
+
+                {loadingRegister ? (
+                  <lottie-player
+                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                    background="transparent"
+                    speed="1"
+                    style={{
+                      width: "200px",
+                      height: "70px",
+                      marginLeft: "28%",
+                    }}
+                    loop
+                    autoplay
+                  ></lottie-player>
+                ) : (
+                  <div className="form-control mt-6 mb-3">
+                    <input
+                      type="submit"
+                      value="Daftar"
+                      className="btn"
+                      style={{ backgroundColor: "#f15447" }}
+                    />
+                  </div>
+                )}
               </form>
               <label class="label-text-alt text-center">
-                <p className="text-xl">
+                <p className="text-md">
                   Sudah mempunyai akun sebelumnya?{" "}
                   <a
                     href="#"
-                    style={{ color: "blue" }}
+                    style={{ color: "#6382ff" }}
                     onClick={() => {
                       handleToLogin();
                     }}

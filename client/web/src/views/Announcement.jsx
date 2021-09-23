@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postAnnouncement } from "../stores/announcements/action";
 
 function Announcement() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [announcement, setAnnouncement] = useState("");
+  const [announcment, setAnnouncement] = useState("");
   const [title, setTitle] = useState("");
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { loadingAnnouncement } = useSelector((state) => state.announcement);
+
+  useEffect(() => {
+    if (!isLoggedIn && !localStorage.getItem("access_token")) {
+      history.push("/");
+      toast.error("Tolong login terlebih dahulu.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, []);
 
   const forAnnouncement = (e) => {
     e.preventDefault();
@@ -31,11 +48,11 @@ function Announcement() {
 
     const payload = {
       title,
-      announcement,
+      announcment,
       date: new Date(),
     };
 
-    if (payload.title === "" || payload.announcement === "") {
+    if (payload.title === "" || payload.announcment === "") {
       toast.error("Anda belum mengisi data sesuai kebutuhan pengumuman.", {
         position: "top-right",
         autoClose: 5000,
@@ -93,14 +110,18 @@ function Announcement() {
             </div>
           </div>
           <div
-            class="card"
-            style={{ backgroundColor: "#f15447", borderWidth: 1 }}
+            class="card shadow-xl"
+            style={{
+              backgroundColor: "#f7f7f7",
+              borderWidth: 1,
+              borderColor: "#f15447",
+            }}
           >
             <div class="m-8">
               <form action="" type="submit" onSubmit={handleSubmitAnnouncement}>
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
+                    <span class="label-text" style={{ color: "#f15447" }}>
                       Judul
                     </span>
                   </label>
@@ -114,7 +135,7 @@ function Announcement() {
 
                 <div class="form-control mt-2">
                   <label class="label">
-                    <span class="label-text" style={{ color: "white" }}>
+                    <span class="label-text" style={{ color: "#f15447" }}>
                       Isi Pengumuman
                     </span>
                   </label>
@@ -123,17 +144,33 @@ function Announcement() {
                     placeholder=""
                     class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                     onChange={forAnnouncement}
-                    value={announcement}
+                    value={announcment}
                   />
                 </div>
-                <div class="form-control mt-6 mb-3">
-                  <input
-                    type="submit"
-                    value="Buat Pengumuman"
-                    class="btn"
-                    style={{ backgroundColor: "black" }}
-                  />
-                </div>
+                {loadingAnnouncement ? (
+                  <lottie-player
+                    src="https://assets4.lottiefiles.com/packages/lf20_ojcfgj.json"
+                    background="transparent"
+                    speed="1"
+                    style={{
+                      width: "200px",
+                      height: "70px",
+                      marginLeft: "44%",
+                      marginTop: "1%",
+                    }}
+                    loop
+                    autoplay
+                  ></lottie-player>
+                ) : (
+                  <div class="form-control mt-6 mb-3">
+                    <input
+                      type="submit"
+                      value="Buat Pengumuman"
+                      class="btn"
+                      style={{ backgroundColor: "#f15447" }}
+                    />
+                  </div>
+                )}
               </form>
             </div>
           </div>

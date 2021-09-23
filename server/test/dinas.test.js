@@ -107,7 +107,6 @@ describe("POST / [CASE FAILED / NO NAME]", () => {
       .set("Accept", "application/json")
       .send(dinasRegister2)
       .then((res) => {
-        console.log(res.body, "<<<<<");
         expect(res.status).toBe(400);
         expect(res.body).toEqual(
           expect.objectContaining({
@@ -310,17 +309,23 @@ describe("GET /dinas [CASE SUCCESS]", () => {
   });
 });
 
-// describe("GET /dinas [CASE FAILED]", () => {
-//   test("Should return array of object of all dinas and status code(500)", (done) => {
-//     request(app)
-//       .get("/dinas")
-//       .then((res) => {
-//         expect(res.status).toBe(500);
+// ! STILL ERROR
+describe("GET /dinas [CASE FAILED]", () => {
+  test("Should return array of object of all dinas and status code(500)", (done) => {
+    const addMock = jest.spyOn(Dinas, "find");
+    addMock.mockImplementation(() =>
+      Promise.reject(new Error("Internal server error"))
+    );
+    request(app)
+      .get("/dinas")
+      .then((res) => {
+        expect(res.status).toBe(500);
+        addMock.mockReset();
 
-//         done();
-//       })
-//       .catch((err) => {
-//         done(err);
-//       });
-//   });
-// });
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});

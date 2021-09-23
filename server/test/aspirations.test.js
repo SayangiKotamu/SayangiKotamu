@@ -455,3 +455,36 @@ describe("POST /aspirations/create [ERROR CASE]", () => {
       });
   });
 });
+
+// console.log(user, 459);
+// ! STILL ERROR
+
+describe("GET /aspirations [SUCCESS FAILED]", () => {
+  function defuse(promise) {
+    promise.catch(() => {});
+    return promise;
+  }
+  test("REJECTED SERVER", (done) => {
+    let access_token = jwtSign({
+      id: dinas._id,
+      email: dinas.email,
+      role: dinas.role,
+    });
+    const addMock = jest.spyOn(Aspiration, "find");
+    addMock.mockImplementation(() => defuse(Promise.reject(new Error("test"))));
+
+    request(app)
+      .get("/dinas/aspirations")
+      .set("Accept", "application/json")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(500);
+        addMock.mockReset();
+
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
