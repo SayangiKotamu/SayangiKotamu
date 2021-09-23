@@ -650,3 +650,31 @@ describe("GET /dinas/rating/:id [ERROR CASE]", () => {
       });
   });
 });
+
+describe("GET /rating [SUCCESS FAILED]", () => {
+  test("REJECTED SERVER", (done) => {
+    let access_token = jwtSign({
+      id: user._id,
+      email: user.email,
+    });
+    const addMock = jest.spyOn(Rating, "find");
+    addMock.mockImplementation(() =>
+      defuse(Promise.reject(new Error("test1")))
+    );
+
+    request(app)
+      .get("/rating")
+      .set("Accept", "application/json")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(500);
+        addMock.mockReset();
+
+        done();
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
