@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
+        marginBottom: '30%'
     },
     horizontalLine: {
         marginTop: 10,
