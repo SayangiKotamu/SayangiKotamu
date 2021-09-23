@@ -7,6 +7,8 @@ const Dinas = require("../models/dinas");
 const User = require("../models/user");
 const Report = require("../models/report");
 const Categories = require("../models/categories");
+const ReportController = require("../controllers/reportController");
+const { jwtSign } = require("../helpers/jwt");
 
 const dinasDinas = [
   {
@@ -139,6 +141,9 @@ let reportId2 = "";
 const statusChanged = {
   status: "diproses",
 };
+let userId = "";
+let userEmail = "";
+
 beforeAll((done) => {
   Dinas.create(dinasDinas)
     .then((res) => {
@@ -152,6 +157,8 @@ beforeAll((done) => {
       return User.create(users);
     })
     .then((res) => {
+      userId = res[0]._id;
+      userEmail = res[0].email;
       user = res[0];
       user1 = res[1];
       user2 = res[2];
@@ -783,6 +790,32 @@ describe("GET /reportUser [CASE SUCCESS]", () => {
       });
   });
 });
+
+// let access_token = jwtSign({
+//   id: userId,
+//   email: userEmail,
+// });
+// describe("GET /reports?status=diterima [CASE SUCCESS]", () => {
+//   test("TEST FAILED CONNECT REJECT ", async () => {
+//     const addMock = jest.spyOn(ReportController, "showAll");
+//     console.log(
+//       "🚀 ~ file: reports.test.js ~ line 791 ~ test ~ addMock",
+//       addMock
+//     );
+
+//     addMock.mockImplementation(() =>
+//       Promise.reject(new Error("Internal Server Error"))
+//     );
+
+//     request(app)
+//       .get("/reportUser")
+//       .set("access_token", access_token)
+//       .then((res) => {
+//         console.log("🚀 ~ file: reports.test.js ~ line 809 ~ .then ~ res", res);
+//         expect(res.status).toBe(200);
+//       });
+//   });
+// });
 
 let accessTokenUser2 = "";
 describe("GET /reportUser [CASE FAILED / NO ACTIVATE EMAIL]", () => {

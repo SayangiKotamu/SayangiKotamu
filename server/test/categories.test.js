@@ -7,14 +7,14 @@ const Dinas = require("../models/dinas");
 const { jwtSign } = require("../helpers/jwt");
 const categoriesController = require("../controllers/categoriesController");
 
-// jest.mock("../controllers/categoriesController.js");
+let user = {};
+let dinas = {};
+let categories = {};
 
-let user;
-let dinas;
-let categories;
+let userId = "";
+let userEmail = "";
 
 beforeAll((done) => {
-  // categoriesController.mockClear();
   const dummyUser = {
     NIK: 1501111709990010,
     fullname: "test",
@@ -53,7 +53,9 @@ beforeAll((done) => {
 
 afterAll((done) => {
   User.deleteMany()
-    .then((_) => {
+    .then((res) => {
+      userId = res._id;
+      userEmail = res.email;
       return Categories.deleteMany();
     })
     .then((_) => {
@@ -98,6 +100,30 @@ describe("GET /categories [SUCCESS CASE]", () => {
   });
 });
 
+// test("TEST FAILED CONNECT REJECT ", (done) => {
+//   const addMock = jest.spyOn(Categories, "find");
+
+//   addMock.mockImplementation(() => Promise.reject(new Error("test")));
+
+//   let access_token = jwtSign({
+//     id: userId,
+//     email: userEmail,
+//   });
+//   request(app)
+//     .get("/categories")
+//     .set("Accept", "application/json")
+//     .set("access_token", access_token)
+//     .then(async (response) => {
+//       expect(response.status).toBe(400);
+
+//       // expect(response.body).toEqual("Internal Server Error");
+//       done();
+//     })
+//     .catch((err) => {
+//       done(err);
+//     });
+// });
+
 describe("GET /categories [ERROR CASE]", () => {
   test("Expect Error when user not login", (done) => {
     request(app)
@@ -133,6 +159,7 @@ describe("GET /dinas/categories [SUCCESS CASE]", () => {
       id: dinas._id,
       email: dinas.email,
     });
+
     request(app)
       .get("/dinas/categories")
       .set("Accept", "application/json")
@@ -457,6 +484,57 @@ describe("POST /dinas/categories [ERROR CASE]", () => {
       });
   });
 });
+
+describe("GET /dinas/categories [SUCCESS FAILED]", () => {
+  test("REJECTED SERVER", (done) => {
+    let access_token = jwtSign({
+      id: dinas._id,
+      email: dinas.email,
+    });
+    const addMock = jest.spyOn(Categories, "find");
+
+    addMock.mockImplementation(() => Promise.reject(new Error("test")));
+    request(app)
+      .get("/dinas/categories")
+      .set("Accept", "application/json")
+      .set("access_token", access_token)
+      .then((response) => {
+        expect(response.status).toBe(500);
+        addMock.mockReset();
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
+
+// test("TEST FAILED  ", async () => {
+//   const addMock = jest.spyOn(Categories, "find");
+
+//   addMock.mockImplementation(() => Promise.reject(new Error("test")));
+//   let access_token = jwtSign({
+//     id: user._id,
+//     email: user.email,
+//   });
+//   request(app)
+//     .get("/categories")
+//     .set("Accept", "application/json")
+//     .set("access_token", access_token)
+//     .then((response) => {
+//       expect(response.status).toBe(500);
+//       expect(response.body).toEqual(
+//         expect.objectContaining({
+//           message: "Categories Not Found",
+//         })
+//       );
+
+//       done();
+//     })
+//     .catch((err) => {
+//       done(err);
+//     });
+// });
 
 // test("Error category fall", () => {
 //   const categories = categoriesController.showAll();

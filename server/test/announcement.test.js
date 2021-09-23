@@ -630,3 +630,36 @@ describe("DELETE /dinas/announcments/:id [CASE FAILED / USER ATTEMPT]", () => {
       });
   });
 });
+
+describe("GET /dinas/announcements [SUCCESS FAILED]", () => {
+  function defuse(promise) {
+    promise.catch(() => {});
+    return promise;
+  }
+  test("REJECTED SERVER", (done) => {
+    const addMock = jest.spyOn(Announcment, "find");
+    addMock.mockImplementation(() =>
+      defuse(Promise.reject(new Error("test1")))
+    );
+    request(app)
+      .post("/dinas/login")
+      .set("Accept", "application/json")
+      .send({ email: dinas.email, password: dinas.password })
+      .then((res) => {
+        return request(app)
+          .get("/dinas/announcments")
+          .set("access_token", res.body.accessToken)
+          .then((res) => {
+            expect(res.status).toBe(500);
+            addMock.mockReset();
+            addMock.mockRestore();
+
+            done();
+          });
+      })
+
+      .catch((err) => {
+        done(err);
+      });
+  });
+});
